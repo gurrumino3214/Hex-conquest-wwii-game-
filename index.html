@@ -18,7 +18,6 @@
         #turn-info { display:flex; flex-direction:column; gap:2px; min-width:0; }
         #turn-label { font-size:9px; color:#b8936e; text-transform:uppercase; letter-spacing:1.5px; font-family:'Fredoka',sans-serif; }
         .player-badge { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:700; border:2px solid; font-family:'Fredoka',sans-serif; white-space:nowrap; background:white; }
-        /* badges de facciones */
         .player-badge.urss { border-color:#e74c3c; color:#c0392b; background:#ffeaea; } .player-badge.nazis { border-color:#7f8c8d; color:#555; background:#f0f0f0; } .player-badge.italia { border-color:#27ae60; color:#1e8449; background:#eafaf1; } .player-badge.usa { border-color:#3498db; color:#2471a3; background:#eaf2f8; } .player-badge.japon { border-color:#f39c12; color:#b9770e; background:#fef5e7; } .player-badge.uk { border-color:#e91e63; color:#c2185b; background:#fce4ec; } .player-badge.francia { border-color:#1abc9c; color:#148f77; background:#e8f8f5; } .player-badge.china { border-color:#e67e22; color:#ca6f1e; background:#fdf2e9; } .player-badge.canada { border-color:#9b59b6; color:#7d3c98; background:#f4ecf7; }
         .player-badge.sparta { border-color:#c0392b; } .player-badge.athens { border-color:#2980b9; } .player-badge.phoenicia { border-color:#d4ac0d; }
         .player-badge.capcom { border-color:#1e8449; } .player-badge.square { border-color:#8e44ad; } .player-badge.ea { border-color:#e67e22; }
@@ -27,7 +26,6 @@
         .player-badge.justice { border-color:#3498db; } .player-badge.avengers_c { border-color:#e74c3c; } .player-badge.xmen { border-color:#f1c40f; } .player-badge.brotherhood { border-color:#8e44ad; } .player-badge.spiderman { border-color:#e91e63; } .player-badge.sinister { border-color:#e67e22; } .player-badge.doom { border-color:#2c3e50; } .player-badge.injustice { border-color:#c0392b; } .player-badge.watchmen { border-color:#1abc9c; }
         .player-badge.fellowship { border-color:#27ae60; } .player-badge.mordor { border-color:#c0392b; } .player-badge.westeros { border-color:#7f8c8d; } .player-badge.targaryen { border-color:#e74c3c; } .player-badge.hogwarts_l { border-color:#1abc9c; } .player-badge.oz { border-color:#f1c40f; } .player-badge.discworld { border-color:#3498db; } .player-badge.narnia { border-color:#e67e22; } .player-badge.riverdale { border-color:#8e44ad; }
         .player-badge.christianity { border-color:#f1c40f; } .player-badge.islam { border-color:#27ae60; } .player-badge.judaism { border-color:#3498db; } .player-badge.hinduism { border-color:#e74c3c; } .player-badge.buddhism { border-color:#f39c12; } .player-badge.sikhism { border-color:#d35400; } .player-badge.jainism { border-color:#2ecc71; } .player-badge.zoroastrianism { border-color:#e67e22; } .player-badge.shinto { border-color:#e74c3c; }
-
         #dice-area { display:flex; gap:8px; align-items:center; flex-shrink:0; }
         .dice-btn, .exit-btn { border:none; color:white; padding:8px 16px; border-radius:25px; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:'Fredoka',sans-serif; }
         .dice-btn { background:linear-gradient(135deg,#ff6b6b,#ee5a24); box-shadow:0 4px 12px rgba(238,90,36,0.3); }
@@ -75,111 +73,18 @@
         .player-slot-label { font-weight:700; font-size:12px; color:#6b4226; min-width:70px; font-family:'Fredoka',sans-serif; }
         .player-slot select { flex:1; padding:8px 12px; border-radius:10px; border:2px solid #e0d0b8; font-family:'Nunito',sans-serif; font-size:12px; background:white; color:#4a3728; }
         .info-modal-content { text-align:left; font-size:12px; max-height:60vh; overflow-y:auto; } .info-modal-content .stat-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #eee; }
-        .event-banner { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fffef9; padding:20px; border-radius:16px; z-index:2000; display:none; }
         .editor-grid { display:inline-block; background:#e8dcc8; padding:8px; border-radius:8px; box-shadow:inset 0 0 20px rgba(0,0,0,0.1); }
         .editor-row { display:flex; margin-bottom:-6px; justify-content:center; } .editor-row:nth-child(even) { margin-left:14px; }
         .editor-cell { width:28px; height:32px; cursor:pointer; clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); border:1px solid rgba(0,0,0,0.2); } .editor-cell:hover { transform:scale(1.1); }
         .editor-cell.plains { background:linear-gradient(145deg,#b8d9a6,#6daf5a); } .editor-cell.river { background:linear-gradient(145deg,#7ec8e3,#2e8cb8); } .editor-cell.mountain { background:linear-gradient(145deg,#d4c4a8,#9c8468); } .editor-cell.city { background:linear-gradient(145deg,#f5c27b,#d4952a); } .editor-cell.base { background:linear-gradient(145deg,#ffd700,#daa520); }
-
-        /* Temas visuales */
-        body.dark { background:#111; color:#ddd; --bg:#1a1a1a; --panel:#2c2c2c; --cream:#3a3a3a; --brown:#c4956a; --brown-light:#8b5e3c; --gold:#f5d56c; --gold-light:#e6a817; --shadow:0 4px 12px rgba(0,0,0,0.4); --shadow-lg:0 8px 24px rgba(0,0,0,0.6); }
-        body.dark #top-bar { background:linear-gradient(180deg,#2c2c2c,#1a1a1a); border-bottom-color:var(--gold); }
+        body.dark { background:#111; color:#ddd; --bg:#1a1a1a; --panel:#2c2c2c; --cream:#3a3a3a; --brown:#c4956a; --brown-light:#8b5e3c; --gold:#f5d56c; --gold-light:#e6a817; --shadow:0 4px 12px rgba(0,0,0,0.4); }
+        body.dark #top-bar { background:#2c2c2c; border-bottom-color:var(--gold); }
         body.dark .modal-box, body.dark .modal-btn, body.dark .player-badge { background:#2c2c2c; color:#ddd; border-color:#555; }
-        body.dark .modal-title, body.dark .section-title { color:#f5d56c; }
-        body.dark .country-card { background:#333; border-color:#555; color:#ddd; }
-        body.dark .diff-btn, body.dark .maptype-btn, body.dark .size-btn, body.dark .mode-option { background:#333; border-color:#555; color:#ddd; }
-        body.dark .diff-btn.selected, body.dark .maptype-btn.selected, body.dark .size-btn.selected, body.dark .mode-option.selected { background:#555; border-color:#f5d56c; color:#fff; }
-        body.dark .counter-btn { background:#333; border-color:#f5d56c; color:#f5d56c; }
-        body.dark .player-slot { background:#2c2c2c; }
-        body.dark .player-slot select { background:#333; border-color:#555; color:#ddd; }
         body.dark .dice-btn { background:linear-gradient(135deg,#b03a2e,#922b21); }
         body.dark .exit-btn { background:linear-gradient(135deg,#555,#444); }
         body.dark .btn-secondary { background:#444; color:#ddd; border-color:#666; }
-        body.dark .btn-gold { background:#b8860b; color:#fff; }
         body.dark .menu-tab { background:#2c2c2c; color:#aaa; }
         body.dark .menu-tab.active { background:#555; color:#fff; }
-        body.dark .menu-tabs { border-color:#555; }
-
-        body.historic {
-            background:#c8b690 url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-            color:#3e2216; font-family:'MedievalSharp',cursive;
-            --bg:#d4c5a0; --panel:#e8d9b5; --cream:#f5ecd7; --brown:#5c3d2e; --brown-light:#8b6914;
-            --gold:#b8860b; --gold-light:#daa520; --red:#8b0000; --green:#3a5a2a; --blue:#2e4a6e; --shadow:0 4px 12px rgba(60,30,10,0.3); --shadow-lg:0 8px 24px rgba(40,20,5,0.5);
-        }
-        body.historic #top-bar { background:linear-gradient(180deg,#5c3d2e,#3e2216); border-bottom:4px double #b8860b; }
-        body.historic .player-badge { background:#f5ecd7; border:2px solid #8b6914; color:#3e2216; font-family:'MedievalSharp',cursive; }
-        body.historic .dice-btn { background:linear-gradient(135deg,#8b6914,#5c3d2e); color:#f5ecd7; border:2px solid #daa520; font-family:'MedievalSharp',cursive; }
-        body.historic .exit-btn { background:linear-gradient(135deg,#6b5a4a,#4a3a2a); color:#f5ecd7; }
-        body.historic #map-wrapper { background-color:#c8b690; box-shadow:inset 0 0 120px rgba(40,20,5,0.5); border:8px double #5c3d2e; }
-        body.historic .hex-inner { border:2px solid rgba(60,30,10,0.4); }
-        body.historic .hex.plains .hex-inner { background:linear-gradient(145deg,#c8b898,#8a7a58); }
-        body.historic .hex.river .hex-inner { background:linear-gradient(145deg,#8aafb8,#3a6a78); }
-        body.historic .hex.mountain .hex-inner { background:linear-gradient(145deg,#9a8a7a,#5a4a3a); }
-        body.historic .hex.city .hex-inner { background:linear-gradient(145deg,#d4b878,#8a6838); }
-        body.historic .hex.base .hex-inner { background:linear-gradient(145deg,#daa520,#8b6914); }
-        body.historic .modal-box { background:#f5ecd7; border:3px double #b8860b; }
-        body.historic .modal-title { color:#3e2216; font-family:'MedievalSharp',cursive; }
-        body.historic .modal-btn { font-family:'MedievalSharp',cursive; }
-        body.historic .btn-primary { background:linear-gradient(135deg,#8b4513,#5c2d0e); color:#f5ecd7; }
-        body.historic .btn-secondary { background:#e8d9b5; color:#3e2216; border:2px solid #8b6914; }
-        body.historic .btn-gold { background:linear-gradient(135deg,#daa520,#b8860b); color:#3e2216; border:2px solid #8b6914; }
-        body.historic .menu-tabs { border:2px solid #8b6914; }
-        body.historic .menu-tab { background:#f5ecd7; color:#5c3d2e; font-family:'MedievalSharp',cursive; }
-        body.historic .menu-tab.active { background:#e8d080; }
-        body.historic .section-title { color:#5c3d2e; border-bottom:2px solid #b8860b; font-family:'MedievalSharp',cursive; }
-        body.historic .country-card { background:#f5ecd7; border:2px solid #8b6914; color:#3e2216; }
-        body.historic .country-card.selected { border-color:#b8860b; background:#e8d080; }
-        body.historic .diff-btn, body.historic .maptype-btn, body.historic .size-btn, body.historic .mode-option { background:#f5ecd7; border:2px solid #8b6914; color:#3e2216; }
-        body.historic .diff-btn.selected, body.historic .maptype-btn.selected, body.historic .size-btn.selected, body.historic .mode-option.selected { background:#e8d080; border-color:#b8860b; }
-        body.historic .counter-btn { background:#f5ecd7; border:2px solid #8b6914; color:#3e2216; }
-        body.historic .player-slot { background:#f5ecd7; }
-        body.historic .player-slot select { background:#f5ecd7; border:2px solid #8b6914; color:#3e2216; }
-        body.historic .notification-bubble, body.historic .event-banner { background:#f5ecd7; border-color:#b8860b; color:#3e2216; }
-        body.historic .editor-grid { background:#d4c5a0; }
-        body.historic .editor-cell.plains { background:#c8b898; } body.historic .editor-cell.river { background:#8aafb8; } body.historic .editor-cell.mountain { background:#9a8a7a; } body.historic .editor-cell.city { background:#d4b878; } body.historic .editor-cell.base { background:#daa520; }
-
-        body.retro {
-            background:#0a0a2e; color:#00ff88; font-family:'Press Start 2P',cursive; font-size:10px; image-rendering:pixelated;
-            --bg:#0a0a2e; --panel:#1a1a4e; --cream:#0d0d35; --brown:#ff6bff; --brown-light:#00ffff;
-            --gold:#ffdd00; --gold-light:#ffaa00; --red:#ff0066; --green:#00ff44; --blue:#00aaff; --shadow:0 4px 12px rgba(255,0,128,0.4); --shadow-lg:0 8px 24px rgba(0,255,255,0.5);
-        }
-        body.retro #top-bar { background:linear-gradient(180deg,#1a0033,#0a0020); border-bottom:4px solid #ff00ff; box-shadow:0 0 20px #ff00ff; }
-        body.retro .player-badge { background:#000; border:2px solid #00ffff; color:#00ffff; font-family:'Press Start 2P',cursive; font-size:8px; }
-        body.retro .dice-btn { background:#ff00ff; color:#fff; border:2px solid #ffdd00; box-shadow:0 0 15px #ff00ff; font-family:'Press Start 2P',cursive; font-size:9px; }
-        body.retro .exit-btn { background:#444; color:#fff; border:2px solid #ff00ff; }
-        body.retro #map-wrapper { background:#0a0a2e; background-image:none; box-shadow:inset 0 0 60px rgba(0,255,255,0.2); border:4px solid #ff00ff; }
-        body.retro .hex-inner { border:2px solid #00ffff; }
-        body.retro .hex.plains .hex-inner { background:#1a3a1a; } body.retro .hex.river .hex-inner { background:#0a2a4a; } body.retro .hex.mountain .hex-inner { background:#3a2a1a; } body.retro .hex.city .hex-inner { background:#4a3a0a; } body.retro .hex.base .hex-inner { background:#4a0a4a; box-shadow:inset 0 0 15px #ff00ff; }
-        body.retro .hex.selected .hex-inner { border:3px solid #ffdd00 !important; box-shadow:0 0 20px #ffdd00 !important; }
-        body.retro .hex.movable .hex-inner { border:3px solid #00ff88 !important; }
-        body.retro .hex.attackable .hex-inner { border:3px solid #ff4444 !important; }
-        body.retro .hex.base-attackable .hex-inner { border:3px solid #ff0000 !important; }
-        body.retro .hex-units { background:#000; color:#ffdd00; border:2px solid #ff00ff; }
-        body.retro #bottom-panel { background:linear-gradient(180deg,#1a0033,#0a0020); border-top:4px solid #ff00ff; }
-        body.retro #action-text { color:#ffdd00; }
-        body.retro .player-card { background:rgba(0,0,0,0.7); border:2px solid #ff00ff; color:#00ffff; }
-        body.retro .player-card.active { border-color:#ffdd00; box-shadow:0 0 15px #ffdd00; }
-        body.retro .modal-box { background:#0d0d35; border:3px solid #ff00ff; box-shadow:0 0 30px #ff00ff; color:#00ff88; }
-        body.retro .modal-title { color:#ffdd00; font-family:'Press Start 2P',cursive; }
-        body.retro .modal-btn { font-family:'Press Start 2P',cursive; font-size:10px; }
-        body.retro .btn-primary { background:#ff00ff; color:#fff; border:2px solid #ffdd00; }
-        body.retro .btn-secondary { background:#1a1a4e; color:#00ffff; border:2px solid #00ffff; }
-        body.retro .btn-gold { background:#ffdd00; color:#000; border:2px solid #ffaa00; }
-        body.retro .menu-tabs { border:2px solid #ff00ff; }
-        body.retro .menu-tab { background:#0d0d35; color:#00ffff; font-family:'Press Start 2P',cursive; font-size:7px; }
-        body.retro .menu-tab.active { background:#ff00ff; color:#fff; }
-        body.retro .section-title { color:#ffdd00; border-bottom:2px solid #ff00ff; font-family:'Press Start 2P',cursive; }
-        body.retro .country-card { background:#0d0d35; border:2px solid #00ffff; color:#00ffff; }
-        body.retro .country-card.selected { border-color:#ffdd00; background:#1a1a4e; }
-        body.retro .diff-btn, body.retro .maptype-btn, body.retro .size-btn, body.retro .mode-option { background:#0d0d35; border:2px solid #00ffff; color:#00ffff; }
-        body.retro .diff-btn.selected, body.retro .maptype-btn.selected, body.retro .size-btn.selected, body.retro .mode-option.selected { border-color:#ffdd00; background:#1a1a4e; }
-        body.retro .counter-btn { background:#0d0d35; border:2px solid #ff00ff; color:#ffdd00; }
-        body.retro .player-slot { background:#0d0d35; }
-        body.retro .player-slot select { background:#000; border:2px solid #00ffff; color:#00ffff; }
-        body.retro .notification-bubble, body.retro .event-banner { background:#0d0d35; border-color:#ffdd00; color:#ffdd00; }
-        body.retro .editor-grid { background:#1a1a4e; }
-        body.retro .editor-cell.plains { background:#1a3a1a; } body.retro .editor-cell.river { background:#0a2a4a; } body.retro .editor-cell.mountain { background:#3a2a1a; } body.retro .editor-cell.city { background:#4a3a0a; } body.retro .editor-cell.base { background:#4a0a4a; }
-
         @media (max-width: 600px) {
             :root { --hex-size: 38px; }
             .dice-btn, .exit-btn { padding:6px 12px; font-size:10px; }
@@ -197,11 +102,9 @@
     </div>
     <div class="tutorial-overlay" id="tutorial-overlay"></div>
     <div class="tutorial-highlight" id="tutorial-highlight"></div>
-
     <div class="modal show" id="menu-modal">
         <div class="modal-box">
-            <h2>⚔️ Hex Conquest</h2>
-            <p style="margin-bottom:10px; font-size:14px;">Edición Definitiva</p>
+            <h2>⚔️ Hex Conquest</h2><p style="margin-bottom:10px;font-size:14px;">Edición Definitiva</p>
             <div class="menu-tabs" id="menu-tabs">
                 <button class="menu-tab active" data-tab="play">⚔ Jugar</button>
                 <button class="menu-tab" data-tab="scenarios">🏛️ Escenarios</button>
@@ -262,6 +165,8 @@
                 <button class="modal-btn btn-secondary" onclick="startScenario('consolewar')">🕹️ Guerra de Consolas (9×9)</button>
                 <div class="section-title">🎬 Películas</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('starwars')">🌌 Star Wars (9×9)</button>
+                <div class="section-title">🎌 Anime / Manga</div>
+                <button class="modal-btn btn-secondary" onclick="startScenario('leafbattle')">🍃 Batalla de la Hoja (7×7)</button>
                 <div class="section-title">📚 Literatura</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('middleearth')">💍 Tierra Media (11×11)</button>
                 <div class="section-title">⛪ Religioso</div>
@@ -271,24 +176,18 @@
                 <div class="section-title">📖 Cómo Jugar</div>
                 <div style="text-align:left;font-size:11px;max-height:50vh;overflow-y:auto;padding:0 5px;">
                     <p><b>🎯 Objetivo:</b> Conquista todas las bases enemigas o elimina a todos los oponentes.</p>
-                    <p><b>🎲 Tirar el dado:</b> Al inicio de tu turno, pulsa "TIRAR DADO". El número determina cuántas casillas puedes mover (más bonificaciones de facción).</p>
-                    <p><b>👆 Mover tropas:</b> Toca una casilla tuya para seleccionarla. Las casillas vacías a tu alcance se iluminan en <span style="color:#27ae60;">verde</span>, y las enemigas en <span style="color:#e74c3c;">rojo</span>. Toca el destino para mover o atacar.</p>
-                    <p><b>⚔️ Combate:</b> Al atacar se tira un dado por bando. El que saque más, gana y conquista o elimina la unidad enemiga.</p>
-                    <p><b>⭐ Bases:</b> Son tu cuartel general. Si la pierdes, quedas eliminado.</p>
-                    <p><b>🌊 Ríos y ⛰️ Montañas:</b> Los ríos solo se cruzan con 1,3 o 6 (salvo habilidad). Las montañas requieren habilidad.</p>
+                    <p><b>🎲 Tirar el dado:</b> Al inicio de tu turno, pulsa "TIRAR DADO". El número obtenido determina cuántas casillas puedes mover tus unidades.</p>
+                    <p><b>👆 Mover tropas:</b> Toca una de tus casillas para seleccionarla. Se iluminarán en <span style="color:#27ae60;">verde</span> las casillas vacías a las que puedes mover, y en <span style="color:#e74c3c;">rojo</span> las casillas enemigas que puedes atacar.</p>
+                    <p><b>⚔️ Combate:</b> Si atacas, se tira un dado por cada bando. Quien saque mayor número gana.</p>
+                    <p><b>⭐ Bases:</b> Son tus cuarteles generales. Si pierdes tu base, ¡quedas eliminado!</p>
+                    <p><b>🌊 Ríos y ⛰️ Montañas:</b> Los ríos solo se pueden cruzar si el dado saca 1, 3 o 6 (salvo habilidad).</p>
                 </div>
                 <button class="modal-btn btn-primary" onclick="startTutorial()">▶ Iniciar Tutorial Interactivo</button>
             </div>
             <div class="tab-panel" id="tab-editor">
                 <div class="section-title">🗺️ Editor de Mapas</div>
                 <div class="editor-grid" id="editor-grid"></div>
-                <div style="margin:6px;">
-                    <button onclick="setBrush('plains')" style="background:#b8d9a6;padding:6px 10px;border-radius:10px;border:1px solid #ccc;cursor:pointer;">Planicie</button>
-                    <button onclick="setBrush('river')" style="background:#7ec8e3;padding:6px 10px;border-radius:10px;border:1px solid #ccc;cursor:pointer;">Río</button>
-                    <button onclick="setBrush('mountain')" style="background:#d4c4a8;padding:6px 10px;border-radius:10px;border:1px solid #ccc;cursor:pointer;">Montaña</button>
-                    <button onclick="setBrush('city')" style="background:#f5c27b;padding:6px 10px;border-radius:10px;border:1px solid #ccc;cursor:pointer;">Ciudad</button>
-                    <button onclick="setBrush('base')" style="background:#ffd700;padding:6px 10px;border-radius:10px;border:1px solid #ccc;cursor:pointer;">Base</button>
-                </div>
+                <div style="margin:6px;"><button onclick="setBrush('plains')" style="background:#b8d9a6;padding:6px 10px;border-radius:10px;">Planicie</button><button onclick="setBrush('river')" style="background:#7ec8e3;padding:6px 10px;border-radius:10px;">Río</button><button onclick="setBrush('mountain')" style="background:#d4c4a8;padding:6px 10px;border-radius:10px;">Montaña</button><button onclick="setBrush('city')" style="background:#f5c27b;padding:6px 10px;border-radius:10px;">Ciudad</button><button onclick="setBrush('base')" style="background:#ffd700;padding:6px 10px;border-radius:10px;">Base</button></div>
                 <button class="modal-btn btn-secondary" onclick="resetCustomMap()">🔄 Restablecer</button>
                 <button class="modal-btn btn-gold" onclick="useCustomMap()">✅ Usar este mapa</button>
             </div>
@@ -325,28 +224,9 @@
             </div>
         </div>
     </div>
-
-    <div class="modal" id="faction-info-modal">
-        <div class="modal-box">
-            <div class="modal-title" id="faction-info-title"></div>
-            <div class="info-modal-content" id="faction-info-content"></div>
-            <button class="modal-btn btn-primary" onclick="document.getElementById('faction-info-modal').classList.remove('show')">Cerrar</button>
-        </div>
-    </div>
-    <div class="modal" id="combat-modal">
-        <div class="modal-box">
-            <div class="modal-title">⚔️ Combate</div>
-            <div id="combat-result"></div>
-            <button class="modal-btn btn-primary" onclick="closeCombat()">Continuar</button>
-        </div>
-    </div>
-    <div class="modal" id="victory-modal">
-        <div class="modal-box">
-            <div class="modal-title" id="victory-title"></div>
-            <p id="victory-text"></p>
-            <button class="modal-btn btn-primary" onclick="goToMenu()">📋 Menú</button>
-        </div>
-    </div>
+    <div class="modal" id="faction-info-modal"><div class="modal-box"><div class="modal-title" id="faction-info-title"></div><div class="info-modal-content" id="faction-info-content"></div><button class="modal-btn btn-primary" onclick="document.getElementById('faction-info-modal').classList.remove('show')">Cerrar</button></div></div>
+    <div class="modal" id="combat-modal"><div class="modal-box"><div class="modal-title">⚔️ Combate</div><div id="combat-result"></div><button class="modal-btn btn-primary" onclick="closeCombat()">Continuar</button></div></div>
+    <div class="modal" id="victory-modal"><div class="modal-box"><div class="modal-title" id="victory-title"></div><p id="victory-text"></p><button class="modal-btn btn-primary" onclick="goToMenu()">📋 Menú</button></div></div>
 
     <script>
         // ═══════════════ DATOS DE TEMAS Y FACCIONES ═══════════════
@@ -354,58 +234,58 @@
             ww2: {
                 factions: ['urss','nazis','italia','usa','japon','uk','francia','china','canada'],
                 data: {
-                    urss:{name:'URSS',flag:'🇷🇺',base9:[0,0],miniEmoji:'☭',leader:'Stalin',fullName:'Unión Soviética',lore:'El Oso de Acero.',stats:{atk:3,def:5,mov:2,reinf:4},pros:['Mejor defensa','Alta regeneración'],cons:['Movimiento lento'],bonuses:{baseDefBonus:5,reinforceBonus:2,riverPenalty:true}},
-                    nazis:{name:'Alemania',flag:'🇩🇪',base9:[0,8],miniEmoji:'✠',leader:'Hitler',fullName:'III Reich',lore:'Blitzkrieg.',stats:{atk:5,def:2,mov:4,reinf:3},pros:['Ataque máximo','Movimiento extra'],cons:['Defensa débil'],bonuses:{atkBonus:2,moveBonus:1,baseDefBonus:2}},
-                    italia:{name:'Italia',flag:'🇮🇹',base9:[8,0],miniEmoji:'⚡',leader:'Mussolini',fullName:'Reino de Italia',lore:'Maestro de ciudades.',stats:{atk:3,def:3,mov:3,reinf:6},pros:['Máximos refuerzos','Bonus ciudades'],cons:['Combate abierto débil'],bonuses:{cityAtkBonus:1,reinforceBonus:4,baseDefBonus:2}},
-                    usa:{name:'EE.UU.',flag:'🇺🇸',base9:[8,8],miniEmoji:'★',leader:'Truman',fullName:'Estados Unidos',lore:'Arsenal de la Democracia.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Equilibrado','Bonus remontada'],cons:['Base alejada'],bonuses:{balancedBonus:1,comebackBonus:true,baseDefBonus:3}},
-                    japon:{name:'Japón',flag:'🇯🇵',base9:[4,4],miniEmoji:'☀',leader:'Hirohito',fullName:'Imperio del Japón',lore:'Centro del tablero.',stats:{atk:4,def:2,mov:6,reinf:3},pros:['Mayor movilidad','Cruce libre'],cons:['Base expuesta'],bonuses:{moveBonus:3,riverFree:true,baseDefBonus:2}},
-                    uk:{name:'R. Unido',flag:'🇬🇧',base9:[0,4],miniEmoji:'👑',leader:'Churchill',fullName:'Reino Unido',lore:'Defensa naval.',stats:{atk:3,def:4,mov:3,reinf:4},pros:['Defensa sólida','Refuerzos navales'],cons:['Ataque moderado'],bonuses:{baseDefBonus:4,reinforceBonus:2,riverFree:true}},
-                    francia:{name:'Francia',flag:'🇫🇷',base9:[4,0],miniEmoji:'🗼',leader:'De Gaulle',fullName:'Francia Libre',lore:'La Resistencia.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Contraataque','Guerrillas'],cons:['Defensa media'],bonuses:{cityAtkBonus:2,counterBonus:1,baseDefBonus:3}},
-                    china:{name:'China',flag:'🇨🇳',base9:[8,4],miniEmoji:'🐉',leader:'Chiang',fullName:'República de China',lore:'El Dragón.',stats:{atk:2,def:3,mov:2,reinf:7},pros:['Refuerzos masivos'],cons:['Ataque bajo'],bonuses:{reinforceBonus:5,territoryBonus:1,baseDefBonus:3,riverPenalty:true}},
-                    canada:{name:'Canadá',flag:'🇨🇦',base9:[4,8],miniEmoji:'🍁',leader:'King',fullName:'Canadá',lore:'El Norte.',stats:{atk:3,def:4,mov:4,reinf:3},pros:['Cruza montañas'],cons:['Refuerzos bajos'],bonuses:{mountainFree:true,moveBonus:1,baseDefBonus:4}}
+                    urss:{name:'URSS',flag:'🇷🇺',base9:[0,0],miniEmoji:'☭',leader:'Stalin',fullName:'Unión Soviética',lore:'El Oso de Acero.',historicalFact:'Produjo 24.000 tanques en 1943.',stats:{atk:3,def:5,mov:2,reinf:4},pros:['Mejor defensa','Alta regeneración'],cons:['Movimiento lento'],bonuses:{baseDefBonus:5,reinforceBonus:2,riverPenalty:true}},
+                    nazis:{name:'Alemania',flag:'🇩🇪',base9:[0,8],miniEmoji:'✠',leader:'Hitler',fullName:'III Reich',lore:'Blitzkrieg.',historicalFact:'Conquistó Francia en 6 semanas.',stats:{atk:5,def:2,mov:4,reinf:3},pros:['Ataque máximo','Movimiento extra'],cons:['Defensa débil'],bonuses:{atkBonus:2,moveBonus:1,baseDefBonus:2}},
+                    italia:{name:'Italia',flag:'🇮🇹',base9:[8,0],miniEmoji:'⚡',leader:'Mussolini',fullName:'Reino de Italia',lore:'Maestro de ciudades.',historicalFact:'Tanques L3/35 de 3 toneladas.',stats:{atk:3,def:3,mov:3,reinf:6},pros:['Máximos refuerzos','Bonus ciudades'],cons:['Combate abierto débil'],bonuses:{cityAtkBonus:1,reinforceBonus:4,baseDefBonus:2}},
+                    usa:{name:'EE.UU.',flag:'🇺🇸',base9:[8,8],miniEmoji:'★',leader:'Truman',fullName:'Estados Unidos',lore:'Arsenal de la Democracia.',historicalFact:'Produjo 300.000 aviones.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Equilibrado','Bonus remontada'],cons:['Base alejada'],bonuses:{balancedBonus:1,comebackBonus:true,baseDefBonus:3}},
+                    japon:{name:'Japón',flag:'🇯🇵',base9:[4,4],miniEmoji:'☀',leader:'Hirohito',fullName:'Imperio del Japón',lore:'Centro del tablero.',historicalFact:'Atacó Pearl Harbor con 353 aviones.',stats:{atk:4,def:2,mov:6,reinf:3},pros:['Mayor movilidad','Cruce libre'],cons:['Base expuesta'],bonuses:{moveBonus:3,riverFree:true,baseDefBonus:2}},
+                    uk:{name:'R. Unido',flag:'🇬🇧',base9:[0,4],miniEmoji:'👑',leader:'Churchill',fullName:'Reino Unido',lore:'Defensa naval.',historicalFact:'1.500 pilotos en la Batalla de Inglaterra.',stats:{atk:3,def:4,mov:3,reinf:4},pros:['Defensa sólida','Refuerzos navales'],cons:['Ataque moderado'],bonuses:{baseDefBonus:4,reinforceBonus:2,riverFree:true}},
+                    francia:{name:'Francia',flag:'🇫🇷',base9:[4,0],miniEmoji:'🗼',leader:'De Gaulle',fullName:'Francia Libre',lore:'La Resistencia.',historicalFact:'Línea Maginot: 3.000 millones.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Contraataque','Guerrillas'],cons:['Defensa media'],bonuses:{cityAtkBonus:2,counterBonus:1,baseDefBonus:3}},
+                    china:{name:'China',flag:'🇨🇳',base9:[8,4],miniEmoji:'🐉',leader:'Chiang',fullName:'República de China',lore:'El Dragón.',historicalFact:'20 millones de bajas.',stats:{atk:2,def:3,mov:2,reinf:7},pros:['Refuerzos masivos'],cons:['Ataque bajo'],bonuses:{reinforceBonus:5,territoryBonus:1,baseDefBonus:3,riverPenalty:true}},
+                    canada:{name:'Canadá',flag:'🇨🇦',base9:[4,8],miniEmoji:'🍁',leader:'King',fullName:'Canadá',lore:'El Norte.',historicalFact:'Entrenó 130.000 pilotos.',stats:{atk:3,def:4,mov:4,reinf:3},pros:['Cruza montañas'],cons:['Refuerzos bajos'],bonuses:{mountainFree:true,moveBonus:1,baseDefBonus:4}}
                 }
             },
             ancient: {
                 factions: ['urss','nazis','italia','usa','japon','uk','francia','china','canada','sparta','athens','phoenicia'],
                 data: {
-                    urss:{name:'Grecia',flag:'🏺',base9:[0,0],miniEmoji:'⚡',leader:'Alejandro Magno',fullName:'Reino de Macedonia',lore:'Conquistó el imperio persa.',stats:{atk:3,def:5,mov:2,reinf:4},pros:['Mejor defensa'],cons:['Movimiento lento'],bonuses:{baseDefBonus:5,reinforceBonus:2,riverPenalty:true}},
-                    nazis:{name:'Roma',flag:'🏛️',base9:[0,8],miniEmoji:'🦅',leader:'Julio César',fullName:'República Romana',lore:'Legiones invencibles.',stats:{atk:5,def:2,mov:4,reinf:3},pros:['Ataque máximo'],cons:['Defensa débil'],bonuses:{atkBonus:2,moveBonus:1,baseDefBonus:2}},
-                    italia:{name:'Cartago',flag:'🐘',base9:[8,0],miniEmoji:'🐘',leader:'Aníbal',fullName:'República Cartaginesa',lore:'Cruzó los Alpes con elefantes.',stats:{atk:3,def:3,mov:3,reinf:6},pros:['Refuerzos masivos'],cons:['Combate débil'],bonuses:{cityAtkBonus:1,reinforceBonus:4,baseDefBonus:2}},
-                    usa:{name:'Egipto',flag:'🔱',base9:[8,8],miniEmoji:'💀',leader:'Ramsés II',fullName:'Nuevo Reino Egipcio',lore:'Faraón longevo.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Equilibrado'],cons:['Base alejada'],bonuses:{balancedBonus:1,comebackBonus:true,baseDefBonus:3}},
-                    japon:{name:'Persia',flag:'🔥',base9:[4,4],miniEmoji:'🔥',leader:'Ciro',fullName:'Imperio Persa',lore:'El mayor imperio de su época.',stats:{atk:4,def:2,mov:6,reinf:3},pros:['Mayor movilidad'],cons:['Base expuesta'],bonuses:{moveBonus:3,riverFree:true,baseDefBonus:2}},
-                    uk:{name:'Babilonia',flag:'🌙',base9:[0,4],miniEmoji:'⭐',leader:'Nabucodonosor',fullName:'Imperio Babilónico',lore:'Jardines Colgantes.',stats:{atk:3,def:4,mov:3,reinf:4},pros:['Defensa sólida'],cons:['Ataque moderado'],bonuses:{baseDefBonus:4,reinforceBonus:2,riverFree:true}},
-                    francia:{name:'Galia',flag:'🐗',base9:[4,0],miniEmoji:'🐗',leader:'Vercingétorix',fullName:'Confederación Gala',lore:'Unidos contra Roma.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Contraataque'],cons:['Defensa media'],bonuses:{cityAtkBonus:2,counterBonus:1,baseDefBonus:3}},
-                    china:{name:'China',flag:'🐉',base9:[8,4],miniEmoji:'🐉',leader:'Qin',fullName:'Dinastía Qin',lore:'Primer emperador.',stats:{atk:2,def:3,mov:2,reinf:7},pros:['Refuerzos masivos'],cons:['Ataque bajo'],bonuses:{reinforceBonus:5,territoryBonus:1,baseDefBonus:3,riverPenalty:true}},
-                    canada:{name:'Escitia',flag:'🐴',base9:[4,8],miniEmoji:'🐴',leader:'Atila',fullName:'Imperio Huno',lore:'El azote de Dios.',stats:{atk:3,def:4,mov:4,reinf:3},pros:['Cruza montañas'],cons:['Refuerzos bajos'],bonuses:{mountainFree:true,moveBonus:1,baseDefBonus:4}},
-                    sparta:{name:'Esparta',flag:'🛡️',base9:[2,2],miniEmoji:'⚔️',leader:'Leónidas',fullName:'Ciudad-Estado Espartana',lore:'Esto es Esparta.',stats:{atk:5,def:5,mov:2,reinf:2},pros:['Defensa legendaria','Ataque fuerte'],cons:['Refuerzos muy bajos'],bonuses:{baseDefBonus:6,moveBonus:0,reinforceBonus:-2}},
-                    athens:{name:'Atenas',flag:'🏺',base9:[6,6],miniEmoji:'🏛️',leader:'Pericles',fullName:'Liga de Delos',lore:'Cuna de la democracia.',stats:{atk:2,def:3,mov:5,reinf:5},pros:['Movilidad naval','Refuerzos decentes'],cons:['Ataque débil'],bonuses:{moveBonus:2,riverFree:true,baseDefBonus:3}},
-                    phoenicia:{name:'Fenicia',flag:'🚢',base9:[4,4],miniEmoji:'⚓',leader:'Hiram',fullName:'Ciudades Fenicias',lore:'Comerciantes del Mediterráneo.',stats:{atk:3,def:3,mov:4,reinf:4},pros:['Comercio','Movilidad'],cons:['Defensa media'],bonuses:{reinforceBonus:3,cityAtkBonus:1,baseDefBonus:3}}
+                    urss:{name:'Grecia',flag:'🏺',base9:[0,0],miniEmoji:'⚡',leader:'Alejandro Magno',fullName:'Reino de Macedonia',lore:'Conquistó el imperio persa.',historicalFact:'Sus conquistas cambiaron el mundo.',stats:{atk:3,def:5,mov:2,reinf:4},pros:['Mejor defensa'],cons:['Movimiento lento'],bonuses:{baseDefBonus:5,reinforceBonus:2,riverPenalty:true}},
+                    nazis:{name:'Roma',flag:'🏛️',base9:[0,8],miniEmoji:'🦅',leader:'Julio César',fullName:'República Romana',lore:'Legiones invencibles.',historicalFact:'Veni, vidi, vici.',stats:{atk:5,def:2,mov:4,reinf:3},pros:['Ataque máximo'],cons:['Defensa débil'],bonuses:{atkBonus:2,moveBonus:1,baseDefBonus:2}},
+                    italia:{name:'Cartago',flag:'🐘',base9:[8,0],miniEmoji:'🐘',leader:'Aníbal',fullName:'República Cartaginesa',lore:'Cruzó los Alpes con elefantes.',historicalFact:'Derrotó a Roma en Cannas.',stats:{atk:3,def:3,mov:3,reinf:6},pros:['Refuerzos masivos'],cons:['Combate débil'],bonuses:{cityAtkBonus:1,reinforceBonus:4,baseDefBonus:2}},
+                    usa:{name:'Egipto',flag:'🔱',base9:[8,8],miniEmoji:'💀',leader:'Ramsés II',fullName:'Nuevo Reino Egipcio',lore:'Faraón longevo.',historicalFact:'Gobernó 66 años.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Equilibrado'],cons:['Base alejada'],bonuses:{balancedBonus:1,comebackBonus:true,baseDefBonus:3}},
+                    japon:{name:'Persia',flag:'🔥',base9:[4,4],miniEmoji:'🔥',leader:'Ciro',fullName:'Imperio Persa',lore:'El mayor imperio de su época.',historicalFact:'Creó los Inmortales.',stats:{atk:4,def:2,mov:6,reinf:3},pros:['Mayor movilidad'],cons:['Base expuesta'],bonuses:{moveBonus:3,riverFree:true,baseDefBonus:2}},
+                    uk:{name:'Babilonia',flag:'🌙',base9:[0,4],miniEmoji:'⭐',leader:'Nabucodonosor',fullName:'Imperio Babilónico',lore:'Jardines Colgantes.',historicalFact:'Destruyó Jerusalén.',stats:{atk:3,def:4,mov:3,reinf:4},pros:['Defensa sólida'],cons:['Ataque moderado'],bonuses:{baseDefBonus:4,reinforceBonus:2,riverFree:true}},
+                    francia:{name:'Galia',flag:'🐗',base9:[4,0],miniEmoji:'🐗',leader:'Vercingétorix',fullName:'Confederación Gala',lore:'Unidos contra Roma.',historicalFact:'Derrotó a César en Gergovia.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Contraataque'],cons:['Defensa media'],bonuses:{cityAtkBonus:2,counterBonus:1,baseDefBonus:3}},
+                    china:{name:'China',flag:'🐉',base9:[8,4],miniEmoji:'🐉',leader:'Qin',fullName:'Dinastía Qin',lore:'Primer emperador.',historicalFact:'Construyó la Gran Muralla.',stats:{atk:2,def:3,mov:2,reinf:7},pros:['Refuerzos masivos'],cons:['Ataque bajo'],bonuses:{reinforceBonus:5,territoryBonus:1,baseDefBonus:3,riverPenalty:true}},
+                    canada:{name:'Escitia',flag:'🐴',base9:[4,8],miniEmoji:'🐴',leader:'Atila',fullName:'Imperio Huno',lore:'El azote de Dios.',historicalFact:'Aterrorizó Roma.',stats:{atk:3,def:4,mov:4,reinf:3},pros:['Cruza montañas'],cons:['Refuerzos bajos'],bonuses:{mountainFree:true,moveBonus:1,baseDefBonus:4}},
+                    sparta:{name:'Esparta',flag:'🛡️',base9:[2,2],miniEmoji:'⚔️',leader:'Leónidas',fullName:'Ciudad-Estado Espartana',lore:'Esto es Esparta.',historicalFact:'300 guerreros en las Termópilas.',stats:{atk:5,def:5,mov:2,reinf:2},pros:['Defensa legendaria','Ataque fuerte'],cons:['Refuerzos muy bajos'],bonuses:{baseDefBonus:6,moveBonus:0,reinforceBonus:-2}},
+                    athens:{name:'Atenas',flag:'🏺',base9:[6,6],miniEmoji:'🏛️',leader:'Pericles',fullName:'Liga de Delos',lore:'Cuna de la democracia.',historicalFact:'Flota de 300 trirremes.',stats:{atk:2,def:3,mov:5,reinf:5},pros:['Movilidad naval','Refuerzos decentes'],cons:['Ataque débil'],bonuses:{moveBonus:2,riverFree:true,baseDefBonus:3}},
+                    phoenicia:{name:'Fenicia',flag:'🚢',base9:[4,4],miniEmoji:'⚓',leader:'Hiram',fullName:'Ciudades Fenicias',lore:'Comerciantes del Mediterráneo.',historicalFact:'Inventaron el alfabeto.',stats:{atk:3,def:3,mov:4,reinf:4},pros:['Comercio','Movilidad'],cons:['Defensa media'],bonuses:{reinforceBonus:3,cityAtkBonus:1,baseDefBonus:3}}
                 }
             },
             gaming: {
                 factions: ['urss','nazis','italia','usa','japon','uk','francia','china','canada','capcom','square','ea'],
                 data: {
-                    urss:{name:'Nintendo',flag:'🍄',base9:[0,0],miniEmoji:'⭐',leader:'Miyamoto',fullName:'Nintendo Co.',lore:'Salvó los videojuegos.',stats:{atk:3,def:5,mov:2,reinf:4},pros:['Defensa creativa'],cons:['Movimiento conservador'],bonuses:{baseDefBonus:5,reinforceBonus:2,riverPenalty:true}},
-                    nazis:{name:'Sega',flag:'🦔',base9:[0,8],miniEmoji:'💨',leader:'Sonic',fullName:'Sega Enterprises',lore:'Velocidad azul.',stats:{atk:5,def:2,mov:4,reinf:3},pros:['Velocidad máxima'],cons:['Defensa frágil'],bonuses:{atkBonus:2,moveBonus:1,baseDefBonus:2}},
-                    italia:{name:'PlayStation',flag:'🎮',base9:[8,0],miniEmoji:'🔵',leader:'Kratos',fullName:'Sony Interactive',lore:'El Dios de la Guerra.',stats:{atk:4,def:3,mov:3,reinf:5},pros:['Exclusivos potentes'],cons:['Costes elevados'],bonuses:{cityAtkBonus:1,reinforceBonus:3,baseDefBonus:2}},
-                    usa:{name:'Xbox',flag:'❎',base9:[8,8],miniEmoji:'❎',leader:'Master Chief',fullName:'Microsoft Gaming',lore:'El Jefe Maestro.',stats:{atk:4,def:4,mov:3,reinf:4},pros:['Equilibrado'],cons:['Base lejana'],bonuses:{balancedBonus:1,comebackBonus:true,baseDefBonus:3}},
-                    japon:{name:'Atari',flag:'🕹️',base9:[4,4],miniEmoji:'👽',leader:'E.T.',fullName:'Atari Corporation',lore:'Pioneros del arcade.',stats:{atk:2,def:4,mov:5,reinf:4},pros:['Movilidad'],cons:['Ataque débil'],bonuses:{moveBonus:2,riverFree:true,baseDefBonus:3}},
-                    uk:{name:'Valve',flag:'🔧',base9:[0,4],miniEmoji:'🛠️',leader:'Gabe Newell',fullName:'Valve Corporation',lore:'Steam y Half-Life.',stats:{atk:3,def:5,mov:3,reinf:3},pros:['Defensa sólida'],cons:['Lento en lanzar'],bonuses:{baseDefBonus:5,reinforceBonus:1,riverFree:true}},
-                    francia:{name:'Ubisoft',flag:'🗼',base9:[4,0],miniEmoji:'🏰',leader:'Ezio',fullName:'Ubisoft Entertainment',lore:'Asesinos y templarios.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Contraataque'],cons:['Defensa media'],bonuses:{cityAtkBonus:2,counterBonus:1,baseDefBonus:3}},
-                    china:{name:'Tencent',flag:'🐧',base9:[8,4],miniEmoji:'💰',leader:'Ma Huateng',fullName:'Tencent Holdings',lore:'Gigante chino.',stats:{atk:2,def:3,mov:2,reinf:7},pros:['Refuerzos masivos'],cons:['Ataque bajo'],bonuses:{reinforceBonus:5,territoryBonus:1,baseDefBonus:3,riverPenalty:true}},
-                    canada:{name:'BioWare',flag:'🐉',base9:[4,8],miniEmoji:'🐲',leader:'Shepard',fullName:'BioWare Corp.',lore:'Mass Effect y Dragon Age.',stats:{atk:3,def:4,mov:4,reinf:3},pros:['Cruza montañas'],cons:['Refuerzos bajos'],bonuses:{mountainFree:true,moveBonus:1,baseDefBonus:4}},
-                    capcom:{name:'Capcom',flag:'🦇',base9:[2,6],miniEmoji:'🥊',leader:'Mega Man',fullName:'Capcom Co.',lore:'Cazadores de monstruos.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Luchadores fuertes'],cons:['Defensa media'],bonuses:{atkBonus:1,cityAtkBonus:1,baseDefBonus:3}},
-                    square:{name:'Square Enix',flag:'🗡️',base9:[6,2],miniEmoji:'⚔️',leader:'Cloud',fullName:'Square Enix Holdings',lore:'Fantasía y magia.',stats:{atk:3,def:4,mov:3,reinf:5},pros:['Magia defensiva','Refuerzos'],cons:['Movimiento normal'],bonuses:{reinforceBonus:3,baseDefBonus:4}},
-                    ea:{name:'Electronic Arts',flag:'💲',base9:[4,4],miniEmoji:'💸',leader:'FIFA',fullName:'EA Sports',lore:'Está en el juego.',stats:{atk:2,def:2,mov:2,reinf:9},pros:['Refuerzos masivos ilimitados'],cons:['Muy débil en combate'],bonuses:{reinforceBonus:7,baseDefBonus:1}}
+                    urss:{name:'Nintendo',flag:'🍄',base9:[0,0],miniEmoji:'⭐',leader:'Miyamoto',fullName:'Nintendo Co.',lore:'Salvó los videojuegos.',historicalFact:'Mario es el más famoso.',stats:{atk:3,def:5,mov:2,reinf:4},pros:['Defensa creativa'],cons:['Movimiento conservador'],bonuses:{baseDefBonus:5,reinforceBonus:2,riverPenalty:true}},
+                    nazis:{name:'Sega',flag:'🦔',base9:[0,8],miniEmoji:'💨',leader:'Sonic',fullName:'Sega Enterprises',lore:'Velocidad azul.',historicalFact:'Creó la Genesis.',stats:{atk:5,def:2,mov:4,reinf:3},pros:['Velocidad máxima'],cons:['Defensa frágil'],bonuses:{atkBonus:2,moveBonus:1,baseDefBonus:2}},
+                    italia:{name:'PlayStation',flag:'🎮',base9:[8,0],miniEmoji:'🔵',leader:'Kratos',fullName:'Sony Interactive',lore:'El Dios de la Guerra.',historicalFact:'Más de 500 millones de consolas.',stats:{atk:4,def:3,mov:3,reinf:5},pros:['Exclusivos potentes'],cons:['Costes elevados'],bonuses:{cityAtkBonus:1,reinforceBonus:3,baseDefBonus:2}},
+                    usa:{name:'Xbox',flag:'❌',base9:[8,8],miniEmoji:'💚',leader:'Master Chief',fullName:'Microsoft Gaming',lore:'El Jefe Maestro.',historicalFact:'Revolucionó el online.',stats:{atk:4,def:4,mov:3,reinf:4},pros:['Equilibrado'],cons:['Base lejana'],bonuses:{balancedBonus:1,comebackBonus:true,baseDefBonus:3}},
+                    japon:{name:'Atari',flag:'🕹️',base9:[4,4],miniEmoji:'👽',leader:'E.T.',fullName:'Atari Corporation',lore:'Pioneros del arcade.',historicalFact:'Crearon Pong.',stats:{atk:2,def:4,mov:5,reinf:4},pros:['Movilidad'],cons:['Ataque débil'],bonuses:{moveBonus:2,riverFree:true,baseDefBonus:3}},
+                    uk:{name:'Valve',flag:'🔧',base9:[0,4],miniEmoji:'🛠️',leader:'Gabe Newell',fullName:'Valve Corporation',lore:'Steam y Half-Life.',historicalFact:'Steam domina el PC.',stats:{atk:3,def:5,mov:3,reinf:3},pros:['Defensa sólida'],cons:['Lento en lanzar'],bonuses:{baseDefBonus:5,reinforceBonus:1,riverFree:true}},
+                    francia:{name:'Ubisoft',flag:'🗼',base9:[4,0],miniEmoji:'🏰',leader:'Ezio',fullName:'Ubisoft Entertainment',lore:'Asesinos y templarios.',historicalFact:'Assassin\'s Creed.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Contraataque'],cons:['Defensa media'],bonuses:{cityAtkBonus:2,counterBonus:1,baseDefBonus:3}},
+                    china:{name:'Tencent',flag:'🐧',base9:[8,4],miniEmoji:'💰',leader:'Ma Huateng',fullName:'Tencent Holdings',lore:'Gigante chino.',historicalFact:'Mayor empresa de videojuegos.',stats:{atk:2,def:3,mov:2,reinf:7},pros:['Refuerzos masivos'],cons:['Ataque bajo'],bonuses:{reinforceBonus:5,territoryBonus:1,baseDefBonus:3,riverPenalty:true}},
+                    canada:{name:'BioWare',flag:'🐉',base9:[4,8],miniEmoji:'🐲',leader:'Shepard',fullName:'BioWare Corp.',lore:'Mass Effect y Dragon Age.',historicalFact:'RPGs inolvidables.',stats:{atk:3,def:4,mov:4,reinf:3},pros:['Cruza montañas'],cons:['Refuerzos bajos'],bonuses:{mountainFree:true,moveBonus:1,baseDefBonus:4}},
+                    capcom:{name:'Capcom',flag:'🦇',base9:[2,6],miniEmoji:'🧛',leader:'Mega Man',fullName:'Capcom Co.',lore:'Cazadores de monstruos.',historicalFact:'Street Fighter II revolucionó los fighting games.',stats:{atk:4,def:3,mov:3,reinf:4},pros:['Luchadores fuertes'],cons:['Defensa media'],bonuses:{atkBonus:1,cityAtkBonus:1,baseDefBonus:3}},
+                    square:{name:'Square Enix',flag:'🗡️',base9:[6,2],miniEmoji:'⚔️',leader:'Cloud',fullName:'Square Enix Holdings',lore:'Fantasía y magia.',historicalFact:'Final Fantasy VII cambió los RPGs.',stats:{atk:3,def:4,mov:3,reinf:5},pros:['Magia defensiva','Refuerzos'],cons:['Movimiento normal'],bonuses:{reinforceBonus:3,baseDefBonus:4}},
+                    ea:{name:'Electronic Arts',flag:'💲',base9:[4,4],miniEmoji:'💸',leader:'FIFA',fullName:'EA Sports',lore:'Está en el juego.',historicalFact:'Loot boxes y microtransacciones.',stats:{atk:2,def:2,mov:2,reinf:9},pros:['Refuerzos masivos ilimitados'],cons:['Muy débil en combate'],bonuses:{reinforceBonus:7,baseDefBonus:1}}
                 }
             },
             movies: {
                 factions: ['rebels','empire','jedi','sith','avengers','thanos','hogwarts','decepticons','wakanda'],
                 data: {
-                    rebels:{name:'Rebeldes',flag:'⭐',base9:[0,0],miniEmoji:'🚀',leader:'Luke',fullName:'Alianza Rebelde',lore:'Esperanza en la galaxia.',stats:{atk:3,def:3,mov:4,reinf:4},pros:['Movilidad','Remontada'],cons:['Defensa media'],bonuses:{moveBonus:1,comebackBonus:true}},
-                    empire:{name:'Imperio',flag:'🌑',base9:[0,8],miniEmoji:'🗡️',leader:'Vader',fullName:'Imperio Galáctico',lore:'El poder de la Fuerza.',stats:{atk:5,def:4,mov:2,reinf:3},pros:['Ataque máximo','Defensa alta'],cons:['Movimiento lento'],bonuses:{atkBonus:2,baseDefBonus:3}},
-                    jedi:{name:'Jedi',flag:'💚',base9:[8,0],miniEmoji:'🌌',leader:'Yoda',fullName:'Orden Jedi',lore:'Guardianes de la paz.',stats:{atk:4,def:5,mov:3,reinf:2},pros:['Defensa legendaria','Contraataque'],cons:['Refuerzos bajos'],bonuses:{baseDefBonus:5,counterBonus:1}},
-                    sith:{name:'Sith',flag:'❤️',base9:[8,8],miniEmoji:'⚡',leader:'Sidious',fullName:'Orden Sith',lore:'El lado oscuro.',stats:{atk:6,def:1,mov:3,reinf:3},pros:['Ataque devastador'],cons:['Defensa frágil'],bonuses:{atkBonus:3,moveBonus:1}},
+                    rebels:{name:'Rebeldes',flag:'⭐',base9:[0,0],miniEmoji:'🚀',leader:'Luke',fullName:'Alianza Rebelde',lore:'Esperanza en la galaxia.',historicalFact:'Destruyeron la Estrella de la Muerte.',stats:{atk:3,def:3,mov:4,reinf:4},pros:['Movilidad','Remontada'],cons:['Defensa media'],bonuses:{moveBonus:1,comebackBonus:true}},
+                    empire:{name:'Imperio',flag:'🌑',base9:[0,8],miniEmoji:'🗡️',leader:'Vader',fullName:'Imperio Galáctico',lore:'El poder de la Fuerza.',historicalFact:'Construyeron dos Estrellas de la Muerte.',stats:{atk:5,def:4,mov:2,reinf:3},pros:['Ataque máximo','Defensa alta'],cons:['Movimiento lento'],bonuses:{atkBonus:2,baseDefBonus:3}},
+                    jedi:{name:'Jedi',flag:'💚',base9:[8,0],miniEmoji:'🌌',leader:'Yoda',fullName:'Orden Jedi',lore:'Guardianes de la paz.',historicalFact:'Entrenaron a Skywalker.',stats:{atk:4,def:5,mov:3,reinf:2},pros:['Defensa legendaria','Contraataque'],cons:['Refuerzos bajos'],bonuses:{baseDefBonus:5,counterBonus:1}},
+                    sith:{name:'Sith',flag:'❤️',base9:[8,8],miniEmoji:'⚡',leader:'Sidious',fullName:'Orden Sith',lore:'El lado oscuro.',historicalFact:'Siempre hay dos.',stats:{atk:6,def:1,mov:3,reinf:3},pros:['Ataque devastador'],cons:['Defensa frágil'],bonuses:{atkBonus:3,moveBonus:1}},
                     avengers:{name:'Vengadores',flag:'🅰️',base9:[4,4],miniEmoji:'🛡️',leader:'Iron Man',fullName:'Los Vengadores',lore:'Los héroes más poderosos de la Tierra.',stats:{atk:4,def:4,mov:3,reinf:4},pros:['Equilibrado'],cons:['Ninguno'],bonuses:{balancedBonus:1}},
                     thanos:{name:'Thanos',flag:'💎',base9:[4,0],miniEmoji:'👁️',leader:'Thanos',fullName:'El Titán Loco',lore:'El equilibrio perfecto.',stats:{atk:6,def:3,mov:2,reinf:3},pros:['Ataque masivo'],cons:['Lento'],bonuses:{atkBonus:3,baseDefBonus:2}},
                     hogwarts:{name:'Hogwarts',flag:'⚡',base9:[4,8],miniEmoji:'🧙',leader:'Dumbledore',fullName:'Colegio Hogwarts',lore:'Magia y hechicería.',stats:{atk:3,def:5,mov:3,reinf:4},pros:['Defensa mágica','Cruce libre de ríos'],cons:['Ataque moderado'],bonuses:{baseDefBonus:5,riverFree:true}},
@@ -416,15 +296,15 @@
             anime: {
                 factions: ['konoha','akatsuki','marine','pirates','hunters','chimera','saiyans','namek','guts'],
                 data: {
-                    konoha:{name:'Konoha',flag:'🍃',base9:[0,0],miniEmoji:'🌀',leader:'Naruto',fullName:'Aldea Oculta de la Hoja',lore:'El camino del ninja.',stats:{atk:4,def:4,mov:3,reinf:4},pros:['Refuerzos','Contraataque'],cons:['Movimiento normal'],bonuses:{reinforceBonus:2,counterBonus:1}},
-                    akatsuki:{name:'Akatsuki',flag:'☁️',base9:[0,8],miniEmoji:'🌧️',leader:'Pain',fullName:'Organización Akatsuki',lore:'Paz mediante el dolor.',stats:{atk:6,def:2,mov:3,reinf:2},pros:['Ataque extremo'],cons:['Defensa débil'],bonuses:{atkBonus:3,moveBonus:1}},
-                    marine:{name:'Marina',flag:'⚓',base9:[8,0],miniEmoji:'🌊',leader:'Akainu',fullName:'Cuartel General de la Marina',lore:'Justicia absoluta.',stats:{atk:5,def:4,mov:2,reinf:3},pros:['Defensa alta','Ataque fuerte'],cons:['Movilidad baja'],bonuses:{baseDefBonus:4,atkBonus:2}},
-                    pirates:{name:'Piratas',flag:'☠️',base9:[8,8],miniEmoji:'🏴‍☠️',leader:'Luffy',fullName:'Sombrero de Paja',lore:'El rey de los piratas.',stats:{atk:5,def:2,mov:5,reinf:4},pros:['Máxima movilidad','Cruce libre'],cons:['Defensa frágil'],bonuses:{moveBonus:3,riverFree:true}},
-                    hunters:{name:'Cazadores',flag:'🎣',base9:[4,4],miniEmoji:'🃏',leader:'Gon',fullName:'Asociación de Hunters',lore:'Aventureros incansables.',stats:{atk:3,def:3,mov:4,reinf:5},pros:['Refuerzos altos'],cons:['Ataque medio'],bonuses:{reinforceBonus:3}},
-                    chimera:{name:'Hormigas',flag:'🐜',base9:[4,0],miniEmoji:'👑',leader:'Meruem',fullName:'Hormigas Quimera',lore:'Evolución imparable.',stats:{atk:7,def:2,mov:3,reinf:2},pros:['Ataque brutal'],cons:['Defensa mínima'],bonuses:{atkBonus:4}},
-                    saiyans:{name:'Saiyans',flag:'💪',base9:[2,2],miniEmoji:'🐵',leader:'Goku',fullName:'Guerreros Saiyan',lore:'Superación constante.',stats:{atk:5,def:3,mov:4,reinf:2},pros:['Remontada','Ataque creciente'],cons:['Refuerzos bajos'],bonuses:{atkBonus:2,comebackBonus:true}},
-                    namek:{name:'Namek',flag:'🟢',base9:[6,6],miniEmoji:'🐉',leader:'Piccolo',fullName:'Planeta Namek',lore:'Sabiduría y poder.',stats:{atk:3,def:5,mov:3,reinf:4},pros:['Defensa sólida','Refuerzos'],cons:['Ataque moderado'],bonuses:{baseDefBonus:5,reinforceBonus:2}},
-                    guts:{name:'Berserk',flag:'⚔️',base9:[4,8],miniEmoji:'💀',leader:'Guts',fullName:'Banda del Halcón',lore:'En este mundo, la única cosa verdaderamente importante es la fuerza.',stats:{atk:6,def:3,mov:4,reinf:2},pros:['Ataque salvaje','Cruza montañas'],cons:['Refuerzos escasos'],bonuses:{atkBonus:3,mountainFree:true}}
+                    konoha:{name:'Konoha',flag:'🍃',base9:[0,0],miniEmoji:'🌀',leader:'Naruto',fullName:'Aldea Oculta de la Hoja',lore:'El camino del ninja.',historicalFact:'Naruto Uzumaki, el séptimo Hokage.',stats:{atk:4,def:4,mov:3,reinf:4},pros:['Refuerzos','Contraataque'],cons:['Movimiento normal'],bonuses:{reinforceBonus:2,counterBonus:1}},
+                    akatsuki:{name:'Akatsuki',flag:'☁️',base9:[0,8],miniEmoji:'🌧️',leader:'Pain',fullName:'Organización Akatsuki',lore:'Paz mediante el dolor.',historicalFact:'Pain destruyó la Aldea de la Hoja.',stats:{atk:6,def:2,mov:3,reinf:2},pros:['Ataque extremo'],cons:['Defensa débil'],bonuses:{atkBonus:3,moveBonus:1}},
+                    marine:{name:'Marina',flag:'⚓',base9:[8,0],miniEmoji:'🌊',leader:'Akainu',fullName:'Cuartel General de la Marina',lore:'Justicia absoluta.',historicalFact:'Akainu mató a Ace.',stats:{atk:5,def:4,mov:2,reinf:3},pros:['Defensa alta','Ataque fuerte'],cons:['Movilidad baja'],bonuses:{baseDefBonus:4,atkBonus:2}},
+                    pirates:{name:'Piratas',flag:'☠️',base9:[8,8],miniEmoji:'🏴‍☠️',leader:'Luffy',fullName:'Sombrero de Paja',lore:'El rey de los piratas.',historicalFact:'Luffy venció a Kaido.',stats:{atk:5,def:2,mov:5,reinf:4},pros:['Máxima movilidad','Cruce libre'],cons:['Defensa frágil'],bonuses:{moveBonus:3,riverFree:true}},
+                    hunters:{name:'Cazadores',flag:'🎣',base9:[4,4],miniEmoji:'🃏',leader:'Gon',fullName:'Asociación de Hunters',lore:'Aventureros incansables.',historicalFact:'Gon sacrificó todo por su venganza.',stats:{atk:3,def:3,mov:4,reinf:5},pros:['Refuerzos altos'],cons:['Ataque medio'],bonuses:{reinforceBonus:3}},
+                    chimera:{name:'Hormigas',flag:'🐜',base9:[4,0],miniEmoji:'👑',leader:'Meruem',fullName:'Hormigas Quimera',lore:'Evolución imparable.',historicalFact:'Meruem fue el ser más poderoso.',stats:{atk:7,def:2,mov:3,reinf:2},pros:['Ataque brutal'],cons:['Defensa mínima'],bonuses:{atkBonus:4}},
+                    saiyans:{name:'Saiyans',flag:'💪',base9:[2,2],miniEmoji:'🐵',leader:'Goku',fullName:'Guerreros Saiyan',lore:'Superación constante.',historicalFact:'Goku alcanzó el Ultra Instinto.',stats:{atk:5,def:3,mov:4,reinf:2},pros:['Remontada','Ataque creciente'],cons:['Refuerzos bajos'],bonuses:{atkBonus:2,comebackBonus:true}},
+                    namek:{name:'Namek',flag:'🟢',base9:[6,6],miniEmoji:'🐉',leader:'Piccolo',fullName:'Planeta Namek',lore:'Sabiduría y poder.',historicalFact:'Piccolo se fusionó con Kami.',stats:{atk:3,def:5,mov:3,reinf:4},pros:['Defensa sólida','Refuerzos'],cons:['Ataque moderado'],bonuses:{baseDefBonus:5,reinforceBonus:2}},
+                    guts:{name:'Berserk',flag:'⚔️',base9:[4,8],miniEmoji:'💀',leader:'Guts',fullName:'Banda del Halcón',lore:'Venganza imparable.',historicalFact:'Guts sobrevivió al Eclipse.',stats:{atk:6,def:3,mov:4,reinf:2},pros:['Ataque salvaje','Cruza montañas'],cons:['Refuerzos escasos'],bonuses:{atkBonus:3,mountainFree:true}}
                 }
             },
             comics: {
@@ -475,13 +355,10 @@
         const ACHIEVEMENTS = [
             { id:'stalin_hammer', name:'El Martillo de Stalin', desc:'Gana con la URSS (WWII).', check: gs => gs.winner==='urss' && gameTheme==='ww2' },
             { id:'blitzkrieg', name:'Blitzkrieg', desc:'Conquista 3 territorios en un turno con Alemania (WWII).', check: gs => gs.stats.lastTurnConquests>=3 && gs.currentPlayer==='nazis' && gameTheme==='ww2' },
-            { id:'italian_empire', name:'Imperio Italiano', desc:'Controla 8 ciudades con Italia (WWII).', check: gs => (gs.stats.cityCount?.['italia']||0)>=8 },
-            { id:'usa_arsenal', name:'Arsenal de la Democracia', desc:'Ten 20 unidades con EE.UU. (WWII).', check: gs => (gs.stats.totalUnits?.['usa']||0)>=20 },
             { id:'spartan_stand', name:'Esto es Esparta', desc:'Defiende con éxito tu base con Esparta.', check: gs => gs.stats.defendedBase?.includes('sparta') },
-            { id:'alexander_conquest', name:'Conquistador', desc:'Gana con Macedonia (Grecia).', check: gs => gs.winner==='urss' && gameTheme==='ancient' },
             { id:'mario_win', name:'¡Mario Gana!', desc:'Gana con Nintendo (Videojuegos).', check: gs => gs.winner==='urss' && gameTheme==='gaming' },
-            { id:'sonic_speed', name:'Velocidad Sónica', desc:'Mueve 4 casillas con Sega (Videojuegos).', check: gs => gs.stats.maxMoveDistance>=4 && gs.currentPlayer==='nazis' && gameTheme==='gaming' },
             { id:'force_awaken', name:'El Despertar de la Fuerza', desc:'Gana con los Rebeldes (Star Wars).', check: gs => gs.winner==='rebels' },
+            { id:'hokage_win', name:'Séptimo Hokage', desc:'Gana con Konoha (Anime).', check: gs => gs.winner==='konoha' },
             { id:'avengers_assemble', name:'Avengers Unidos', desc:'Gana con los Vengadores (Cómics).', check: gs => gs.winner==='avengers_c' },
             { id:'ring_bearer', name:'Portador del Anillo', desc:'Gana con la Comunidad del Anillo.', check: gs => gs.winner==='fellowship' },
             { id:'crusader', name:'Cruzado', desc:'Gana las Cruzadas con el Cristianismo.', check: gs => gs.winner==='christianity' },
@@ -606,7 +483,6 @@
             return [hash % (size-1), (hash * 7) % (size-1)];
         }
 
-        // ═══════════════ GENERACIÓN DE MAPAS (corregido: incluido) ═══════════════
         function generateMap(size, type, preset, activeFactionsOverride) {
             if (preset) return JSON.parse(JSON.stringify(preset));
             if (window._customMapToUse) { const cm = window._customMapToUse; window._customMapToUse = null; return cm; }
@@ -653,7 +529,6 @@
             return map;
         }
 
-        // Renderizado y lógica de juego
         function renderMap() {
             const g = document.getElementById('hex-grid'); g.innerHTML = '';
             for (let r = 0; r < gameState.mapSize; r++) {
@@ -834,15 +709,58 @@
             const dice = gameState.diceValue + (getThemeData()[p].bonuses.moveBonus || 0);
             const my = []; for (let r = 0; r < gameState.mapSize; r++) for (let c = 0; c < gameState.mapSize; c++) { if (gameState.map[r][c].owner === p && gameState.map[r][c].units > 0) my.push({r, c}); }
             if (!my.length) { endTurn(); return; }
-            const s = my[Math.floor(Math.random() * my.length)];
-            const reach = getReachable(s.r, s.c, dice, p);
-            if (reach.length > 0) {
-                const t = reach[Math.floor(Math.random() * reach.length)];
-                const tc = gameState.map[t.row][t.col];
-                if (tc.owner && tc.owner !== p) {
-                    startCombat(s.r, s.c, t.row, t.col, true);
-                    showNotification(`⚔️ ${getThemeData()[p].name} ataca a ${getThemeData()[tc.owner].name}`, 1500);
-                } else { tc.owner = p; tc.units = 1; gameState.map[s.r][s.c].units--; }
+
+            // En modo imposible: buscar bases enemigas para atacar
+            let target = null;
+            if (aiDifficulty === 'impossible') {
+                // Priorizar atacar bases enemigas
+                for (const s of my) {
+                    const reach = getReachable(s.r, s.c, dice, p);
+                    for (const t of reach) {
+                        const tc = gameState.map[t.row][t.col];
+                        if (tc.type === 'base' && tc.owner !== p && tc.owner) {
+                            target = { from: s, to: t, cell: tc };
+                            break;
+                        }
+                    }
+                    if (target) break;
+                }
+            }
+
+            // Si no se encontró base enemiga o no es modo imposible, ataque normal
+            if (!target) {
+                const s = my[Math.floor(Math.random() * my.length)];
+                const reach = getReachable(s.r, s.c, dice, p);
+                if (reach.length > 0) {
+                    // En modo imposible, priorizar atacar cualquier enemigo
+                    if (aiDifficulty === 'impossible') {
+                        const enemies = reach.filter(t => gameState.map[t.row][t.col].owner && gameState.map[t.row][t.col].owner !== p);
+                        if (enemies.length > 0) {
+                            const t = enemies[Math.floor(Math.random() * enemies.length)];
+                            target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                        } else {
+                            const t = reach[Math.floor(Math.random() * reach.length)];
+                            target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                        }
+                    } else {
+                        const t = reach[Math.floor(Math.random() * reach.length)];
+                        target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                    }
+                }
+            }
+
+            if (target) {
+                const { from, to, cell } = target;
+                if (cell.owner && cell.owner !== p) {
+                    startCombat(from.r, from.c, to.row, to.col, true);
+                    showNotification(`⚔️ ${getThemeData()[p].name} ataca a ${getThemeData()[cell.owner].name}`, 1500);
+                } else if (!cell.owner) {
+                    cell.owner = p; cell.units = 1;
+                    gameState.map[from.r][from.c].units--;
+                    if (gameState.map[from.r][from.c].units <= 0 && gameState.map[from.r][from.c].type !== 'base') {
+                        gameState.map[from.r][from.c].owner = null;
+                    }
+                }
             }
             if (!checkVictory()) endTurn();
         }
@@ -928,6 +846,7 @@
             }).join('');
         }
 
+        // ══════════ ESCENARIOS ══════════
         function startScenario(scenario) {
             let map, human, active, size, theme;
             if (scenario === 'stalingrad') { theme='ww2'; map=generateScenarioMap('stalingrad'); human=['urss']; active=['urss','nazis']; size=7; }
@@ -937,6 +856,7 @@
             else if (scenario === 'cannas') { theme='ancient'; map=generateScenarioMap('cannas'); human=['nazis']; active=['nazis','italia']; size=9; }
             else if (scenario === 'consolewar') { theme='gaming'; map=generateScenarioMap('consolewar'); human=['urss']; active=['urss','italia','nazis']; size=9; }
             else if (scenario === 'starwars') { theme='movies'; map=generateScenarioMap('starwars'); human=['rebels']; active=['rebels','empire','jedi','sith']; size=9; }
+            else if (scenario === 'leafbattle') { theme='anime'; map=generateScenarioMap('leafbattle'); human=['konoha']; active=['konoha','akatsuki']; size=7; }
             else if (scenario === 'middleearth') { theme='literature'; map=generateScenarioMap('middleearth'); human=['fellowship']; active=['fellowship','mordor']; size=11; }
             else if (scenario === 'crusades') { theme='religion'; map=generateScenarioMap('crusades'); human=['christianity']; active=['christianity','islam','judaism']; size=9; }
             else return;
@@ -954,22 +874,87 @@
             if (type==='cannas') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'nazis',units:6};m[8][4]={type:'base',owner:'italia',units:8};return m;}
             if (type==='consolewar') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'city',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'urss',units:5};m[8][4]={type:'base',owner:'italia',units:5};m[4][0]={type:'base',owner:'nazis',units:5};return m;}
             if (type==='starwars') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'rebels',units:5};m[8][4]={type:'base',owner:'empire',units:7};m[4][0]={type:'base',owner:'jedi',units:3};m[4][8]={type:'base',owner:'sith',units:6};return m;}
+            if (type==='leafbattle') { const s=7,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[3][0]={type:'base',owner:'konoha',units:6};m[3][6]={type:'base',owner:'akatsuki',units:8};return m;}
             if (type==='middleearth') { const s=11,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[5][0]={type:'base',owner:'fellowship',units:5};m[5][10]={type:'base',owner:'mordor',units:10};return m;}
             if (type==='crusades') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[4][0]={type:'base',owner:'christianity',units:6};m[4][8]={type:'base',owner:'islam',units:6};m[0][4]={type:'base',owner:'judaism',units:4};return m;}
             return [];
         }
 
-        function startGame() { if (gameMode==='pvp' && Object.values(slotSelections).filter(v=>v).length!==selectedHumanCount) { alert('Elige país para cada jugador'); return; } initGame(); }
+        function startGame() {
+            if (gameMode==='pvp' && Object.values(slotSelections).filter(v=>v).length!==selectedHumanCount) {
+                alert('Elige país para cada jugador');
+                return;
+            }
+            initGame();
+        }
         function initGame() {
             const size = selectedMapSize; let human=[], all=[];
-            if (gameMode==='ai') { human=[selectedIACountry]; all=[selectedIACountry]; const pool = getAllFactions().filter(p=>p!==selectedIACountry).sort(()=>Math.random()-0.5); for (let i=0;i<selectedIACount&&i<pool.length;i++) all.push(pool[i]); }
-            else { human=Object.values(slotSelections).filter(v=>v); all=[...human]; if (mapType!=='pvp_balanced') { const pool = getAllFactions().filter(p=>!all.includes(p)).sort(()=>Math.random()-0.5); for (let i=0;i<selectedPvPAICount&&i<pool.length;i++) all.push(pool[i]); } }
-            gameState = { map: generateMap(size, mapType, null, all), activePlayers: all, humanPlayers: human, currentPlayer:0, diceValue:0, selectedHex:null, phase:'roll', eliminated:[], turn:1, scores:{}, pendingCombat:null, mapSize:size, stats:{lastTurnConquests:0,totalUnits:{},defendedBase:[]}, tutorialMode:false };
-            all.forEach(p=>gameState.scores[p]=0);
-            document.getElementById('menu-modal').classList.remove('show'); renderMap();
+            if (gameMode==='ai') {
+                human=[selectedIACountry];
+                all=[selectedIACountry];
+                const pool = getAllFactions().filter(p=>p!==selectedIACountry).sort(()=>Math.random()-0.5);
+                for (let i=0;i<selectedIACount&&i<pool.length;i++) all.push(pool[i]);
+            } else {
+                human=Object.values(slotSelections).filter(v=>v);
+                all=[...human];
+                if (mapType!=='pvp_balanced') {
+                    const pool = getAllFactions().filter(p=>!all.includes(p)).sort(()=>Math.random()-0.5);
+                    for (let i=0;i<selectedPvPAICount&&i<pool.length;i++) all.push(pool[i]);
+                }
+            }
+
+            // ══════════ MODO BEBÉ: auto-victoria ══════════
+            if (aiDifficulty === 'baby') {
+                const humanPlayer = human[0];
+                // Generar un mapa pequeño y vacío
+                const map = [];
+                for (let r = 0; r < size; r++) {
+                    const rd = [];
+                    for (let c = 0; c < size; c++) {
+                        rd.push({ type: 'plains', owner: humanPlayer, units: 1, row: r, col: c });
+                    }
+                    map.push(rd);
+                }
+                // Poner la base del jugador humano
+                const [br, bc] = getBasePos(humanPlayer, size);
+                map[br][bc] = { type: 'base', owner: humanPlayer, units: 10, row: br, col: bc };
+
+                gameState = {
+                    map, activePlayers: [humanPlayer], humanPlayers: human,
+                    currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll',
+                    eliminated: [], turn: 1, scores: { [humanPlayer]: 1000 },
+                    pendingCombat: null, mapSize: size,
+                    stats: { lastTurnConquests: 0, totalUnits: {}, defendedBase: [] },
+                    tutorialMode: false
+                };
+
+                document.getElementById('menu-modal').classList.remove('show');
+                renderMap();
+                // Mostrar victoria automáticamente después de medio segundo
+                setTimeout(() => showVictory(humanPlayer), 500);
+                return;
+            }
+
+            // ══════════ MODO NORMAL / DIFÍCIL / IMPOSIBLE ══════════
+            gameState = {
+                map: generateMap(size, mapType, null, all),
+                activePlayers: all, humanPlayers: human,
+                currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll',
+                eliminated: [], turn: 1, scores: {},
+                pendingCombat: null, mapSize: size,
+                stats: { lastTurnConquests: 0, totalUnits: {}, defendedBase: [], territoryCount: {}, cityCount: {}, maxMoveDistance: 0 },
+                tutorialMode: false
+            };
+            all.forEach(p => gameState.scores[p] = 0);
+
+            document.getElementById('menu-modal').classList.remove('show');
+            renderMap();
             document.getElementById('action-text').textContent = `${getThemeData()[human[0]].leader} — ¡Tira el dado!`;
+
+            // Si el primer jugador no es humano, que empiece la IA
             if (!human.includes(all[0])) setTimeout(aiTurn, 600);
         }
+
         function goToMenu() { ['victory-modal','combat-modal'].forEach(m=>document.getElementById(m).classList.remove('show')); document.getElementById('menu-modal').classList.add('show'); }
         function saveGame() { localStorage.setItem('hex_save', JSON.stringify(gameState)); alert('✅ Partida guardada'); }
         function loadGame() { const s=localStorage.getItem('hex_save'); if(s) { gameState=JSON.parse(s); document.getElementById('menu-modal').classList.remove('show'); renderMap(); alert('📂 Partida cargada'); } }
@@ -979,7 +964,6 @@
             localStorage.setItem('ww2_theme', t);
             document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.theme === t));
         }
-
         function resetProgress() { if (confirm('¿Estás seguro? Se borrarán todos los datos.')) { localStorage.clear(); location.reload(); } }
 
         const EDITOR_SIZE = 9;
