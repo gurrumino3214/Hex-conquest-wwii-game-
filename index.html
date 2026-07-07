@@ -12,12 +12,38 @@
             --red:#e74c3c; --green:#27ae60; --blue:#3498db; --orange:#f39c12; --pink:#e91e63; --teal:#1abc9c; --cream:#fef9f0;
             --shadow:0 4px 12px rgba(0,0,0,0.1); --shadow-lg:0 8px 24px rgba(0,0,0,0.15); --btn-radius:25px;
             --hex-size: 54px;
+            --plains-1: #a8d88a; --plains-2: #6daf5a; --river-1: #7ec8e3; --river-2: #2e8cb8;
+            --mountain-1: #d4c4a8; --mountain-2: #9c8468; --city-1: #f5c27b; --city-2: #d4952a;
         }
         body { background:linear-gradient(135deg,#fdf6e8,#f0e4cc); color:#4a3728; font-family:'Nunito',sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; }
-        #top-bar { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold-light); flex-shrink:0; z-index:100; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+        #top-bar { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold-light); flex-shrink:0; z-index:100; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); backdrop-filter:blur(10px); }
+        #map-wrapper { flex:1; overflow:auto; display:flex; justify-content:center; align-items:center; position:relative; background:radial-gradient(circle at center, #e8dcc8 0%, #d4c4a8 100%); box-shadow:inset 0 0 80px rgba(0,0,0,0.08); scroll-behavior:smooth; border-top:2px solid var(--gold-light); border-bottom:2px solid var(--gold-light); }
+        #hex-grid { padding:20px; transform-origin:center; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2)); background:rgba(255,255,255,0.3); border-radius:16px; margin:20px; }
+        .hex-row { display:flex; margin-bottom: calc(var(--hex-size) * -0.19); }
+        .hex-row:nth-child(even) { margin-left: calc(var(--hex-size) * 0.52); }
+        .hex { width: var(--hex-size); height: calc(var(--hex-size) * 1.1547); position:relative; margin:0 2px; cursor:pointer; transition:transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease; }
+        .hex:hover { filter:brightness(1.15); z-index:10; transform:scale(1.08); }
+        .hex-inner { width:100%; height:100%; clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; border:2px solid rgba(0,0,0,0.25); box-shadow:inset 0 0 10px rgba(0,0,0,0.1); transition:all 0.2s ease; }
+        .hex.plains .hex-inner { background:linear-gradient(145deg,var(--plains-1),var(--plains-2)); }
+        .hex.river .hex-inner { background:linear-gradient(145deg,var(--river-1),var(--river-2)); }
+        .hex.mountain .hex-inner { background:linear-gradient(145deg,var(--mountain-1),var(--mountain-2)); }
+        .hex.city .hex-inner { background:linear-gradient(145deg,var(--city-1),var(--city-2)); }
+        .hex.base .hex-inner { background:linear-gradient(145deg,#ffd700,#daa520); animation:baseGlow 2s infinite alternate; box-shadow:inset 0 0 15px rgba(255,215,0,0.5); }
+        @keyframes baseGlow { from{box-shadow:inset 0 0 10px rgba(255,215,0,0.4)} to{box-shadow:inset 0 0 20px rgba(255,215,0,0.7)} }
+        @keyframes hexPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+        @keyframes diceRoll { 0%{transform:rotate(0deg) scale(1)} 25%{transform:rotate(90deg) scale(1.2)} 50%{transform:rotate(180deg) scale(1)} 75%{transform:rotate(270deg) scale(1.2)} 100%{transform:rotate(360deg) scale(1)} }
+        @keyframes combatFlash { 0%,100%{background-color:transparent} 50%{background-color:rgba(231,76,60,0.3)} }
+        .hex.selected .hex-inner { border:3px solid #fff !important; box-shadow:0 0 20px rgba(255,255,255,0.9); animation:hexPulse 0.6s ease-in-out infinite; }
+        .hex.movable .hex-inner { border:3px solid #27ae60 !important; box-shadow:0 0 15px rgba(39,174,96,0.6), inset 0 0 10px rgba(39,174,96,0.2); cursor:pointer; animation:movablePulse 1.5s ease-in-out infinite; }
+        .hex.attackable .hex-inner { border:3px solid #e74c3c !important; box-shadow:0 0 15px rgba(231,76,60,0.6), inset 0 0 10px rgba(231,76,60,0.2); cursor:pointer; }
+        .hex.base-attackable .hex-inner { border:3px solid #ff0033 !important; box-shadow:0 0 20px rgba(255,0,51,0.8), inset 0 0 15px rgba(255,0,51,0.3); animation:hexPulse 0.4s ease-in-out infinite; }
+        @keyframes movablePulse { 0%,100%{box-shadow:0 0 15px rgba(39,174,96,0.6), inset 0 0 10px rgba(39,174,96,0.2)} 50%{box-shadow:0 0 25px rgba(39,174,96,0.8), inset 0 0 20px rgba(39,174,96,0.4)} }
+        .hex-icon { font-size:18px; margin-top:3px; text-shadow:0 1px 3px rgba(0,0,0,0.3); filter:drop-shadow(0 1px 2px rgba(0,0,0,0.2)); }
+        .hex-units { position:absolute; bottom:6px; right:6px; background:linear-gradient(135deg,#fff,#f8f8f8); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; border:2px solid var(--gold); box-shadow:0 2px 8px rgba(0,0,0,0.3); }
         #turn-info { display:flex; flex-direction:column; gap:2px; min-width:0; }
         #turn-label { font-size:9px; color:#b8936e; text-transform:uppercase; letter-spacing:1.5px; font-family:'Fredoka',sans-serif; }
-        .player-badge { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:700; border:2px solid; font-family:'Fredoka',sans-serif; white-space:nowrap; background:white; }
+        .player-badge { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:700; border:2px solid; font-family:'Fredoka',sans-serif; white-space:nowrap; background:white; transition:all 0.2s; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+        .player-badge:hover { transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
         .player-badge.urss { border-color:#e74c3c; color:#c0392b; background:#ffeaea; } .player-badge.nazis { border-color:#7f8c8d; color:#555; background:#f0f0f0; } .player-badge.italia { border-color:#27ae60; color:#1e8449; background:#eafaf1; } .player-badge.usa { border-color:#3498db; color:#2471a3; background:#eaf2f8; } .player-badge.japon { border-color:#f39c12; color:#b9770e; background:#fef5e7; } .player-badge.uk { border-color:#e91e63; color:#c2185b; background:#fce4ec; } .player-badge.francia { border-color:#1abc9c; color:#148f77; background:#e8f8f5; } .player-badge.china { border-color:#e67e22; color:#ca6f1e; background:#fdf2e9; } .player-badge.canada { border-color:#9b59b6; color:#7d3c98; background:#f4ecf7; }
         .player-badge.sparta { border-color:#c0392b; } .player-badge.athens { border-color:#2980b9; } .player-badge.phoenicia { border-color:#d4ac0d; }
         .player-badge.capcom { border-color:#1e8449; } .player-badge.square { border-color:#8e44ad; } .player-badge.ea { border-color:#e67e22; }
@@ -27,34 +53,18 @@
         .player-badge.fellowship { border-color:#27ae60; } .player-badge.mordor { border-color:#c0392b; } .player-badge.westeros { border-color:#7f8c8d; } .player-badge.targaryen { border-color:#e74c3c; } .player-badge.hogwarts_l { border-color:#1abc9c; } .player-badge.oz { border-color:#f1c40f; } .player-badge.discworld { border-color:#3498db; } .player-badge.narnia { border-color:#e67e22; } .player-badge.riverdale { border-color:#8e44ad; }
         .player-badge.christianity { border-color:#f1c40f; } .player-badge.islam { border-color:#27ae60; } .player-badge.judaism { border-color:#3498db; } .player-badge.hinduism { border-color:#e74c3c; } .player-badge.buddhism { border-color:#f39c12; } .player-badge.sikhism { border-color:#d35400; } .player-badge.jainism { border-color:#2ecc71; } .player-badge.zoroastrianism { border-color:#e67e22; } .player-badge.shinto { border-color:#e74c3c; }
         #dice-area { display:flex; gap:8px; align-items:center; flex-shrink:0; }
-        .dice-btn, .exit-btn { border:none; color:white; padding:8px 16px; border-radius:25px; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:'Fredoka',sans-serif; }
+        .dice-btn, .exit-btn { border:none; color:white; padding:8px 16px; border-radius:25px; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:'Fredoka',sans-serif; position:relative; overflow:hidden; }
         .dice-btn { background:linear-gradient(135deg,#ff6b6b,#ee5a24); box-shadow:0 4px 12px rgba(238,90,36,0.3); }
+        .dice-btn::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:linear-gradient(45deg,transparent,rgba(255,255,255,0.2),transparent); transform:rotate(45deg); transition:all 0.3s; opacity:0; }
+        .dice-btn:hover::before { opacity:1; left:100%; }
         .dice-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 6px 16px rgba(238,90,36,0.4); }
         .dice-btn:active:not(:disabled) { transform:translateY(0); }
-        .dice-btn:disabled { background:#ccc; color:#999; cursor:not-allowed; }
+        .dice-btn:disabled { background:#ccc; color:#999; cursor:not-allowed; box-shadow:none; }
         .dice-btn.rolling { animation:diceRoll 0.5s ease-in-out; }
         .exit-btn { background:linear-gradient(135deg,#7f8c8d,#5d6d7e); box-shadow:0 3px 10px rgba(100,100,100,0.3); }
         .exit-btn:hover { transform:translateY(-2px); box-shadow:0 5px 14px rgba(100,100,100,0.4); }
-        #dice-result { font-size:28px; font-weight:900; color:var(--brown); min-width:38px; text-align:center; font-family:'Fredoka',sans-serif; background:white; border-radius:12px; padding:2px 8px; box-shadow:var(--shadow); }
-        #score-board { background:rgba(255,248,237,0.9); padding:5px 10px; display:flex; justify-content:space-around; border-bottom:2px solid #f0d9a0; flex-shrink:0; font-size:10px; flex-wrap:wrap; gap:4px; }
-        #map-wrapper { flex:1; overflow:auto; display:flex; justify-content:center; align-items:center; position:relative; background-color:#e8dcc8; box-shadow:inset 0 0 80px rgba(0,0,0,0.08); scroll-behavior:smooth; }
-        #hex-grid { padding:14px; transform-origin:center; filter:drop-shadow(0 6px 14px rgba(0,0,0,0.15)); }
-        .hex-row { display:flex; margin-bottom: calc(var(--hex-size) * -0.19); }
-        .hex-row:nth-child(even) { margin-left: calc(var(--hex-size) * 0.52); }
-        .hex { width: var(--hex-size); height: calc(var(--hex-size) * 1.1547); position:relative; margin:0 1.5px; cursor:pointer; transition:transform 0.2s, filter 0.2s; }
-        .hex:hover { filter:brightness(1.15); z-index:10; }
-        .hex-inner { width:100%; height:100%; clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; border:2px solid rgba(0,0,0,0.2); }
-        .hex.plains .hex-inner { background:linear-gradient(145deg,#b8d9a6,#6daf5a); } .hex.river .hex-inner { background:linear-gradient(145deg,#7ec8e3,#2e8cb8); } .hex.mountain .hex-inner { background:linear-gradient(145deg,#d4c4a8,#9c8468); } .hex.city .hex-inner { background:linear-gradient(145deg,#f5c27b,#d4952a); } .hex.base .hex-inner { background:linear-gradient(145deg,#ffd700,#daa520); animation:baseGlow 2s infinite alternate; }
-        @keyframes baseGlow { from{box-shadow:inset 0 0 10px rgba(255,215,0,0.4)} to{box-shadow:inset 0 0 20px rgba(255,215,0,0.7)} }
-        @keyframes hexPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
-        @keyframes diceRoll { 0%{transform:rotate(0deg) scale(1)} 25%{transform:rotate(90deg) scale(1.2)} 50%{transform:rotate(180deg) scale(1)} 75%{transform:rotate(270deg) scale(1.2)} 100%{transform:rotate(360deg) scale(1)} }
-        @keyframes combatFlash { 0%,100%{background-color:transparent} 50%{background-color:rgba(231,76,60,0.3)} }
-        .hex.selected .hex-inner { border:3px solid #fff !important; box-shadow:0 0 15px rgba(255,255,255,0.8); animation:hexPulse 0.6s ease-in-out infinite; }
-        .hex.movable .hex-inner { border:3px solid #27ae60 !important; box-shadow:0 0 10px rgba(39,174,96,0.5); cursor:pointer; }
-        .hex.attackable .hex-inner { border:3px solid #e74c3c !important; box-shadow:0 0 10px rgba(231,76,60,0.5); cursor:pointer; }
-        .hex.base-attackable .hex-inner { border:3px solid #ff0033 !important; box-shadow:0 0 15px rgba(255,0,51,0.7); animation:hexPulse 0.4s ease-in-out infinite; }
-        .hex-icon { font-size:17px; margin-top:3px; text-shadow:0 1px 3px rgba(0,0,0,0.3); }
-        .hex-units { position:absolute; bottom:6px; right:6px; background:linear-gradient(135deg,#fff,#f8f8f8); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; border:2px solid var(--gold); box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+        #dice-result { font-size:28px; font-weight:900; color:var(--brown); min-width:38px; text-align:center; font-family:'Fredoka',sans-serif; background:linear-gradient(135deg,#fff,#f8f8f8); border-radius:12px; padding:2px 8px; box-shadow:0 3px 10px rgba(0,0,0,0.15); border:2px solid var(--gold-light); }
+        #score-board { background:rgba(255,248,237,0.95); padding:5px 10px; display:flex; justify-content:space-around; border-bottom:2px solid #f0d9a0; flex-shrink:0; font-size:10px; flex-wrap:wrap; gap:4px; backdrop-filter:blur(5px); }
         #bottom-panel { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:6px 10px; border-top:3px solid var(--gold-light); }
         #action-text { text-align:center; font-size:12px; color:#6b4226; margin-bottom:4px; font-weight:700; }
         #players-bar { display:flex; justify-content:space-around; gap:2px; flex-wrap:wrap; }
@@ -99,7 +109,7 @@
         .editor-grid { display:inline-block; background:#e8dcc8; padding:8px; border-radius:8px; box-shadow:inset 0 0 20px rgba(0,0,0,0.1); }
         .editor-row { display:flex; margin-bottom:-6px; justify-content:center; } .editor-row:nth-child(even) { margin-left:14px; }
         .editor-cell { width:28px; height:32px; cursor:pointer; clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); border:1px solid rgba(0,0,0,0.2); transition:all 0.15s; } .editor-cell:hover { transform:scale(1.15); box-shadow:0 4px 12px rgba(0,0,0,0.2); z-index:10; }
-        .editor-cell.plains { background:linear-gradient(145deg,#b8d9a6,#6daf5a); } .editor-cell.river { background:linear-gradient(145deg,#7ec8e3,#2e8cb8); } .editor-cell.mountain { background:linear-gradient(145deg,#d4c4a8,#9c8468); } .editor-cell.city { background:linear-gradient(145deg,#f5c27b,#d4952a); } .editor-cell.base { background:linear-gradient(145deg,#ffd700,#daa520); animation:baseGlow 2s infinite alternate; }
+        .editor-cell.plains { background:linear-gradient(145deg,var(--plains-1),var(--plains-2)); } .editor-cell.river { background:linear-gradient(145deg,var(--river-1),var(--river-2)); } .editor-cell.mountain { background:linear-gradient(145deg,var(--mountain-1),var(--mountain-2)); } .editor-cell.city { background:linear-gradient(145deg,var(--city-1),var(--city-2)); } .editor-cell.base { background:linear-gradient(145deg,#ffd700,#daa520); animation:baseGlow 2s infinite alternate; }
         body.dark { background:#111; color:#ddd; --bg:#1a1a1a; --panel:#2c2c2c; --cream:#3a3a3a; --brown:#c4956a; --brown-light:#8b5e3c; --gold:#f5d56c; --gold-light:#e6a817; --shadow:0 4px 12px rgba(0,0,0,0.4); }
         body.dark #top-bar { background:#2c2c2c; border-bottom-color:var(--gold); }
         body.dark .modal-box, body.dark .modal-btn, body.dark .player-badge { background:#2c2c2c; color:#ddd; border-color:#555; }
@@ -197,13 +207,43 @@
             </div>
             <div class="tab-panel" id="tab-tutorial">
                 <div class="section-title">📖 Cómo Jugar</div>
-                <div style="text-align:left;font-size:11px;max-height:50vh;overflow-y:auto;padding:0 5px;">
-                    <p><b>🎯 Objetivo:</b> Conquista todas las bases enemigas o elimina a todos los oponentes.</p>
-                    <p><b>🎲 Tirar el dado:</b> Al inicio de tu turno, pulsa "TIRAR DADO". El número obtenido determina cuántas casillas puedes mover tus unidades.</p>
-                    <p><b>👆 Mover tropas:</b> Toca una de tus casillas para seleccionarla. Se iluminarán en <span style="color:#27ae60;">verde</span> las casillas vacías a las que puedes mover, y en <span style="color:#e74c3c;">rojo</span> las casillas enemigas que puedes atacar.</p>
-                    <p><b>⚔️ Combate:</b> Si atacas, se tira un dado por cada bando. Quien saque mayor número gana.</p>
-                    <p><b>⭐ Bases:</b> Son tus cuarteles generales. Si pierdes tu base, ¡quedas eliminado!</p>
-                    <p><b>🌊 Ríos y ⛰️ Montañas:</b> Los ríos solo se pueden cruzar si el dado saca 1, 3 o 6 (salvo habilidad).</p>
+                <div style="text-align:left;font-size:12px;max-height:50vh;overflow-y:auto;padding:0 5px;line-height:1.6;">
+                    <div style="background:#fffde7;border-radius:12px;padding:12px;margin-bottom:10px;border:2px solid var(--gold-light);">
+                        <p style="margin-bottom:8px;"><b>🎯 Objetivo del Juego:</b></p>
+                        <p>Conquista todas las bases enemigas o elimina a todos los oponentes para ganar la partida.</p>
+                    </div>
+                    <div style="background:#eafaf1;border-radius:12px;padding:12px;margin-bottom:10px;">
+                        <p style="margin-bottom:8px;"><b>🎲 Fase de Dados:</b></p>
+                        <p>Al inicio de tu turno, pulsa <b>"TIRAR DADO"</b>. El número obtenido (1-6) determina cuántas casillas puedes mover tus unidades ese turno.</p>
+                    </div>
+                    <div style="background:#eaf2f8;border-radius:12px;padding:12px;margin-bottom:10px;">
+                        <p style="margin-bottom:8px;"><b>👆 Mover Tropas:</b></p>
+                        <p>1. Toca una de tus casillas con unidades para seleccionarla.<br>
+                        2. Las casillas alcanzables se iluminarán:<br>
+                           • <span style="color:#27ae60;font-weight:bold;">🟢 Verde</span>: Casillas vacías a las que puedes mover<br>
+                           • <span style="color:#e74c3c;font-weight:bold;">🔴 Rojo</span>: Casillas enemigas que puedes atacar<br>
+                           • <span style="color:#ff0033;font-weight:bold;">⚠️ Rojo brillante</span>: Bases enemigas (¡objetivos prioritarios!)</p>
+                    </div>
+                    <div style="background:#fdedec;border-radius:12px;padding:12px;margin-bottom:10px;">
+                        <p style="margin-bottom:8px;"><b>⚔️ Sistema de Combate:</b></p>
+                        <p>Si atacas una casilla enemiga, ambos bandos tiran un dado:<br>
+                        • Quien saque el número más alto gana<br>
+                        • Si ganas, conquistas la casilla<br>
+                        • Si pierdes, tu unidad es eliminada</p>
+                    </div>
+                    <div style="background:#fef9e7;border-radius:12px;padding:12px;margin-bottom:10px;">
+                        <p style="margin-bottom:8px;"><b>⭐ Bases y Territorios:</b></p>
+                        <p>• Las <b>Bases</b> son tus cuarteles generales. ¡Si pierdes tu base, quedas eliminado!<br>
+                        • Las <b>Ciudades</b> generan ventajas estratégicas<br>
+                        • Cada territorio conquistado te da puntos</p>
+                    </div>
+                    <div style="background:#f4ecf7;border-radius:12px;padding:12px;margin-bottom:10px;">
+                        <p style="margin-bottom:8px;"><b>🌊 Terreno Especial:</b></p>
+                        <p>• <b>Ríos 💧</b>: Solo se pueden cruzar si el dado muestra 1, 3 o 6 (a menos que tengas habilidad especial)<br>
+                        • <b>Montañas ⛰️</b>: Son impassables para algunas facciones<br>
+                        • <b>Planicies 🌿</b>: Terreno estándar, sin penalizaciones</p>
+                    </div>
+                    <p style="text-align:center;color:#8b6b4a;font-style:italic;">💡 Consejo: ¡El tutorial interactivo te enseñará todo paso a paso!</p>
                 </div>
                 <button class="modal-btn btn-primary" onclick="startTutorial()">▶ Iniciar Tutorial Interactivo</button>
             </div>
@@ -814,16 +854,35 @@
             map[0][0] = { type: 'base', owner: 'urss', units: 5 }; map[4][4] = { type: 'base', owner: 'nazis', units: 2 };
             gameState = { map, activePlayers: ['urss','nazis'], humanPlayers: ['urss'], currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {urss:0,nazis:0}, pendingCombat: null, mapSize: 5, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[]}, tutorialMode: true, tutorialStep: 0, tutorialCombatDone: false };
             aiDifficulty='easy'; document.getElementById('menu-modal').classList.remove('show'); renderMap();
-            showNotification('🎲 Paso 1: Pulsa "TIRAR DADO".'); highlightElement('roll-btn');
+            showNotification('🎲 Paso 1: Pulsa "TIRAR DADO" para comenzar tu turno.', 3000); highlightElement('roll-btn');
         }
         function advanceTutorial() {
             const step = gameState.tutorialStep;
-            if (step === 0 && gameState.phase === 'move') { gameState.tutorialStep = 1; hideHighlight(); showNotification('👆 Selecciona tu base.'); }
-            else if (step === 1 && gameState.selectedHex) { gameState.tutorialStep = 2; showNotification('🟢 Toca un hexágono verde para mover.'); }
-            else if (step === 2 && gameState.phase === 'roll' && gameState.turn > 1) { gameState.tutorialStep = 3; showNotification('🎲 Tira el dado otra vez.'); highlightElement('roll-btn'); }
-            else if (step === 3 && gameState.phase === 'move') { gameState.tutorialStep = 4; hideHighlight(); showNotification('👆 Selecciona una unidad.'); }
-            else if (step === 4 && gameState.selectedHex) { gameState.tutorialStep = 5; showNotification('🔴 Toca un hexágono rojo para atacar.'); }
-            else if (step === 5 && gameState.tutorialCombatDone) { gameState.tutorialMode = false; hideHighlight(); showNotification('🎉 Tutorial completado.'); setTimeout(() => goToMenu(), 2000); }
+            if (step === 0 && gameState.phase === 'move') { 
+                gameState.tutorialStep = 1; hideHighlight(); 
+                showNotification('👆 Paso 2: Selecciona tu base (hexágono con ⭐). Toca el hexágono dorado en la esquina superior izquierda.'); 
+            }
+            else if (step === 1 && gameState.selectedHex) { 
+                gameState.tutorialStep = 2; 
+                showNotification('🟢 Paso 3: Los hexágonos VERDES son movimientos posibles. Toca uno para mover tus tropas.'); 
+            }
+            else if (step === 2 && gameState.phase === 'roll' && gameState.turn > 1) { 
+                gameState.tutorialStep = 3; 
+                showNotification('🎲 Paso 4: ¡Nuevo turno! Tira el dado otra vez.'); highlightElement('roll-btn'); 
+            }
+            else if (step === 3 && gameState.phase === 'move') { 
+                gameState.tutorialStep = 4; hideHighlight(); 
+                showNotification('👆 Paso 5: Selecciona una de tus unidades para preparar un ataque.'); 
+            }
+            else if (step === 4 && gameState.selectedHex) { 
+                gameState.tutorialStep = 5; 
+                showNotification('🔴 Paso 6: Los hexágonos ROJOS son enemigos. ¡Ataca la base enemiga para ganar!'); 
+            }
+            else if (step === 5 && gameState.tutorialCombatDone) { 
+                gameState.tutorialMode = false; hideHighlight(); 
+                showNotification('🎉 ¡Tutorial completado! Ahora eres un maestro de Hex Conquest. ¡Buena suerte en la batalla!', 4000); 
+                setTimeout(() => goToMenu(), 2500); 
+            }
         }
         function showNotification(msg, duration=2500) {
             const old = document.querySelector('.notification-bubble'); if (old) old.remove();
