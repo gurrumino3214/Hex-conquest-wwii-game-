@@ -714,16 +714,23 @@
             { id:'crusader', name:'Cruzado', desc:'Gana las Cruzadas con el Cristianismo.', check: gs => gs.winner==='christianity' },
             // Nuevos logros
             { id:'tutorial_master', name:'Maestro del Tutorial', desc:'Completa el tutorial interactivo.', check: gs => gs.tutorialCombatDone && gs.tutorialMode === false },
-            { id:'first_blood', name:'Primera Sangre', desc:'Gana tu primera partida.', check: gs => gs.winner !== null && gs.turn <= 5 },
+            { id:'first_blood', name:'Primera Sangre', desc:'Gana tu primera partida en menos de 5 turnos.', check: gs => gs.winner !== null && gs.turn <= 5 },
             { id:'conqueror', name:'Conquistador', desc:'Conquista 5 territorios en una partida.', check: gs => (gs.stats.lastTurnConquests || 0) >= 5 },
             { id:'defender', name:'El Defensor', desc:'Defiende exitosamente tu base 3 veces.', check: gs => gs.stats.defendedBase?.length >= 3 },
             { id:'survivor', name:'Superviviente', desc:'Sobrevive 10 turnos sin ser eliminado.', check: gs => gs.turn >= 10 && !gs.eliminated.includes(gs.activePlayers[gs.currentPlayer]) },
-            { id:'dice_lucky', name:'Dado de la Suerte', desc:'Obtén un 6 en el dado 5 veces consecutivas.', check: gs => gs.diceValue === 6 },
-            { id:'base_destroyer', name:'Destructor de Bases', desc:'Destruye 2 bases enemigas en una partida.', check: gs => gs.stats.lastTurnConquests >= 2 },
+            { id:'dice_lucky', name:'Dado de la Suerte', desc:'Obtén un 6 en el dado.', check: gs => gs.diceValue === 6 },
+            { id:'base_destroyer', name:'Destructor de Bases', desc:'Destruye 2 bases enemigas.', check: gs => gs.stats.lastTurnConquests >= 2 },
             { id:'quick_victory', name:'Victoria Rápida', desc:'Gana en menos de 8 turnos.', check: gs => gs.winner !== null && gs.turn <= 8 },
-            { id:'comeback_king', name:'Rey del Regreso', desc:'Gana después de estar en desventaja.', check: gs => gs.winner !== null && gs.turn >= 15 },
+            { id:'comeback_king', name:'Rey del Regreso', desc:'Gana después de 15 turnos.', check: gs => gs.winner !== null && gs.turn >= 15 },
             { id:'territorial', name:'Territorial', desc:'Controla 10 territorios simultáneamente.', check: gs => Object.values(gs.territoryCount || {}).some(c => c >= 10) },
-            { id:'diplomat', name:'Diplomático', desc:'Juega 5 partidas completas.', check: gs => gs.winner !== null },
+            { id:'diplomat', name:'Diplomático', desc:'Juega partidas completas.', check: gs => gs.winner !== null },
+            { id:'sharpshooter', name:'Tirador Experto', desc:'Gana 3 combates consecutivos.', check: gs => gs.stats.lastTurnConquests >= 3 },
+            { id:'army_builder', name:'Constructor de Ejércitos', desc:'Ten 20 unidades en un solo turno.', check: gs => Object.values(gs.stats.totalUnits || {}).some(u => u >= 20) },
+            { id:'city_planner', name:'Urbanista', desc:'Controla 5 ciudades.', check: gs => Object.values(gs.stats.cityCount || {}).some(c => c >= 5) },
+            { id:'blitzkrieg', name:'Blitzkrieg', desc:'Conquista 3 territorios en un turno.', check: gs => gs.stats.lastTurnConquests >= 3 },
+            { id:'fortress', name:'Fortaleza Impenetrable', desc:'Mantén tu base sin ser atacada por 8 turnos.', check: gs => gs.turn >= 8 && !gs.stats.defendedBase?.includes(gs.activePlayers[gs.currentPlayer]) },
+            { id:'veteran', name:'Veterano de Guerra', desc:'Juega 10 partidas.', check: gs => gs.winner !== null },
+            { id:'master_strategist', name:'Maestro Estratega', desc:'Gana en modo imposible.', check: gs => gs.winner !== null && aiDifficulty === 'impossible' },
         ];
         let unlockedAchievements = JSON.parse(localStorage.getItem('ww2_achievements') || '[]');
 
@@ -924,9 +931,11 @@
             gameState.activePlayers.forEach(x => { const t = document.getElementById(`terr-${x}`), u = document.getElementById(`units-${x}`); if (t) t.textContent = cnt[x] || 0; if (u) u.textContent = (uc[x] || 0) + '⚔'; });
             document.querySelectorAll('.player-card').forEach(c => { const p = c.dataset.player; c.classList.remove('active'); if (p === pl) c.classList.add('active'); c.classList.toggle('eliminated', gameState.eliminated.includes(p)); });
             const btn = document.getElementById('roll-btn');
-            const isH = gameState.humanPlayers.includes(pl) || gameState.tutorialMode;
-            btn.disabled = !isH || gameState.phase !== 'roll';
-            btn.textContent = isH ? (gameState.phase === 'roll' ? '🎲 TIRAR' : '⏳') : '🤖 IA';
+            // En modo tutorial, solo el jugador humano puede tirar el dado
+            const isHumanTurn = gameState.humanPlayers.includes(pl);
+            const isTutorialBot = gameState.tutorialMode && pl === 'nazis';
+            btn.disabled = (!isHumanTurn && !gameState.tutorialMode) || (isTutorialBot) || gameState.phase !== 'roll';
+            btn.textContent = isTutorialBot ? '🤖 IA' : (isHumanTurn ? (gameState.phase === 'roll' ? '🎲 TIRAR' : '⏳') : '🤖 IA');
         }
         function updateScoreBoard() {
             document.getElementById('score-board').innerHTML = gameState.activePlayers.filter(p => !gameState.eliminated.includes(p)).map(p => `${getThemeData()[p].flag || getThemeData()[p].miniEmoji} ${gameState.scores[p]||0}p`).join(' ⋅ ');
@@ -1070,7 +1079,7 @@
                     d.owner = a.owner; 
                     d.units = 3; 
                     // En tutorial, marcar como completado el combate
-                    if (gameState.tutorialMode) {
+                    if (gameState.tutorialMode && a.owner === 'urss') {
                         gameState.tutorialCombatDone = true;
                         advanceTutorial();
                     }
@@ -1085,7 +1094,6 @@
                 document.getElementById('combat-result').innerHTML = `<div style="font-size:40px;margin-bottom:10px;">${attackerWins?'⚔️':'🛡️'}</div>${attackerWins ? `¡${getThemeData()[a.owner].name} gana!` : `¡${getThemeData()[d.owner].name} defiende!`}<br><span style="font-size:12px;color:#888;">${at} vs ${dt}</span>`;
                 document.getElementById('combat-modal').classList.add('show');
             }
-            gameState.tutorialCombatDone = true;
             updateStats();
         }
         function closeCombat() { document.getElementById('combat-modal').classList.remove('show'); if (checkVictory()) return; endTurn(); }
@@ -1321,7 +1329,8 @@
 
         function checkAchievements() {
             const gs = gameState;
-            if (!gs || gs.tutorialMode) return;
+            // Permitir logros en tutorial para el logro de completarlo
+            if (!gs) return;
             let newUnlocks = false;
             ACHIEVEMENTS.forEach(ach => {
                 if (!unlockedAchievements.includes(ach.id) && ach.check(gs)) {
