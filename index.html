@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>⚔️ Hex Conquest · Edición Definitiva</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;900&family=Patrick+Hand&family=Special+Elite&family=MedievalSharp&family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;900&family=Patrick+Hand&family=Special+Elite&family=MedievalSharp&family=Press+Start+2P&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:wght@400;600;700&family=VT323&display=swap');
         * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; }
         :root {
             --bg:#f5efe0; --panel:#fff8ed; --gold:#e6a817; --gold-light:#f5d56c; --brown:#8b5e3c; --brown-light:#c4956a;
@@ -15,7 +15,294 @@
             --plains-1: #a8d88a; --plains-2: #6daf5a; --river-1: #7ec8e3; --river-2: #2e8cb8;
             --mountain-1: #d4c4a8; --mountain-2: #9c8468; --city-1: #f5c27b; --city-2: #d4952a;
         }
-        body { background:linear-gradient(135deg,#fdf6e8,#f0e4cc); color:#4a3728; font-family:'Nunito',sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; }
+        body { background:linear-gradient(135deg,#fdf6e8,#f0e4cc); color:#4a3728; font-family:'Nunito',sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; transition:all 0.4s ease; }
+        
+        /* TEMA HISTÓRICO - Romano/Medieval */
+        body.historic { 
+            background: linear-gradient(135deg, #2c1810 0%, #4a2c2a 50%, #1a0f0a 100%);
+            font-family: 'Cormorant Garamond', serif;
+        }
+        body.historic #top-bar, body.historic #bottom-panel, body.historic #score-board {
+            background: linear-gradient(180deg, #3d2418 0%, #2a1810 100%);
+            border-color: #c9a961 !important;
+            box-shadow: 0 4px 20px rgba(201, 169, 97, 0.3);
+        }
+        body.historic .modal-box {
+            background: linear-gradient(135deg, #f4e4c4 0%, #e8d4b4 100%);
+            border: 3px solid #8b4513;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(139, 69, 19, 0.5);
+            position: relative;
+        }
+        body.historic .modal-box::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 2px solid #c9a961;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+        body.historic .modal-title {
+            font-family: 'Cinzel Decorative', cursive;
+            color: #5c3a21;
+            text-shadow: 1px 1px 2px rgba(201, 169, 97, 0.5);
+        }
+        body.historic .modal-btn {
+            font-family: 'Cormorant Garamond', serif;
+            border-radius: 4px;
+            border: 2px solid #8b4513;
+        }
+        body.historic .btn-primary {
+            background: linear-gradient(135deg, #8b0000 0%, #5c0000 100%);
+            color: #f4e4c4;
+        }
+        body.historic .btn-secondary {
+            background: linear-gradient(135deg, #e8d4b4 0%, #d4c4a4 100%);
+            color: #3d2418;
+        }
+        body.historic .btn-gold {
+            background: linear-gradient(135deg, #c9a961 0%, #a08040 100%);
+            color: #2a1810;
+        }
+        body.historic #map-wrapper {
+            background: radial-gradient(circle at center, #3a2418 0%, #1a0f0a 100%);
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+        }
+        body.historic #hex-grid {
+            background: rgba(61, 36, 24, 0.4);
+            border: 3px solid #c9a961;
+            box-shadow: 0 8px 32px rgba(201, 169, 97, 0.2);
+        }
+        body.historic .hex.plains .hex-inner { background: linear-gradient(145deg, #6b8e5a, #4a6b3a); }
+        body.historic .hex.river .hex-inner { background: linear-gradient(145deg, #5a8ba8, #3a6b88); }
+        body.historic .hex.mountain .hex-inner { background: linear-gradient(145deg, #8b7355, #6b5335); }
+        body.historic .hex.city .hex-inner { background: linear-gradient(145deg, #c9a961, #a08040); }
+        body.historic .hex.base .hex-inner {
+            background: linear-gradient(145deg, #ffd700, #b8860b);
+            box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.6), 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+        body.historic .player-badge {
+            font-family: 'Cinzel Decorative', cursive;
+            border-width: 3px;
+        }
+        body.historic .dice-btn {
+            background: linear-gradient(135deg, #8b0000, #5c0000);
+            border: 2px solid #c9a961;
+        }
+        body.historic .exit-btn {
+            background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
+            border: 2px solid #8b7355;
+        }
+        body.historic #dice-result {
+            background: linear-gradient(135deg, #f4e4c4, #e8d4b4);
+            border: 2px solid #8b4513;
+            font-family: 'Cinzel Decorative', cursive;
+        }
+        body.historic .player-card {
+            font-family: 'Cormorant Garamond', serif;
+            background: rgba(61, 36, 24, 0.6);
+        }
+        body.historic .player-card.active {
+            background: linear-gradient(135deg, #f4e4c4, #e8d4b4);
+            border-color: #c9a961;
+        }
+        body.historic .menu-tab {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #3d2418, #2a1810);
+            color: #c9a961;
+        }
+        body.historic .menu-tab.active {
+            background: linear-gradient(135deg, #f4e4c4, #e8d4b4);
+            color: #3d2418;
+        }
+        body.historic .country-card {
+            background: linear-gradient(135deg, #f4e4c4, #e8d4b4);
+            border: 2px solid #8b4513;
+        }
+        body.historic .diff-btn, body.historic .maptype-btn, body.historic .size-btn, body.historic .mode-option {
+            background: linear-gradient(135deg, #e8d4b4, #d4c4a4);
+            border: 2px solid #8b4513;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* TEMA RETRO - Años 90-2000 */
+        body.retro {
+            background: #000000;
+            font-family: 'VT323', monospace;
+            image-rendering: pixelated;
+        }
+        body.retro::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+        body.retro #top-bar, body.retro #bottom-panel, body.retro #score-board {
+            background: linear-gradient(180deg, #00aa00 0%, #008800 100%);
+            border: 4px solid #00ff00;
+            box-shadow: 0 0 20px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.3);
+            text-shadow: 0 0 5px #00ff00;
+        }
+        body.retro .modal-box {
+            background: #000000;
+            border: 4px solid #00ff00;
+            box-shadow: 0 0 30px #00ff00, inset 0 0 20px rgba(0, 255, 0, 0.2);
+            font-family: 'VT323', monospace;
+        }
+        body.retro .modal-title {
+            font-family: 'Press Start 2P', cursive;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+        body.retro .modal-btn {
+            font-family: 'VT323', monospace;
+            background: #000000;
+            color: #00ff00;
+            border: 3px solid #00ff00;
+            border-radius: 0;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        body.retro .modal-btn:hover {
+            background: #00ff00;
+            color: #000000;
+            box-shadow: 0 0 20px #00ff00;
+        }
+        body.retro .btn-primary {
+            background: #ff00ff;
+            color: #ffffff;
+            border: 3px solid #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+        body.retro .btn-secondary {
+            background: #000000;
+            color: #00ffff;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        body.retro .btn-gold {
+            background: #ffff00;
+            color: #000000;
+            border: 3px solid #ffff00;
+            box-shadow: 0 0 15px #ffff00;
+        }
+        body.retro #map-wrapper {
+            background: radial-gradient(circle at center, #001a00 0%, #000000 100%);
+            box-shadow: inset 0 0 50px rgba(0, 255, 0, 0.2);
+        }
+        body.retro #hex-grid {
+            background: rgba(0, 20, 0, 0.6);
+            border: 4px solid #00ff00;
+            box-shadow: 0 0 30px #00ff00;
+        }
+        body.retro .hex.plains .hex-inner { background: linear-gradient(145deg, #00aa00, #006600); }
+        body.retro .hex.river .hex-inner { background: linear-gradient(145deg, #0088ff, #0044aa); }
+        body.retro .hex.mountain .hex-inner { background: linear-gradient(145deg, #888888, #444444); }
+        body.retro .hex.city .hex-inner { background: linear-gradient(145deg, #ffaa00, #ff6600); }
+        body.retro .hex.base .hex-inner {
+            background: linear-gradient(145deg, #ffff00, #aaaa00);
+            box-shadow: inset 0 0 20px rgba(255, 255, 0, 0.8), 0 0 20px #ffff00;
+            animation: retroBaseGlow 0.5s infinite alternate;
+        }
+        @keyframes retroBaseGlow {
+            from { box-shadow: inset 0 0 20px rgba(255, 255, 0, 0.8), 0 0 20px #ffff00; }
+            to { box-shadow: inset 0 0 30px rgba(255, 255, 0, 1), 0 0 30px #ffff00; }
+        }
+        body.retro .hex.selected .hex-inner {
+            border: 4px solid #ff00ff !important;
+            box-shadow: 0 0 20px #ff00ff, inset 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+        body.retro .hex.movable .hex-inner {
+            border: 4px solid #00ff00 !important;
+            box-shadow: 0 0 20px #00ff00, inset 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+        body.retro .hex.attackable .hex-inner {
+            border: 4px solid #ff0000 !important;
+            box-shadow: 0 0 20px #ff0000, inset 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+        body.retro .player-badge {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            border-width: 3px;
+            background: #000000;
+        }
+        body.retro .dice-btn {
+            background: #ff0000;
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 15px #ff0000;
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+        }
+        body.retro .exit-btn {
+            background: #000000;
+            border: 3px solid #888888;
+            box-shadow: 0 0 10px #888888;
+        }
+        body.retro #dice-result {
+            background: #000000;
+            border: 3px solid #00ff00;
+            color: #00ff00;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            box-shadow: 0 0 15px #00ff00;
+        }
+        body.retro .player-card {
+            font-family: 'VT323', monospace;
+            background: #000000;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+        }
+        body.retro .player-card.active {
+            background: #00ff00;
+            color: #000000;
+            border-color: #ffff00;
+            box-shadow: 0 0 20px #00ff00;
+        }
+        body.retro .menu-tab {
+            font-family: 'VT323', monospace;
+            background: #000000;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            border-radius: 0;
+        }
+        body.retro .menu-tab.active {
+            background: #00ff00;
+            color: #000000;
+        }
+        body.retro .country-card {
+            background: #000000;
+            border: 3px solid #00ff00;
+            color: #00ff00;
+        }
+        body.retro .diff-btn, body.retro .maptype-btn, body.retro .size-btn, body.retro .mode-option {
+            background: #000000;
+            border: 3px solid #00ff00;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            border-radius: 0;
+        }
+        body.retro .section-title {
+            font-family: 'Press Start 2P', cursive;
+            color: #ffff00;
+            text-shadow: 0 0 10px #ffff00;
+        }
+        body.retro .notification-bubble {
+            background: #000000;
+            border: 3px solid #00ff00;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            box-shadow: 0 0 20px #00ff00;
+        }
         #top-bar { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold-light); flex-shrink:0; z-index:100; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); backdrop-filter:blur(10px); }
         #map-wrapper { flex:1; overflow:auto; display:flex; justify-content:center; align-items:center; position:relative; background:radial-gradient(circle at center, #e8dcc8 0%, #d4c4a8 100%); box-shadow:inset 0 0 80px rgba(0,0,0,0.08); scroll-behavior:smooth; border-top:2px solid var(--gold-light); border-bottom:2px solid var(--gold-light); }
         #hex-grid { padding:20px; transform-origin:center; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2)); background:rgba(255,255,255,0.3); border-radius:16px; margin:20px; }
@@ -785,7 +1072,13 @@
             } while (gameState.eliminated.includes(gameState.activePlayers[gameState.currentPlayer]));
             const p = gameState.activePlayers[gameState.currentPlayer];
             document.getElementById('action-text').textContent = `Turno de ${getThemeData()[p].flag || getThemeData()[p].miniEmoji} ${getThemeData()[p].name}`;
-            if (!gameState.humanPlayers.includes(p) && !gameState.tutorialMode) setTimeout(aiTurn, 500);
+            
+            // En modo tutorial, el bot juega automáticamente
+            if (gameState.tutorialMode && p === 'nazis') {
+                setTimeout(tutorialBotTurn, 800);
+            } else if (!gameState.humanPlayers.includes(p) && !gameState.tutorialMode) {
+                setTimeout(aiTurn, 500);
+            }
         }
         function aiTurn() {
             const p = gameState.activePlayers[gameState.currentPlayer];
@@ -849,6 +1142,49 @@
         }
 
         function exitToMenu() { if (confirm('¿Salir?')) goToMenu(); }
+        
+        // Función para el turno del BOT en el tutorial
+        function tutorialBotTurn() {
+            if (!gameState.tutorialMode) return;
+            const p = gameState.activePlayers[gameState.currentPlayer];
+            if (p !== 'nazis') return; // Solo el nazi es el bot en el tutorial
+            
+            setTimeout(() => {
+                // El bot tira el dado automáticamente
+                rollDice();
+                
+                setTimeout(() => {
+                    // El bot selecciona su base y ataca
+                    const botBase = {r: 4, c: 4};
+                    const dice = gameState.diceValue;
+                    const reach = getReachable(botBase.r, botBase.c, dice, p);
+                    
+                    if (reach.length > 0) {
+                        // Buscar objetivo enemigo
+                        const enemies = reach.filter(t => gameState.map[t.row][t.col].owner && gameState.map[t.row][t.col].owner !== p);
+                        if (enemies.length > 0) {
+                            const t = enemies[0];
+                            startCombat(botBase.r, botBase.c, t.row, t.col, true);
+                        } else {
+                            // Mover a terreno vacío
+                            const empty = reach.filter(t => !gameState.map[t.row][t.col].owner);
+                            if (empty.length > 0) {
+                                const t = empty[0];
+                                gameState.map[t.row][t.col].owner = p;
+                                gameState.map[t.row][t.col].units = 1;
+                                gameState.map[botBase.r][botBase.c].units--;
+                                showNotification('🤖 BOT: Movió tropas a territorio neutral', 2000);
+                            }
+                        }
+                    }
+                    
+                    setTimeout(() => {
+                        endTurn();
+                    }, 1500);
+                }, 600);
+            }, 800);
+        }
+        
         function startTutorial() {
             const map = []; for (let r = 0; r < 5; r++) { const rd = []; for (let c = 0; c < 5; c++) rd.push({ type: 'plains', owner: null, units: 0 }); map.push(rd); }
             map[0][0] = { type: 'base', owner: 'urss', units: 5 }; map[4][4] = { type: 'base', owner: 'nazis', units: 2 };
