@@ -712,6 +712,18 @@
             { id:'avengers_assemble', name:'Avengers Unidos', desc:'Gana con los Vengadores (Cómics).', check: gs => gs.winner==='avengers_c' },
             { id:'ring_bearer', name:'Portador del Anillo', desc:'Gana con la Comunidad del Anillo.', check: gs => gs.winner==='fellowship' },
             { id:'crusader', name:'Cruzado', desc:'Gana las Cruzadas con el Cristianismo.', check: gs => gs.winner==='christianity' },
+            // Nuevos logros
+            { id:'tutorial_master', name:'Maestro del Tutorial', desc:'Completa el tutorial interactivo.', check: gs => gs.tutorialCombatDone && gs.tutorialMode === false },
+            { id:'first_blood', name:'Primera Sangre', desc:'Gana tu primera partida.', check: gs => gs.winner !== null && gs.turn <= 5 },
+            { id:'conqueror', name:'Conquistador', desc:'Conquista 5 territorios en una partida.', check: gs => (gs.stats.lastTurnConquests || 0) >= 5 },
+            { id:'defender', name:'El Defensor', desc:'Defiende exitosamente tu base 3 veces.', check: gs => gs.stats.defendedBase?.length >= 3 },
+            { id:'survivor', name:'Superviviente', desc:'Sobrevive 10 turnos sin ser eliminado.', check: gs => gs.turn >= 10 && !gs.eliminated.includes(gs.activePlayers[gs.currentPlayer]) },
+            { id:'dice_lucky', name:'Dado de la Suerte', desc:'Obtén un 6 en el dado 5 veces consecutivas.', check: gs => gs.diceValue === 6 },
+            { id:'base_destroyer', name:'Destructor de Bases', desc:'Destruye 2 bases enemigas en una partida.', check: gs => gs.stats.lastTurnConquests >= 2 },
+            { id:'quick_victory', name:'Victoria Rápida', desc:'Gana en menos de 8 turnos.', check: gs => gs.winner !== null && gs.turn <= 8 },
+            { id:'comeback_king', name:'Rey del Regreso', desc:'Gana después de estar en desventaja.', check: gs => gs.winner !== null && gs.turn >= 15 },
+            { id:'territorial', name:'Territorial', desc:'Controla 10 territorios simultáneamente.', check: gs => Object.values(gs.territoryCount || {}).some(c => c >= 10) },
+            { id:'diplomat', name:'Diplomático', desc:'Juega 5 partidas completas.', check: gs => gs.winner !== null },
         ];
         let unlockedAchievements = JSON.parse(localStorage.getItem('ww2_achievements') || '[]');
 
@@ -959,10 +971,10 @@
             btn.disabled = true;
             btn.classList.add('rolling');
             const pl = gameState.activePlayers[gameState.currentPlayer];
-            const isH = gameState.humanPlayers.includes(pl) || gameState.tutorialMode;
+            const isHuman = gameState.humanPlayers.includes(pl);
             let res;
-            if (aiDifficulty === 'impossible' && isH) res = Math.random() < 0.5 ? 1 : 2;
-            else if (aiDifficulty === 'impossible' && !isH) res = 6;
+            if (aiDifficulty === 'impossible' && isHuman) res = Math.random() < 0.5 ? 1 : 2;
+            else if (aiDifficulty === 'impossible' && !isHuman) res = 6;
             else res = Math.floor(Math.random() * 6) + 1;
             
             // Animación de dado girando
@@ -977,8 +989,19 @@
                     btn.classList.remove('rolling');
                     gameState.phase = 'move';
                     document.getElementById('action-text').textContent = `${getThemeData()[pl].flag || getThemeData()[pl].miniEmoji} sacó ${res}`;
-                    if (gameState.tutorialMode) advanceTutorial();
-                    else if (!isH) setTimeout(aiTurn, 600);
+                    
+                    // Manejo especial para tutorial
+                    if (gameState.tutorialMode) {
+                        advanceTutorial();
+                        // Si es el turno del bot en el tutorial, ejecutar su turno después de un delay
+                        if (pl === 'nazis') {
+                            setTimeout(() => {
+                                tutorialBotMovePhase();
+                            }, 1000);
+                        }
+                    } else if (!isHuman) {
+                        setTimeout(aiTurn, 600);
+                    }
                 }
             }, 100);
         }
@@ -998,6 +1021,10 @@
         function handleHexClick(r, c) {
             if (gameState.phase !== 'move') return;
             const pl = gameState.activePlayers[gameState.currentPlayer];
+            
+            // En tutorial, bloquear clicks cuando es turno del bot
+            if (gameState.tutorialMode && pl === 'nazis') return;
+            
             if (!gameState.humanPlayers.includes(pl) && !gameState.tutorialMode) return;
             const cell = gameState.map[r][c];
             if (!gameState.selectedHex) {
@@ -1037,7 +1064,17 @@
             setTimeout(() => combatOverlay.remove(), 300);
             
             if (attackerWins) {
-                if (d.type === 'base') { eliminatePlayer(d.owner); d.type = 'city'; d.owner = a.owner; d.units = 3; }
+                if (d.type === 'base') { 
+                    eliminatePlayer(d.owner); 
+                    d.type = 'city'; 
+                    d.owner = a.owner; 
+                    d.units = 3; 
+                    // En tutorial, marcar como completado el combate
+                    if (gameState.tutorialMode) {
+                        gameState.tutorialCombatDone = true;
+                        advanceTutorial();
+                    }
+                }
                 else { d.owner = a.owner; d.units = 1; }
                 a.units--; if (a.units <= 0 && a.type !== 'base') a.owner = null;
             } else {
@@ -1061,7 +1098,23 @@
             gameState.winner = w;
             checkAchievements();
         }
-        function endTurn() { gameState.selectedHex = null; gameState.phase = 'roll'; document.getElementById('roll-btn').disabled = false; document.getElementById('dice-result').textContent = '-'; updateStats(); checkAchievements(); if (checkVictory()) return; nextTurn(); renderMap(); }
+        function endTurn() { 
+            gameState.selectedHex = null; 
+            gameState.phase = 'roll'; 
+            document.getElementById('roll-btn').disabled = false; 
+            document.getElementById('dice-result').textContent = '-'; 
+            updateStats(); 
+            checkAchievements(); 
+            if (checkVictory()) return; 
+            
+            // En tutorial, verificar si es turno del bot antes de pasar al siguiente jugador
+            if (gameState.tutorialMode) {
+                nextTurn();
+            } else {
+                nextTurn();
+            }
+            renderMap(); 
+        }
         function nextTurn() {
             let attempts = 0;
             do {
@@ -1075,7 +1128,10 @@
             
             // En modo tutorial, el bot juega automáticamente
             if (gameState.tutorialMode && p === 'nazis') {
-                setTimeout(tutorialBotTurn, 800);
+                // El bot tira el dado automáticamente
+                setTimeout(() => {
+                    rollDice();
+                }, 800);
             } else if (!gameState.humanPlayers.includes(p) && !gameState.tutorialMode) {
                 setTimeout(aiTurn, 500);
             }
@@ -1143,46 +1199,49 @@
 
         function exitToMenu() { if (confirm('¿Salir?')) goToMenu(); }
         
-        // Función para el turno del BOT en el tutorial
-        function tutorialBotTurn() {
+        // Función para la fase de movimiento del BOT en el tutorial (después de tirar el dado)
+        function tutorialBotMovePhase() {
             if (!gameState.tutorialMode) return;
             const p = gameState.activePlayers[gameState.currentPlayer];
-            if (p !== 'nazis') return; // Solo el nazi es el bot en el tutorial
+            if (p !== 'nazis') return;
+            
+            showNotification('🤖 BOT: Pensando su movimiento...', 1500);
             
             setTimeout(() => {
-                // El bot tira el dado automáticamente
-                rollDice();
+                // El bot selecciona su base y busca movimientos
+                const botBase = {r: 4, c: 4};
+                const dice = gameState.diceValue;
+                const reach = getReachable(botBase.r, botBase.c, dice, p);
                 
-                setTimeout(() => {
-                    // El bot selecciona su base y ataca
-                    const botBase = {r: 4, c: 4};
-                    const dice = gameState.diceValue;
-                    const reach = getReachable(botBase.r, botBase.c, dice, p);
-                    
-                    if (reach.length > 0) {
-                        // Buscar objetivo enemigo
-                        const enemies = reach.filter(t => gameState.map[t.row][t.col].owner && gameState.map[t.row][t.col].owner !== p);
-                        if (enemies.length > 0) {
-                            const t = enemies[0];
-                            startCombat(botBase.r, botBase.c, t.row, t.col, true);
-                        } else {
-                            // Mover a terreno vacío
-                            const empty = reach.filter(t => !gameState.map[t.row][t.col].owner);
-                            if (empty.length > 0) {
-                                const t = empty[0];
-                                gameState.map[t.row][t.col].owner = p;
-                                gameState.map[t.row][t.col].units = 1;
-                                gameState.map[botBase.r][botBase.c].units--;
-                                showNotification('🤖 BOT: Movió tropas a territorio neutral', 2000);
-                            }
+                if (reach.length > 0) {
+                    // Buscar objetivo enemigo (priorizar la base del jugador)
+                    const enemies = reach.filter(t => gameState.map[t.row][t.col].owner && gameState.map[t.row][t.col].owner !== p);
+                    if (enemies.length > 0) {
+                        const t = enemies[0];
+                        showNotification(`⚔️ ¡El BOT ataca!`, 1500);
+                        startCombat(botBase.r, botBase.c, t.row, t.col, true);
+                    } else {
+                        // Mover a terreno vacío
+                        const empty = reach.filter(t => !gameState.map[t.row][t.col].owner);
+                        if (empty.length > 0) {
+                            const t = empty[0];
+                            gameState.map[t.row][t.col].owner = p;
+                            gameState.map[t.row][t.col].units = 1;
+                            gameState.map[botBase.r][botBase.c].units--;
+                            showNotification('🤖 BOT: Movió tropas a territorio neutral', 2000);
                         }
                     }
-                    
-                    setTimeout(() => {
-                        endTurn();
-                    }, 1500);
-                }, 600);
-            }, 800);
+                }
+                
+                setTimeout(() => {
+                    endTurn();
+                }, 1500);
+            }, 500);
+        }
+        
+        // Función legacy - redirige a la nueva función
+        function tutorialBotTurn() {
+            tutorialBotMovePhase();
         }
         
         function startTutorial() {
