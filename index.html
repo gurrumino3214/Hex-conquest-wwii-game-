@@ -108,6 +108,203 @@
         body.dark .btn-secondary { background:#444; color:#ddd; border-color:#666; }
         body.dark .menu-tab { background:#2c2c2c; color:#aaa; }
         body.dark .menu-tab.active { background:#555; color:#fff; }
+        
+        /* Tema Retro - Estilo arcade/pixel art */
+        body.retro { 
+            background:#2d1b4e; 
+            color:#00ff88; 
+            font-family:'Press Start 2P',cursive;
+            --bg:#1a0f2e; 
+            --panel:#2d1b4e; 
+            --cream:#00ff88; 
+            --brown:#ff00ff; 
+            --brown-light:#00ffff; 
+            --gold:#ffff00; 
+            --gold-light:#ff6600; 
+            --shadow:0 0 15px rgba(0,255,136,0.3);
+        }
+        body.retro #top-bar { 
+            background:#2d1b4e; 
+            border:4px solid #00ff88;
+            border-bottom:4px solid #00ff88;
+            box-shadow:0 0 20px rgba(0,255,136,0.5);
+        }
+        body.retro .modal-box { 
+            background:#1a0f2e; 
+            color:#00ff88; 
+            border:4px solid #00ff88;
+            box-shadow:0 0 30px rgba(0,255,136,0.4);
+        }
+        body.retro .modal-btn { 
+            background:#2d1b4e; 
+            color:#00ff88; 
+            border:3px solid #00ff88;
+            text-transform:uppercase;
+            letter-spacing:2px;
+        }
+        body.retro .modal-btn:hover { 
+            background:#00ff88; 
+            color:#1a0f2e;
+            box-shadow:0 0 20px rgba(0,255,136,0.8);
+        }
+        body.retro .dice-btn { 
+            background:#ff00ff; 
+            border:3px solid #fff;
+            box-shadow:0 0 15px rgba(255,0,255,0.6);
+        }
+        body.retro .exit-btn { 
+            background:#ff6600; 
+            border:3px solid #fff;
+            box-shadow:0 0 15px rgba(255,102,0,0.6);
+        }
+        body.retro .btn-secondary { 
+            background:#1a0f2e; 
+            color:#00ffff; 
+            border:3px solid #00ffff;
+        }
+        body.retro .btn-gold { 
+            background:#ffff00; 
+            color:#1a0f2e; 
+            border:3px solid #fff;
+        }
+        body.retro .menu-tab { 
+            background:#1a0f2e; 
+            color:#00ff88; 
+            border-right:3px solid #00ff88;
+        }
+        body.retro .menu-tab.active { 
+            background:#00ff88; 
+            color:#1a0f2e;
+            box-shadow:0 0 15px rgba(0,255,136,0.6);
+        }
+        body.retro #hex-grid { 
+            filter:drop-shadow(0 0 10px rgba(0,255,136,0.5));
+        }
+        body.retro .hex.plains .hex-inner { background:#00aa55; }
+        body.retro .hex.river .hex-inner { background:#0066aa; }
+        body.retro .hex.mountain .hex-inner { background:#aa6600; }
+        body.retro .hex.city .hex-inner { background:#ffaa00; }
+        body.retro .hex.base .hex-inner { background:#ffff00; }
+        body.retro .player-card { 
+            background:#1a0f2e; 
+            border:2px solid #00ff88;
+            color:#00ff88;
+        }
+        body.retro .player-card.active { 
+            background:#00ff88; 
+            color:#1a0f2e;
+            box-shadow:0 0 20px rgba(0,255,136,0.8);
+        }
+        body.retro .notification-bubble { 
+            background:#1a0f2e; 
+            border:3px solid #00ff88;
+            color:#00ff88;
+            box-shadow:0 0 25px rgba(0,255,136,0.6);
+        }
+        body.retro #dice-result { 
+            background:#1a0f2e; 
+            color:#ffff00;
+            border:3px solid #ffff00;
+        }
+        
+        /* Tema Histórico - Estilo pergamino antiguo */
+        body.historic { 
+            background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23f5e6d0" width="100" height="100"/><path d="M0 0 L100 100 M100 0 L0 100" stroke="%23dcc9a8" stroke-width="0.5" opacity="0.3"/></svg>');
+            color:#3d2817; 
+            font-family:'Special Elite',cursive;
+            --bg:#f5e6d0; 
+            --panel:#f9f1e0; 
+            --cream:#f5e6d0; 
+            --brown:#3d2817; 
+            --brown-light:#5d4037; 
+            --gold:#8b6914; 
+            --gold-light:#c9a962; 
+            --shadow:0 4px 12px rgba(61,40,23,0.2);
+        }
+        body.historic #top-bar { 
+            background:#f9f1e0; 
+            border-bottom:4px double #8b6914;
+            box-shadow:0 4px 15px rgba(61,40,23,0.15);
+        }
+        body.historic .modal-box { 
+            background:#f9f1e0; 
+            color:#3d2817; 
+            border:3px double #8b6914;
+            box-shadow:0 8px 25px rgba(61,40,23,0.2);
+        }
+        body.historic .modal-btn { 
+            background:#f5e6d0; 
+            color:#3d2817; 
+            border:2px solid #8b6914;
+            font-style:italic;
+        }
+        body.historic .modal-btn:hover { 
+            background:#8b6914; 
+            color:#f9f1e0;
+        }
+        body.historic .dice-btn { 
+            background:#8b3a3a; 
+            border:2px solid #5d2929;
+            box-shadow:0 4px 12px rgba(139,58,58,0.4);
+        }
+        body.historic .exit-btn { 
+            background:#4a5d4a; 
+            border:2px solid #2d3d2d;
+            box-shadow:0 4px 12px rgba(74,93,74,0.4);
+        }
+        body.historic .btn-secondary { 
+            background:#f5e6d0; 
+            color:#5d4037; 
+            border:2px solid #c9a962;
+        }
+        body.historic .btn-gold { 
+            background:#c9a962; 
+            color:#3d2817; 
+            border:2px solid #8b6914;
+        }
+        body.historic .menu-tab { 
+            background:#f5e6d0; 
+            color:#5d4037; 
+            border-right:2px solid #c9a962;
+        }
+        body.historic .menu-tab.active { 
+            background:#f9f1e0; 
+            color:#3d2817;
+            border-bottom:3px solid #8b6914;
+        }
+        body.historic #hex-grid { 
+            filter:sepia(0.3) drop-shadow(0 6px 14px rgba(61,40,23,0.2));
+        }
+        body.historic .hex.plains .hex-inner { background:#c4d4a4; }
+        body.historic .hex.river .hex-inner { background:#a4c4d4; }
+        body.historic .hex.mountain .hex-inner { background:#d4c4a4; }
+        body.historic .hex.city .hex-inner { background:#e4c484; }
+        body.historic .hex.base .hex-inner { background:#d4af37; }
+        body.historic .player-card { 
+            background:#f5e6d0; 
+            border:2px solid #c9a962;
+            color:#5d4037;
+        }
+        body.historic .player-card.active { 
+            background:#c9a962; 
+            color:#f9f1e0;
+            box-shadow:0 4px 15px rgba(139,105,20,0.3);
+        }
+        body.historic .notification-bubble { 
+            background:#f9f1e0; 
+            border:3px double #8b6914;
+            color:#3d2817;
+            box-shadow:0 4px 20px rgba(61,40,23,0.25);
+        }
+        body.historic #dice-result { 
+            background:#f5e6d0; 
+            color:#3d2817;
+            border:2px solid #8b6914;
+        }
+        body.historic .section-title { 
+            border-bottom:2px double #8b6914;
+            color:#5d4037;
+        }
         @media (max-width: 600px) {
             :root { --hex-size: 38px; }
             .dice-btn, .exit-btn { padding:6px 12px; font-size:10px; }
@@ -750,13 +947,24 @@
         function aiTurn() {
             const p = gameState.activePlayers[gameState.currentPlayer];
             const dice = gameState.diceValue + (getThemeData()[p].bonuses.moveBonus || 0);
-            const my = []; for (let r = 0; r < gameState.mapSize; r++) for (let c = 0; c < gameState.mapSize; c++) { if (gameState.map[r][c].owner === p && gameState.map[r][c].units > 0) my.push({r, c}); }
+            
+            // Obtener todas las unidades de la IA
+            const my = []; 
+            for (let r = 0; r < gameState.mapSize; r++) {
+                for (let c = 0; c < gameState.mapSize; c++) {
+                    if (gameState.map[r][c].owner === p && gameState.map[r][c].units > 0) {
+                        my.push({r, c});
+                    }
+                }
+            }
             if (!my.length) { endTurn(); return; }
 
-            // En modo imposible: buscar bases enemigas para atacar
+            // ══════════ IA MEJORADA - Lógica por dificultad ══════════
             let target = null;
+            
+            // Modo IMPOSIBLE: IA muy agresiva y estratégica
             if (aiDifficulty === 'impossible') {
-                // Priorizar atacar bases enemigas
+                // 1. Prioridad máxima: atacar bases enemigas
                 for (const s of my) {
                     const reach = getReachable(s.r, s.c, dice, p);
                     for (const t of reach) {
@@ -768,30 +976,104 @@
                     }
                     if (target) break;
                 }
+                
+                // 2. Si no hay bases, atacar cualquier unidad enemiga
+                if (!target) {
+                    for (const s of my) {
+                        const reach = getReachable(s.r, s.c, dice, p);
+                        const enemies = reach.filter(t => gameState.map[t.row][t.col].owner && gameState.map[t.row][t.col].owner !== p);
+                        if (enemies.length > 0) {
+                            // Elegir el enemigo con menos unidades
+                            enemies.sort((a, b) => gameState.map[a.row][a.col].units - gameState.map[b.row][b.col].units);
+                            const t = enemies[0];
+                            target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                            break;
+                        }
+                    }
+                }
+                
+                // 3. Si no hay enemigos, expandirse estratégicamente
+                if (!target) {
+                    const s = my[Math.floor(Math.random() * my.length)];
+                    const reach = getReachable(s.r, s.c, dice, p);
+                    // Priorizar ciudades y terrenos vacíos cercanos a enemigos
+                    const cities = reach.filter(t => gameState.map[t.row][t.col].type === 'city' && !gameState.map[t.row][t.col].owner);
+                    if (cities.length > 0) {
+                        const t = cities[Math.floor(Math.random() * cities.length)];
+                        target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                    } else if (reach.length > 0) {
+                        const t = reach[Math.floor(Math.random() * reach.length)];
+                        target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                    }
+                }
             }
-
-            // Si no se encontró base enemiga o no es modo imposible, ataque normal
-            if (!target) {
-                const s = my[Math.floor(Math.random() * my.length)];
-                const reach = getReachable(s.r, s.c, dice, p);
-                if (reach.length > 0) {
-                    // En modo imposible, priorizar atacar cualquier enemigo
-                    if (aiDifficulty === 'impossible') {
+            // Modo DIFÍCIL: IA agresiva pero con errores ocasionales
+            else if (aiDifficulty === 'hard') {
+                // 70% de probabilidad de tomar la mejor decisión
+                if (Math.random() < 0.7) {
+                    // Buscar enemigos para atacar
+                    for (const s of my) {
+                        const reach = getReachable(s.r, s.c, dice, p);
                         const enemies = reach.filter(t => gameState.map[t.row][t.col].owner && gameState.map[t.row][t.col].owner !== p);
                         if (enemies.length > 0) {
                             const t = enemies[Math.floor(Math.random() * enemies.length)];
                             target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
-                        } else {
-                            const t = reach[Math.floor(Math.random() * reach.length)];
-                            target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                            break;
                         }
+                    }
+                }
+                
+                // Si no se encontró objetivo o falló la decisión, movimiento aleatorio
+                if (!target) {
+                    const s = my[Math.floor(Math.random() * my.length)];
+                    const reach = getReachable(s.r, s.c, dice, p);
+                    if (reach.length > 0) {
+                        const t = reach[Math.floor(Math.random() * reach.length)];
+                        target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                    }
+                }
+            }
+            // Modo NORMAL: IA equilibrada
+            else if (aiDifficulty === 'normal') {
+                const s = my[Math.floor(Math.random() * my.length)];
+                const reach = getReachable(s.r, s.c, dice, p);
+                if (reach.length > 0) {
+                    // 50% de atacar si hay enemigo
+                    const enemies = reach.filter(t => gameState.map[t.row][t.col].owner && gameState.map[t.row][t.col].owner !== p);
+                    if (enemies.length > 0 && Math.random() < 0.5) {
+                        const t = enemies[Math.floor(Math.random() * enemies.length)];
+                        target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
                     } else {
                         const t = reach[Math.floor(Math.random() * reach.length)];
                         target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
                     }
                 }
             }
+            // Modo FÁCIL: IA básica con muchos errores
+            else if (aiDifficulty === 'easy') {
+                const s = my[Math.floor(Math.random() * my.length)];
+                const reach = getReachable(s.r, s.c, dice, p);
+                if (reach.length > 0) {
+                    const t = reach[Math.floor(Math.random() * reach.length)];
+                    target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                }
+            }
+            // Modo BEBÉ: IA muy débil
+            else if (aiDifficulty === 'baby') {
+                // 50% de probabilidad de no hacer nada útil
+                if (Math.random() < 0.5) {
+                    endTurn();
+                    return;
+                }
+                const s = my[Math.floor(Math.random() * my.length)];
+                const reach = getReachable(s.r, s.c, dice, p);
+                if (reach.length > 0) {
+                    const t = reach[Math.floor(Math.random() * reach.length)];
+                    target = { from: s, to: t, cell: gameState.map[t.row][t.col] };
+                }
+            }
 
+            // Ejecutar la acción seleccionada
             if (target) {
                 const { from, to, cell } = target;
                 if (cell.owner && cell.owner !== p) {
@@ -809,21 +1091,124 @@
         }
 
         function exitToMenu() { if (confirm('¿Salir?')) goToMenu(); }
+        
+        // Escenarios del tutorial con contexto histórico/narrativo
+        const tutorialScenarios = [
+            {
+                step: 0,
+                title: "🎲 Primer Movimiento",
+                context: "Estás al mando de las fuerzas soviéticas en 1943. El Ejército Rojo se prepara para una ofensiva crucial. Tu base en el noroeste debe expandirse hacia territorio enemigo.",
+                instruction: "Pulsa 'TIRAR DADO' para comenzar tu turno. El resultado determinará cuántas casillas pueden mover tus tropas.",
+                mapSetup: { size: 5, playerBase: [0,0], enemyBase: [4,4], playerUnits: 5, enemyUnits: 2 }
+            },
+            {
+                step: 1,
+                title: "👆 Selecciona tu Unidad",
+                context: "Tus tropas están listas para avanzar. Cada hexágono representa terreno estratégico que puedes controlar.",
+                instruction: "Selecciona tu base (hexágono dorado) haciendo clic sobre ella. Verás las opciones de movimiento disponibles.",
+                mapSetup: null
+            },
+            {
+                step: 2,
+                title: "🟢 Movimiento Táctico",
+                context: "Los hexágonos verdes indican terreno seguro donde puedes posicionar tus fuerzas sin combate.",
+                instruction: "Toca un hexágono verde para mover tus tropas. Planifica cuidadosamente tu avance.",
+                mapSetup: null
+            },
+            {
+                step: 3,
+                title: "🎲 Segundo Turno",
+                context: "El enemigo ha reaccionado a tu movimiento. Es momento de continuar la ofensiva.",
+                instruction: "Tira el dado nuevamente para determinar tus opciones de movimiento en este turno.",
+                mapSetup: null
+            },
+            {
+                step: 4,
+                title: "⚔️ Preparando el Ataque",
+                context: "Has detectado posiciones enemigas. Los hexágonos rojos indican objetivos que puedes atacar.",
+                instruction: "Selecciona una de tus unidades y luego toca un hexágono rojo para iniciar el combate.",
+                mapSetup: null
+            },
+            {
+                step: 5,
+                title: "🏆 Victoria",
+                context: "¡Has completado el entrenamiento! Ahora estás listo para comandar en escenarios reales contra la IA o jugadores humanos.",
+                instruction: "El tutorial ha finalizado. Serás redirigido al menú principal.",
+                mapSetup: null
+            }
+        ];
+        
         function startTutorial() {
             const map = []; for (let r = 0; r < 5; r++) { const rd = []; for (let c = 0; c < 5; c++) rd.push({ type: 'plains', owner: null, units: 0 }); map.push(rd); }
             map[0][0] = { type: 'base', owner: 'urss', units: 5 }; map[4][4] = { type: 'base', owner: 'nazis', units: 2 };
             gameState = { map, activePlayers: ['urss','nazis'], humanPlayers: ['urss'], currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {urss:0,nazis:0}, pendingCombat: null, mapSize: 5, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[]}, tutorialMode: true, tutorialStep: 0, tutorialCombatDone: false };
             aiDifficulty='easy'; document.getElementById('menu-modal').classList.remove('show'); renderMap();
-            showNotification('🎲 Paso 1: Pulsa "TIRAR DADO".'); highlightElement('roll-btn');
+            showTutorialContext(0);
         }
+        
+        function showTutorialContext(step) {
+            const scenario = tutorialScenarios[step];
+            if (!scenario) return;
+            
+            // Mostrar modal con contexto antes de cada paso
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.id = 'tutorial-context-modal';
+            modal.innerHTML = `
+                <div class="modal-box" style="max-width:600px;">
+                    <h2 style="color:#6b4226;margin-bottom:8px;">${scenario.title}</h2>
+                    <div style="background:#f9f6f0;border-radius:12px;padding:16px;margin:12px 0;text-align:left;">
+                        <p style="font-size:13px;line-height:1.6;color:#5d4037;">${scenario.context}</p>
+                    </div>
+                    <div style="background:#e8f5e9;border-radius:12px;padding:12px;margin:12px 0;">
+                        <p style="font-size:12px;font-weight:700;color:#2e7d32;">📌 ${scenario.instruction}</p>
+                    </div>
+                    <button class="modal-btn btn-primary" onclick="continueTutorial(${step})">▶ Comenzar</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        function continueTutorial(step) {
+            const modal = document.getElementById('tutorial-context-modal');
+            if (modal) modal.remove();
+            
+            if (step === 0) {
+                showNotification('🎲 Paso 1: Pulsa "TIRAR DADO".'); 
+                highlightElement('roll-btn');
+            }
+        }
+        
         function advanceTutorial() {
             const step = gameState.tutorialStep;
-            if (step === 0 && gameState.phase === 'move') { gameState.tutorialStep = 1; hideHighlight(); showNotification('👆 Selecciona tu base.'); }
-            else if (step === 1 && gameState.selectedHex) { gameState.tutorialStep = 2; showNotification('🟢 Toca un hexágono verde para mover.'); }
-            else if (step === 2 && gameState.phase === 'roll' && gameState.turn > 1) { gameState.tutorialStep = 3; showNotification('🎲 Tira el dado otra vez.'); highlightElement('roll-btn'); }
-            else if (step === 3 && gameState.phase === 'move') { gameState.tutorialStep = 4; hideHighlight(); showNotification('👆 Selecciona una unidad.'); }
-            else if (step === 4 && gameState.selectedHex) { gameState.tutorialStep = 5; showNotification('🔴 Toca un hexágono rojo para atacar.'); }
-            else if (step === 5 && gameState.tutorialCombatDone) { gameState.tutorialMode = false; hideHighlight(); showNotification('🎉 Tutorial completado.'); setTimeout(() => goToMenu(), 2000); }
+            if (step === 0 && gameState.phase === 'move') { 
+                gameState.tutorialStep = 1; 
+                hideHighlight(); 
+                showTutorialContext(1); 
+            }
+            else if (step === 1 && gameState.selectedHex) { 
+                gameState.tutorialStep = 2; 
+                showNotification('🟢 Toca un hexágono verde para mover.'); 
+            }
+            else if (step === 2 && gameState.phase === 'roll' && gameState.turn > 1) { 
+                gameState.tutorialStep = 3; 
+                showTutorialContext(3); 
+            }
+            else if (step === 3 && gameState.phase === 'move') { 
+                gameState.tutorialStep = 4; 
+                hideHighlight(); 
+                showTutorialContext(4); 
+            }
+            else if (step === 4 && gameState.selectedHex) { 
+                gameState.tutorialStep = 5; 
+                showNotification('🔴 Toca un hexágono rojo para atacar.'); 
+            }
+            else if (step === 5 && gameState.tutorialCombatDone) { 
+                gameState.tutorialMode = false; 
+                hideHighlight(); 
+                showTutorialContext(5);
+                setTimeout(() => goToMenu(), 3000); 
+            }
         }
         function showNotification(msg, duration=2500) {
             const old = document.querySelector('.notification-bubble'); if (old) old.remove();
@@ -891,23 +1276,72 @@
 
         // ══════════ ESCENARIOS ══════════
         function startScenario(scenario) {
-            let map, human, active, size, theme;
-            if (scenario === 'stalingrad') { theme='ww2'; map=generateScenarioMap('stalingrad'); human=['urss']; active=['urss','nazis']; size=7; }
-            else if (scenario === 'normandy') { theme='ww2'; map=generateScenarioMap('normandy'); human=['usa']; active=['usa','uk','nazis']; size=9; }
-            else if (scenario === 'midway') { theme='ww2'; map=generateScenarioMap('midway'); human=['usa']; active=['usa','japon']; size=9; }
-            else if (scenario === 'termpilas') { theme='ancient'; map=generateScenarioMap('termpilas'); human=['sparta']; active=['sparta','japon']; size=7; }
-            else if (scenario === 'cannas') { theme='ancient'; map=generateScenarioMap('cannas'); human=['nazis']; active=['nazis','italia']; size=9; }
-            else if (scenario === 'consolewar') { theme='gaming'; map=generateScenarioMap('consolewar'); human=['urss']; active=['urss','italia','nazis']; size=9; }
-            else if (scenario === 'starwars') { theme='movies'; map=generateScenarioMap('starwars'); human=['rebels']; active=['rebels','empire','jedi','sith']; size=9; }
-            else if (scenario === 'leafbattle') { theme='anime'; map=generateScenarioMap('leafbattle'); human=['konoha']; active=['konoha','akatsuki']; size=7; }
-            else if (scenario === 'middleearth') { theme='literature'; map=generateScenarioMap('middleearth'); human=['fellowship']; active=['fellowship','mordor']; size=11; }
-            else if (scenario === 'crusades') { theme='religion'; map=generateScenarioMap('crusades'); human=['christianity']; active=['christianity','islam','judaism']; size=9; }
+            let map, human, active, size, theme, contextTitle, contextDesc;
+            
+            // Contexto narrativo para cada escenario
+            const scenarioContexts = {
+                'stalingrad': { title: "🇷🇺 Batalla de Stalingrado", desc: "1942-1943: El punto de inflexión en el Frente Oriental. Las fuerzas soviéticas defienden la ciudad contra el avance alemán." },
+                'normandy': { title: "🇺🇸 Día D - Normandía", desc: "6 de junio de 1944: La mayor operación anfibia de la historia. Los Aliados desembarcan en las playas de Normandía." },
+                'midway': { title: "🇯🇵 Batalla de Midway", desc: "Junio 1942: El combate naval que cambió el curso de la guerra en el Pacífico." },
+                'termpilas': { title: "🛡️ Las Termópilas", desc: "480 a.C.: Leónidas y sus 300 espartanos enfrentan al ejército persa de Jerjes." },
+                'cannas': { title: "⚔️ Batalla de Cannas", desc: "216 a.C.: Aníbal derrota a Roma en una de las batallas más estudiadas de la historia." },
+                'consolewar': { title: "🕹️ Guerra de Consolas", desc: "Los gigantes de los videojuegos compiten por el dominio del mercado." },
+                'starwars': { title: "🌌 Star Wars", desc: "La Rebelión lucha contra el Imperio Galáctico en una guerra interestelar." },
+                'leafbattle': { title: "🍃 Batalla de la Hoja", desc: "Naruto y la Aldea Oculta de la Hoja se enfrentan a la Akatsuki." },
+                'middleearth': { title: "💍 Tierra Media", desc: "La Comunidad del Anillo busca destruir el Anillo Único en el Monte del Destino." },
+                'crusades': { title: "✝️ Las Cruzadas", desc: "Siglos XI-XIII: Las guerras religiosas por el control de Tierra Santa." }
+            };
+            
+            if (scenario === 'stalingrad') { theme='ww2'; map=generateScenarioMap('stalingrad'); human=['urss']; active=['urss','nazis']; size=7; contextTitle = scenarioContexts['stalingrad'].title; contextDesc = scenarioContexts['stalingrad'].desc; }
+            else if (scenario === 'normandy') { theme='ww2'; map=generateScenarioMap('normandy'); human=['usa']; active=['usa','uk','nazis']; size=9; contextTitle = scenarioContexts['normandy'].title; contextDesc = scenarioContexts['normandy'].desc; }
+            else if (scenario === 'midway') { theme='ww2'; map=generateScenarioMap('midway'); human=['usa']; active=['usa','japon']; size=9; contextTitle = scenarioContexts['midway'].title; contextDesc = scenarioContexts['midway'].desc; }
+            else if (scenario === 'termpilas') { theme='ancient'; map=generateScenarioMap('termpilas'); human=['sparta']; active=['sparta','japon']; size=7; contextTitle = scenarioContexts['termpilas'].title; contextDesc = scenarioContexts['termpilas'].desc; }
+            else if (scenario === 'cannas') { theme='ancient'; map=generateScenarioMap('cannas'); human=['nazis']; active=['nazis','italia']; size=9; contextTitle = scenarioContexts['cannas'].title; contextDesc = scenarioContexts['cannas'].desc; }
+            else if (scenario === 'consolewar') { theme='gaming'; map=generateScenarioMap('consolewar'); human=['urss']; active=['urss','italia','nazis']; size=9; contextTitle = scenarioContexts['consolewar'].title; contextDesc = scenarioContexts['consolewar'].desc; }
+            else if (scenario === 'starwars') { theme='movies'; map=generateScenarioMap('starwars'); human=['rebels']; active=['rebels','empire','jedi','sith']; size=9; contextTitle = scenarioContexts['starwars'].title; contextDesc = scenarioContexts['starwars'].desc; }
+            else if (scenario === 'leafbattle') { theme='anime'; map=generateScenarioMap('leafbattle'); human=['konoha']; active=['konoha','akatsuki']; size=7; contextTitle = scenarioContexts['leafbattle'].title; contextDesc = scenarioContexts['leafbattle'].desc; }
+            else if (scenario === 'middleearth') { theme='literature'; map=generateScenarioMap('middleearth'); human=['fellowship']; active=['fellowship','mordor']; size=11; contextTitle = scenarioContexts['middleearth'].title; contextDesc = scenarioContexts['middleearth'].desc; }
+            else if (scenario === 'crusades') { theme='religion'; map=generateScenarioMap('crusades'); human=['christianity']; active=['christianity','islam','judaism']; size=9; contextTitle = scenarioContexts['crusades'].title; contextDesc = scenarioContexts['crusades'].desc; }
             else return;
-            setGameTheme(theme);
-            gameState = { map, activePlayers: active, humanPlayers: human, currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {}, pendingCombat: null, mapSize: size, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[]}, tutorialMode: false };
-            active.forEach(p => gameState.scores[p]=0);
-            document.getElementById('menu-modal').classList.remove('show'); renderMap();
-            if (!human.includes(active[0])) setTimeout(aiTurn, 600);
+            
+            // Mostrar contexto antes de iniciar el escenario
+            showScenarioContext(contextTitle, contextDesc, () => {
+                setGameTheme(theme);
+                gameState = { map, activePlayers: active, humanPlayers: human, currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {}, pendingCombat: null, mapSize: size, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[]}, tutorialMode: false };
+                active.forEach(p => gameState.scores[p]=0);
+                document.getElementById('menu-modal').classList.remove('show'); renderMap();
+                if (!human.includes(active[0])) setTimeout(aiTurn, 600);
+            });
+        }
+        
+        function showScenarioContext(title, description, callback) {
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.id = 'scenario-context-modal';
+            modal.innerHTML = `
+                <div class="modal-box" style="max-width:600px;">
+                    <h2 style="color:#6b4226;margin-bottom:8px;font-size:20px;">${title}</h2>
+                    <div style="background:linear-gradient(135deg,#f9f6f0,#fff8e8);border-radius:12px;padding:20px;margin:16px 0;text-align:left;border:2px solid #e0d0b8;">
+                        <p style="font-size:14px;line-height:1.7;color:#5d4037;margin-bottom:12px;">${description}</p>
+                        <div style="display:flex;gap:12px;align-items:center;background:#e8f5e9;border-radius:8px;padding:12px;">
+                            <span style="font-size:24px;">🎯</span>
+                            <p style="font-size:12px;color:#2e7d32;margin:0;"><b>Objetivo:</b> Derrota a tus enemigos y conquista sus bases.</p>
+                        </div>
+                    </div>
+                    <button class="modal-btn btn-primary" onclick="startScenarioGame()">▶ Iniciar Batalla</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            window._scenarioCallback = callback;
+        }
+        
+        function startScenarioGame() {
+            const modal = document.getElementById('scenario-context-modal');
+            if (modal) modal.remove();
+            if (window._scenarioCallback) {
+                window._scenarioCallback();
+                window._scenarioCallback = null;
+            }
         }
         function generateScenarioMap(type) {
             if (type==='stalingrad') { const s=7,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[3][0]={type:'base',owner:'urss',units:5};m[3][6]={type:'base',owner:'nazis',units:5};return m;}
