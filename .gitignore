@@ -1,4 +1,2 @@
-```
-# Backup files
-*_backup.*
-```
+(index.html is a source file, so no need to add it to .gitignore)
+(empty — output nothing)
