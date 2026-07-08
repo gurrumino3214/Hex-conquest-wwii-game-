@@ -301,15 +301,145 @@
             color:#3d2817;
             border:2px solid #8b6914;
         }
+        
+        /* Estilos para la sección Cómo Jugar */
+        .how-to-play-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+            max-height: 55vh;
+            overflow-y: auto;
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .tutorial-card {
+            background: linear-gradient(135deg, #fffef9, #fff);
+            border: 2px solid #e0c9a0;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .tutorial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(230,168,23,0.25);
+            border-color: var(--gold);
+        }
+        
+        .tutorial-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .tutorial-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6b4226;
+            margin: 8px 0;
+            font-family: 'Fredoka', sans-serif;
+        }
+        
+        .tutorial-card p {
+            font-size: 11px;
+            color: #5d4037;
+            line-height: 1.5;
+        }
+        
+        .tutorial-cta {
+            text-align: center;
+            padding: 12px;
+            background: linear-gradient(135deg, #fffde7, #fff);
+            border-radius: 16px;
+            border: 2px dashed var(--gold);
+            margin-top: 8px;
+        }
+        
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .tutorial-subtitle {
+            font-size: 11px;
+            color: #8b6b4a;
+            margin: 0;
+            font-style: italic;
+        }
+        
+        /* Estilos Retro para Cómo Jugar */
+        body.retro .how-to-play-container {
+            grid-template-columns: 1fr;
+        }
+        
+        body.retro .tutorial-card {
+            background: #1a0f2e;
+            border: 3px solid #00ff88;
+            color: #00ff88;
+            box-shadow: 0 0 15px rgba(0,255,136,0.3);
+        }
+        
+        body.retro .tutorial-card h3 {
+            color: #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        body.retro .tutorial-card p {
+            color: #00ff88;
+        }
+        
+        body.retro .tutorial-cta {
+            background: #1a0f2e;
+            border: 3px dashed #00ff88;
+        }
+        
+        body.retro .tutorial-subtitle {
+            color: #00ffff;
+        }
+        
+        /* Estilos Históricos para Cómo Jugar */
+        body.historic .tutorial-card {
+            background: #f9f1e0;
+            border: 2px double #8b6914;
+            box-shadow: 0 4px 12px rgba(61,40,23,0.15);
+        }
+        
+        body.historic .tutorial-card h3 {
+            color: #3d2817;
+            font-family: 'Special Elite', cursive;
+            font-style: italic;
+        }
+        
+        body.historic .tutorial-card p {
+            color: #5d4037;
+        }
+        
+        body.historic .tutorial-cta {
+            background: #f9f1e0;
+            border: 2px double #8b6914;
+        }
+        
+        body.historic .tutorial-subtitle {
+            color: #8b6914;
+            font-family: 'Special Elite', cursive;
+        }
+        
         body.historic .section-title { 
             border-bottom:2px double #8b6914;
             color:#5d4037;
         }
+        
         @media (max-width: 600px) {
             :root { --hex-size: 38px; }
             .dice-btn, .exit-btn { padding:6px 12px; font-size:10px; }
             #dice-result { font-size:22px; }
             .modal-box { max-width:95%; }
+            .how-to-play-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -394,15 +524,42 @@
             </div>
             <div class="tab-panel" id="tab-tutorial">
                 <div class="section-title">📖 Cómo Jugar</div>
-                <div style="text-align:left;font-size:11px;max-height:50vh;overflow-y:auto;padding:0 5px;">
-                    <p><b>🎯 Objetivo:</b> Conquista todas las bases enemigas o elimina a todos los oponentes.</p>
-                    <p><b>🎲 Tirar el dado:</b> Al inicio de tu turno, pulsa "TIRAR DADO". El número obtenido determina cuántas casillas puedes mover tus unidades.</p>
-                    <p><b>👆 Mover tropas:</b> Toca una de tus casillas para seleccionarla. Se iluminarán en <span style="color:#27ae60;">verde</span> las casillas vacías a las que puedes mover, y en <span style="color:#e74c3c;">rojo</span> las casillas enemigas que puedes atacar.</p>
-                    <p><b>⚔️ Combate:</b> Si atacas, se tira un dado por cada bando. Quien saque mayor número gana.</p>
-                    <p><b>⭐ Bases:</b> Son tus cuarteles generales. Si pierdes tu base, ¡quedas eliminado!</p>
-                    <p><b>🌊 Ríos y ⛰️ Montañas:</b> Los ríos solo se pueden cruzar si el dado saca 1, 3 o 6 (salvo habilidad).</p>
+                <div class="how-to-play-container">
+                    <div class="tutorial-card">
+                        <div class="tutorial-icon">🎯</div>
+                        <h3>Objetivo del Juego</h3>
+                        <p>Conquista todas las bases enemigas o elimina a todos los oponentes para lograr la victoria.</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-icon">🎲</div>
+                        <h3>Tirar el Dado</h3>
+                        <p>Al inicio de tu turno, pulsa "TIRAR DADO". El número obtenido determina cuántas casillas puedes mover tus unidades.</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-icon">👆</div>
+                        <h3>Mover Tropas</h3>
+                        <p>Toca una de tus casillas para seleccionarla. Se iluminarán en <span style="color:#27ae60;font-weight:bold;">verde</span> las casillas vacías a las que puedes mover, y en <span style="color:#e74c3c;font-weight:bold;">rojo</span> las casillas enemigas que puedes atacar.</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-icon">⚔️</div>
+                        <h3>Combate</h3>
+                        <p>Si atacas, se tira un dado por cada bando. Quien saque mayor número gana. ¡El perdedor pierde sus unidades!</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-icon">⭐</div>
+                        <h3>Bases</h3>
+                        <p>Son tus cuarteles generales. Si pierdes tu base, ¡quedas eliminado del juego! Protégelas a toda costa.</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <div class="tutorial-icon">🌊</div>
+                        <h3>Terreno Especial</h3>
+                        <p>Los ríos solo se pueden cruzar si el dado saca 1, 3 o 6 (salvo habilidad especial). Las montañas reducen el movimiento.</p>
+                    </div>
                 </div>
-                <button class="modal-btn btn-primary" onclick="startTutorial()">▶ Iniciar Tutorial Interactivo</button>
+                <div class="tutorial-cta">
+                    <button class="modal-btn btn-primary btn-large" onclick="startTutorial()">▶ Iniciar Tutorial Interactivo vs IA</button>
+                    <p class="tutorial-subtitle">Aprende jugando contra una IA que te guiará paso a paso</p>
+                </div>
             </div>
             <div class="tab-panel" id="tab-editor">
                 <div class="section-title">🗺️ Editor de Mapas</div>
@@ -921,7 +1078,15 @@
             gameState.tutorialCombatDone = true;
             updateStats();
         }
-        function closeCombat() { document.getElementById('combat-modal').classList.remove('show'); if (checkVictory()) return; endTurn(); }
+        function closeCombat() { 
+            document.getElementById('combat-modal').classList.remove('show'); 
+            if (gameState.tutorialMode && gameState.tutorialStep === 5) {
+                advanceTutorial();
+                return;
+            }
+            if (checkVictory()) return; 
+            endTurn(); 
+        }
         function eliminatePlayer(p) { if (gameState.eliminated.includes(p)) return; gameState.eliminated.push(p); for (const row of gameState.map) for (const cell of row) if (cell.owner === p && cell.type !== 'base') { cell.owner = null; cell.units = 0; } }
         function checkVictory() { const active = gameState.activePlayers.filter(p => !gameState.eliminated.includes(p)); if (active.length === 1) { showVictory(active[0]); return true; } return false; }
         function showVictory(w) {
@@ -942,7 +1107,9 @@
             } while (gameState.eliminated.includes(gameState.activePlayers[gameState.currentPlayer]));
             const p = gameState.activePlayers[gameState.currentPlayer];
             document.getElementById('action-text').textContent = `Turno de ${getThemeData()[p].flag || getThemeData()[p].miniEmoji} ${getThemeData()[p].name}`;
+            // En tutorial, la IA siempre juega después del jugador
             if (!gameState.humanPlayers.includes(p) && !gameState.tutorialMode) setTimeout(aiTurn, 500);
+            else if (gameState.tutorialMode && !gameState.humanPlayers.includes(p)) setTimeout(aiTurn, 500);
         }
         function aiTurn() {
             const p = gameState.activePlayers[gameState.currentPlayer];
@@ -1087,7 +1254,8 @@
                     }
                 }
             }
-            if (!checkVictory()) endTurn();
+            // En tutorial, no terminar automáticamente - esperar al jugador
+            if (!gameState.tutorialMode && !checkVictory()) endTurn();
         }
 
         function exitToMenu() { if (confirm('¿Salir?')) goToMenu(); }
