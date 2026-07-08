@@ -362,7 +362,7 @@
         @keyframes fadeInOut { 0%{opacity:0;bottom:100px;} 15%{opacity:1;bottom:120px;} 80%{opacity:1;bottom:120px;} 100%{opacity:0;bottom:100px;} }
         .combat-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(231,76,60,0.2); z-index:999; pointer-events:none; animation:combatFlash 0.3s ease-in-out; }
         .tutorial-highlight { position:absolute; border:4px solid #ff6b6b; border-radius:12px; pointer-events:none; z-index:999; display:none; animation:highlightPulse 1s infinite; } @keyframes highlightPulse { 0%,100%{border-color:#ff6b6b} 50%{border-color:#ffd700} }
-        .tutorial-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:transparent; z-index:998; display:none; pointer-events:none; }
+        .tutorial-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:998; display:none; }
         .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center; padding:12px; overflow-y:auto; } .modal.show { display:flex; }
         .modal-box { background:#fffef9; border:2px solid var(--gold-light); border-radius:16px; padding:20px; max-width:560px; width:100%; text-align:center; max-height:90vh; overflow-y:auto; }
         .modal-title { font-size:22px; font-weight:900; color:#6b4226; margin-bottom:8px; font-family:'Fredoka',sans-serif; }
@@ -475,22 +475,22 @@
             </div>
             <div class="tab-panel" id="tab-scenarios">
                 <div class="section-title">🏛️ Históricos (WWII)</div>
-                <button class="modal-btn btn-gold" onclick="showScenarioInfo('stalingrad')">🇷🇺 Stalingrado (7×7)</button>
-                <button class="modal-btn btn-gold" onclick="showScenarioInfo('normandy')">🇺🇸 Normandía (9×9)</button>
-                <button class="modal-btn btn-gold" onclick="showScenarioInfo('midway')">🇯🇵 Midway (9×9)</button>
+                <button class="modal-btn btn-gold" onclick="startScenario('stalingrad')">🇷🇺 Stalingrado (7×7)</button>
+                <button class="modal-btn btn-gold" onclick="startScenario('normandy')">🇺🇸 Normandía (9×9)</button>
+                <button class="modal-btn btn-gold" onclick="startScenario('midway')">🇯🇵 Midway (9×9)</button>
                 <div class="section-title">🏺 Antigüedad</div>
-                <button class="modal-btn btn-secondary" onclick="showScenarioInfo('termpilas')">🛡️ Termópilas (7×7)</button>
-                <button class="modal-btn btn-secondary" onclick="showScenarioInfo('cannas')">⚔️ Cannas (9×9)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('termpilas')">🛡️ Termópilas (7×7)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('cannas')">⚔️ Cannas (9×9)</button>
                 <div class="section-title">🎮 Videojuegos</div>
-                <button class="modal-btn btn-secondary" onclick="showScenarioInfo('consolewar')">🕹️ Guerra de Consolas (9×9)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('consolewar')">🕹️ Guerra de Consolas (9×9)</button>
                 <div class="section-title">🎬 Películas</div>
-                <button class="modal-btn btn-secondary" onclick="showScenarioInfo('starwars')">🌌 Star Wars (9×9)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('starwars')">🌌 Star Wars (9×9)</button>
                 <div class="section-title">🎌 Anime / Manga</div>
-                <button class="modal-btn btn-secondary" onclick="showScenarioInfo('leafbattle')">🍃 Batalla de la Hoja (7×7)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('leafbattle')">🍃 Batalla de la Hoja (7×7)</button>
                 <div class="section-title">📚 Literatura</div>
-                <button class="modal-btn btn-secondary" onclick="showScenarioInfo('middleearth')">💍 Tierra Media (11×11)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('middleearth')">💍 Tierra Media (11×11)</button>
                 <div class="section-title">⛪ Religioso</div>
-                <button class="modal-btn btn-secondary" onclick="showScenarioInfo('crusades')">✝️ Cruzadas (9×9)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('crusades')">✝️ Cruzadas (9×9)</button>
             </div>
             <div class="tab-panel" id="tab-tutorial">
                 <div class="section-title">📖 Cómo Jugar</div>
@@ -578,7 +578,6 @@
     <div class="modal" id="faction-info-modal"><div class="modal-box"><div class="modal-title" id="faction-info-title"></div><div class="info-modal-content" id="faction-info-content"></div><button class="modal-btn btn-primary" onclick="document.getElementById('faction-info-modal').classList.remove('show')">Cerrar</button></div></div>
     <div class="modal" id="combat-modal"><div class="modal-box"><div class="modal-title">⚔️ Combate</div><div id="combat-result"></div><button class="modal-btn btn-primary" onclick="closeCombat()">Continuar</button></div></div>
     <div class="modal" id="victory-modal"><div class="modal-box"><div class="modal-title" id="victory-title"></div><p id="victory-text"></p><button class="modal-btn btn-primary" onclick="goToMenu()">📋 Menú</button></div></div>
-    <div class="modal" id="scenario-info-modal"><div class="modal-box"><div class="modal-title" id="scenario-info-title"></div><div style="text-align:left;font-size:13px;line-height:1.6;"><p id="scenario-info-period" style="color:#8b6b4a;font-weight:bold;margin-bottom:8px;"></p><p id="scenario-info-context" style="margin-bottom:12px;"></p><p id="scenario-info-objective" style="background:#fffde7;padding:10px;border-radius:8px;border-left:3px solid var(--gold);margin-bottom:12px;"></p><p id="scenario-info-difficulty" style="font-weight:bold;color:#e74c3c;"></p></div><div style="display:flex;gap:8px;margin-top:12px;"><button class="modal-btn btn-secondary" onclick="document.getElementById('scenario-info-modal').classList.remove('show')" style="flex:1;">❌ Cancelar</button><button class="modal-btn btn-gold" onclick="confirmStartScenario()" style="flex:1;">▶ Iniciar Misión</button></div></div></div>
 
     <script>
         // ═══════════════ DATOS DE TEMAS Y FACCIONES ═══════════════
@@ -1422,100 +1421,6 @@
         }
 
         // ══════════ ESCENARIOS ══════════
-        const scenarioInfo = {
-            'stalingrad': {
-                title: '🇷🇺 Batalla de Stalingrado',
-                period: '1942-1943',
-                context: 'Una de las batallas más sangrientas de la Segunda Guerra Mundial. El Ejército Rojo soviético defendió ferozmente la ciudad contra el avance alemán.',
-                objective: 'Como URSS, defiende tu posición y contraataca para destruir la base nazi.',
-                difficulty: '⭐⭐⭐'
-            },
-            'normandy': {
-                title: '🇺🇸 Desembarco de Normandía',
-                period: '1944',
-                context: 'La operación Overlord marcó el inicio de la liberación de Europa occidental. Las fuerzas aliadas desembarcaron en las playas de Normandía.',
-                objective: 'Como USA y UK, coordina tus fuerzas para eliminar la ocupación nazi.',
-                difficulty: '⭐⭐⭐⭐'
-            },
-            'midway': {
-                title: '🇯🇵 Batalla de Midway',
-                period: '1942',
-                context: 'Batalla naval decisiva en el Pacífico. Estados Unidos logró una victoria crucial contra la Armada Imperial Japonesa.',
-                objective: 'Como USA, derrota a Japón en este enfrentamiento naval estratégico.',
-                difficulty: '⭐⭐⭐⭐'
-            },
-            'termpilas': {
-                title: '🛡️ Batalla de las Termópilas',
-                period: '480 a.C.',
-                context: 'Los espartanos bajo el rey Leónidas defendieron el paso de las Termópilas contra el vasto ejército persa.',
-                objective: 'Como Esparta, resiste el máximo de turnos posible contra el enemigo.',
-                difficulty: '⭐⭐⭐⭐⭐'
-            },
-            'cannas': {
-                title: '⚔️ Batalla de Cannas',
-                period: '216 a.C.',
-                context: 'Aníbal Barca logró una de las mayores victorias tácticas de la historia contra la República Romana.',
-                objective: 'Como Cartago (representado), rodea y destruye las fuerzas romanas.',
-                difficulty: '⭐⭐⭐'
-            },
-            'consolewar': {
-                title: '🕹️ Guerra de Consolas',
-                period: '1990s-2000s',
-                context: 'La legendaria rivalidad entre las grandes compañías de videojuegos por la supremacía del mercado.',
-                objective: 'Domina el mercado eliminando a tus competidores.',
-                difficulty: '⭐⭐'
-            },
-            'starwars': {
-                title: '🌌 Guerra de las Galaxias',
-                period: 'BBY/DBY',
-                context: 'La Rebelión lucha contra el Imperio Galáctico mientras los Jedi y Sith libran su propia batalla.',
-                objective: 'Elige tu bando y lleva a tu facción a la victoria.',
-                difficulty: '⭐⭐⭐⭐'
-            },
-            'leafbattle': {
-                title: '🍃 Batalla de la Hoja',
-                period: 'Era Ninja',
-                context: 'La Aldea Oculta de la Hoja se enfrenta a la organización criminal Akatsuki.',
-                objective: 'Como Konoha, protege la aldea y derrota a Akatsuki.',
-                difficulty: '⭐⭐⭐⭐'
-            },
-            'middleearth': {
-                title: '💍 Tierra Media',
-                period: 'Tercera Edad',
-                context: 'La Comunidad del Anillo se enfrenta a las hordas de Mordor en una batalla épica.',
-                objective: 'Como la Comunidad, resiste hasta que el Anillo sea destruido.',
-                difficulty: '⭐⭐⭐⭐⭐'
-            },
-            'crusades': {
-                title: '✝️ Las Cruzadas',
-                period: '1095-1291',
-                context: 'Serie de conflictos religiosos por el control de Tierra Santa entre cristianos, musulmanes y judíos.',
-                objective: 'Establece el dominio de tu fe en la región.',
-                difficulty: '⭐⭐⭐'
-            }
-        };
-
-        function showScenarioInfo(scenarioKey) {
-            const info = scenarioInfo[scenarioKey];
-            if (!info) return;
-            
-            document.getElementById('scenario-info-title').textContent = info.title;
-            document.getElementById('scenario-info-period').textContent = `⏳ ${info.period}`;
-            document.getElementById('scenario-info-context').textContent = info.context;
-            document.getElementById('scenario-info-objective').textContent = info.objective;
-            document.getElementById('scenario-info-difficulty').textContent = `Dificultad: ${info.difficulty}`;
-            
-            document.getElementById('scenario-info-modal').classList.add('show');
-            window.currentScenario = scenarioKey;
-        }
-
-        function confirmStartScenario() {
-            if (window.currentScenario) {
-                startScenario(window.currentScenario);
-                document.getElementById('scenario-info-modal').classList.remove('show');
-            }
-        }
-
         function startScenario(scenario) {
             let map, human, active, size, theme;
             if (scenario === 'stalingrad') { theme='ww2'; map=generateScenarioMap('stalingrad'); human=['urss']; active=['urss','nazis']; size=7; }
