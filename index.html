@@ -540,6 +540,7 @@
                 <div style="margin:6px;"><button onclick="setBrush('plains')" style="background:#b8d9a6;padding:6px 10px;border-radius:10px;">Planicie</button><button onclick="setBrush('river')" style="background:#7ec8e3;padding:6px 10px;border-radius:10px;">Río</button><button onclick="setBrush('mountain')" style="background:#d4c4a8;padding:6px 10px;border-radius:10px;">Montaña</button><button onclick="setBrush('city')" style="background:#f5c27b;padding:6px 10px;border-radius:10px;">Ciudad</button><button onclick="setBrush('base')" style="background:#ffd700;padding:6px 10px;border-radius:10px;">Base</button></div>
                 <button class="modal-btn btn-secondary" onclick="resetCustomMap()">🔄 Restablecer</button>
                 <button class="modal-btn btn-gold" onclick="useCustomMap()">✅ Usar este mapa</button>
+                <button class="modal-btn btn-secondary" onclick="resetTutorials()" style="margin-top:10px; font-size:0.8em;">🔄 Reiniciar tutoriales</button>
             </div>
             <div class="tab-panel" id="tab-achievements">
                 <div class="section-title">🏆 Logros</div>
@@ -758,6 +759,73 @@
             buildPlayerBar();
         }
 
+        // ══════════ SISTEMA DE TUTORIALES INICIALES (EDITOR & PVP) ══════════
+        
+        function showInitialTutorial(mode) {
+            const storageKey = `tutorial_seen_${mode}`;
+            if (localStorage.getItem(storageKey)) return;
+
+            let title, content;
+            
+            if (mode === 'editor') {
+                title = "🎨 Bienvenido al Editor de Mapas";
+                content = `
+                    <div style="text-align:left; line-height:1.6;">
+                        <p>¡Crea tus propios campos de batalla!</p>
+                        <ul style="margin:10px 0; padding-left:20px;">
+                            <li><strong>🖌️ Pintar:</strong> Selecciona un tipo de terreno y haz clic en los hexágonos.</li>
+                            <li><strong>🏰 Jugadores:</strong> Usa el selector de jugador para colocar bases iniciales.</li>
+                            <li><strong>💾 Guardar:</strong> Dale un nombre a tu mapa y guárdalo para jugar luego.</li>
+                            <li><strong>📂 Cargar:</strong> Selecciona un mapa guardado para editarlo o jugar.</li>
+                        </ul>
+                        <p style="color:#aaa; font-size:0.9em;">💡 Tip: Los terrenos montañosos dan defensa extra, los bosques esconden movimientos.</p>
+                    </div>
+                `;
+            } else if (mode === 'pvp') {
+                title = "⚔️ Modo PvP Local";
+                content = `
+                    <div style="text-align:left; line-height:1.6;">
+                        <p>¡Desafía a un amigo en el mismo dispositivo!</p>
+                        <ul style="margin:10px 0; padding-left:20px;">
+                            <li><strong>🎲 Turnos:</strong> Cada turno tienes 3 fases: Tirar dado, Mover/Atacar, Finalizar.</li>
+                            <li><strong>⚔️ Combate:</strong> Ataca territorios enemigos. El dado decide el resultado.</li>
+                            <li><strong>🏆 Victoria:</strong> Elimina todas las bases enemigas para ganar.</li>
+                            <li><strong>🤝 Reglas:</strong> No se puede atacar en el primer turno. ¡La estrategia es clave!</li>
+                        </ul>
+                        <p style="color:#aaa; font-size:0.9em;">💡 Tip: Agrupa tus tropas para ataques más fuertes.</p>
+                    </div>
+                `;
+            }
+
+            if (!title) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.style.zIndex = '10000';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width:500px; background:var(--bg-panel); border:2px solid var(--primary); box-shadow:0 0 20px rgba(0,0,0,0.5);">
+                    <h2 style="color:var(--primary); text-align:center; margin-bottom:20px; font-family:var(--font-main);">${title}</h2>
+                    <div style="color:var(--text-color); margin-bottom:25px; font-size:1rem;">${content}</div>
+                    <div style="text-align:center;">
+                        <button onclick="this.closest('.modal-overlay').remove(); localStorage.setItem('tutorial_seen_${mode}', 'true')" 
+                                style="background:var(--primary); color:var(--bg-dark); border:none; padding:12px 30px; font-size:1.1rem; font-weight:bold; cursor:pointer; border-radius:5px; font-family:var(--font-main); transition:transform 0.2s;">
+                            ¡Entendido!
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Función para resetear tutoriales (opcional, desde menú)
+        window.resetTutorials = function() {
+            localStorage.removeItem('tutorial_seen_editor');
+            localStorage.removeItem('tutorial_seen_pvp');
+            showNotification("🔄 Tutoriales reiniciados. Se mostrarán la próxima vez.");
+        };
+
+        // ══════════ FIN SISTEMA TUTORIALES ══════════
+
         window.onload = () => {
             buildPlayerBar();
             document.querySelectorAll('.menu-tab').forEach(tab => tab.addEventListener('click', function() { switchMenuTab(this.dataset.tab); }));
@@ -791,7 +859,7 @@
             if (at) at.classList.add('active');
             const pn = document.getElementById(`tab-${tab}`);
             if (pn) pn.classList.add('active');
-            if (tab==='editor') buildEditorGrid();
+            if (tab==='editor') { buildEditorGrid(); showInitialTutorial('editor'); }
             if (tab==='achievements') showAchievements();
         }
 
@@ -1485,6 +1553,10 @@
             if (gameMode==='pvp' && Object.values(slotSelections).filter(v=>v).length!==selectedHumanCount) {
                 alert('Elige país para cada jugador');
                 return;
+            }
+            // Mostrar tutorial de PvP si es la primera vez en modo PvP
+            if (gameMode === 'pvp') {
+                showInitialTutorial('pvp');
             }
             initGame();
         }
