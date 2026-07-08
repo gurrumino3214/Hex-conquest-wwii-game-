@@ -72,7 +72,7 @@
             color: var(--bg-color);
         }
 
-        button:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* Game Area */
         #game-container {
@@ -145,31 +145,6 @@
         .dice-rolling { animation: spin 0.5s infinite linear; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Cards Section */
-        .cards-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 5px;
-        }
-        .card {
-            width: 60px;
-            height: 80px;
-            background: var(--card-bg);
-            border: 1px solid var(--text-color);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            cursor: pointer;
-            position: relative;
-            transition: transform 0.2s;
-        }
-        .card:hover { transform: translateY(-5px); background: var(--text-color); color: var(--bg-color); }
-        .card-cost { position: absolute; top: 2px; right: 2px; font-weight: bold; color: var(--highlight); }
-        .card-icon { font-size: 1.2rem; margin-bottom: 4px; }
-
         /* Modals */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -239,7 +214,6 @@
             flex-direction: column;
             gap: 10px;
             z-index: 500;
-            pointer-events: none; /* Allow clicks through */
         }
         .toast {
             background: var(--card-bg);
@@ -249,7 +223,6 @@
             animation: slideIn 0.3s ease-out;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             font-family: var(--font-body);
-            pointer-events: auto;
         }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
@@ -265,26 +238,6 @@
         .color-option { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
         .color-option.selected { border-color: white; transform: scale(1.2); }
 
-        /* Tutorial Specifics */
-        #tutorial-overlay {
-            background: rgba(0,0,0,0.7);
-            pointer-events: none; /* Crucial: Let clicks pass through to game */
-        }
-        #tutorial-box {
-            pointer-events: auto; /* Re-enable clicks on the box itself */
-            max-width: 400px;
-            position: absolute;
-            bottom: 100px;
-            right: 20px;
-            text-align: left;
-        }
-        .tutorial-highlight {
-            animation: pulse 1s infinite;
-            stroke: var(--highlight) !important;
-            stroke-width: 4px !important;
-            fill-opacity: 0.5 !important;
-        }
-
     </style>
 </head>
 <body>
@@ -292,7 +245,6 @@
 <header>
     <div class="top-bar">
         <h1>HEX CONQUEST</h1>
-        <button onclick="toggleTheme()">🎨 Tema</button>
         <button onclick="showModal('profile-modal')">👤 Perfil</button>
     </div>
     <div id="game-status" style="font-family: var(--font-main); font-weight: bold;">Menú Principal</div>
@@ -302,49 +254,33 @@
 <div id="game-container">
     <svg id="map-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"></svg>
     <div id="notification-area"></div>
-    
-    <!-- Tutorial Overlay (Non-blocking) -->
-    <div id="tutorial-overlay" class="modal-overlay">
-        <div class="modal" id="tutorial-box">
-            <h2 id="tut-title" style="font-size: 1.2rem;">Tutorial</h2>
-            <p id="tut-text" style="margin-bottom: 15px; font-size: 0.9rem;">Instrucciones...</p>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span id="tut-step" style="font-size: 0.8rem; opacity: 0.7;">Paso 1/6</span>
-                <button onclick="tutorial.nextStep()" id="tut-btn">Continuar ➡</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 <footer>
     <div class="player-info" id="p1-panel">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-weight:bold; color:var(--p1-color)">JUGADOR 1</span>
-            <span id="p1-mana">💧 0/5</span>
         </div>
         <div class="stats-row">
             <span>🪖 <span id="p1-units">0</span></span>
             <span>🏰 <span id="p1-bases">1</span></span>
         </div>
-        <div class="cards-container" id="p1-cards"></div>
     </div>
 
     <div class="controls">
         <div class="dice-display" id="dice-val">🎲</div>
-        <button id="btn-roll" onclick="game.rollDice()">TIRAR DADO</button>
-        <button id="btn-end" onclick="game.endTurn()" disabled>FINALIZAR</button>
+        <button id="btn-roll" onclick="game.rollDice()">Tirar Dado</button>
+        <button id="btn-end" onclick="game.endTurn()" disabled>Finalizar Turno</button>
     </div>
 
     <div class="player-info" id="p2-panel">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-weight:bold; color:var(--p2-color)" id="p2-name">ENEMIGO</span>
-            <span id="p2-mana">💧 0/5</span>
         </div>
         <div class="stats-row">
             <span>🪖 <span id="p2-units">0</span></span>
             <span>🏰 <span id="p2-bases">1</span></span>
         </div>
-        <div class="cards-container" id="p2-cards"></div>
     </div>
 </footer>
 
@@ -353,7 +289,7 @@
     <div class="modal">
         <h2>HEX CONQUEST</h2>
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('modes')">Jugar</button>
+            <button class="tab-btn active" onclick="switchTab('modes')">Modos</button>
             <button class="tab-btn" onclick="switchTab('custom')">Personalizar</button>
         </div>
 
@@ -368,12 +304,12 @@
                     <div class="scenario-title">🤖 vs IA</div>
                     <div class="scenario-desc">Desafía a la inteligencia artificial.</div>
                 </div>
-                <div class="mode-card" onclick="game.setupGame('tutorial')">
-                    <div class="scenario-title">🎓 Tutorial</div>
+                <div class="mode-card" onclick="game.startTutorial()">
+                    <div class="scenario-title">📜 Tutorial</div>
                     <div class="scenario-desc">Aprende jugando contra la IA.</div>
                 </div>
             </div>
-            <div style="margin-top:15px; display:flex; gap:10px; justify-content:center; align-items:center;">
+            <div style="margin-top:15px; display:flex; gap:10px; justify-content:center;">
                 <label><input type="checkbox" id="fog-check"> Niebla de Guerra</label>
             </div>
         </div>
@@ -382,7 +318,6 @@
         <div id="tab-custom" class="tab-content">
             <h3>Color de Tropas</h3>
             <div class="color-picker" id="color-picker"></div>
-            <button onclick="saveCustom()" style="margin-top:10px;">Guardar Cambios</button>
         </div>
     </div>
 </div>
@@ -402,7 +337,7 @@
             </div>
             <div class="mode-card" onclick="game.setupGame('ai', 'hard')">
                 <div class="scenario-title">🔴 Difícil</div>
-                <div class="scenario-desc">Tácticas avanzadas.</div>
+                <div class="scenario-desc">Maestro táctico.</div>
             </div>
         </div>
         <button onclick="closeModal('ai-difficulty-modal')">Cancelar</button>
@@ -428,91 +363,41 @@
             <div>
                 <h3>Últimas Partidas</h3>
                 <ul id="match-history" style="list-style:none; font-size:0.8rem; text-align:left; margin-top:10px;"></ul>
-                <h3 style="margin-top:20px;">Logros</h3>
-                <div id="recent-achievements" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:5px;"></div>
             </div>
         </div>
         <button onclick="closeModal('profile-modal')" style="margin-top:20px;">Cerrar</button>
     </div>
 </div>
 
+<!-- Tutorial Overlay -->
+<div id="tutorial-overlay" class="modal-overlay">
+    <div class="modal" style="pointer-events:auto;">
+        <h2 id="tut-title">Tutorial</h2>
+        <p id="tut-text" style="margin-bottom: 20px; font-size: 1.1rem;">Instrucciones...</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span id="tut-step" style="font-size:0.9rem; opacity:0.8;">Paso 1/5</span>
+            <button onclick="tutorial.nextStep()" id="tut-btn">Continuar ➡</button>
+        </div>
+    </div>
+</div>
+
 <script>
 /**
- * HEX CONQUEST - CORE LOGIC
- * Fixed Tutorial, Advanced AI, Profile, Fog of War
+ * HEX CONQUEST - CORE LOGIC RESTORED
  */
 
-// --- AUDIO SYSTEM ---
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const playSound = (type) => {
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    const now = audioCtx.currentTime;
-    
-    if (type === 'click') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(800, now);
-        osc.frequency.exponentialRampToValueAtTime(300, now + 0.1);
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-        osc.start(now); osc.stop(now + 0.1);
-    } else if (type === 'roll') {
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(200, now);
-        osc.frequency.linearRampToValueAtTime(600, now + 0.2);
-        gain.gain.setValueAtTime(0.05, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.2);
-        osc.start(now); osc.stop(now + 0.2);
-    } else if (type === 'battle') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(100, now);
-        osc.frequency.exponentialRampToValueAtTime(50, now + 0.3);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-        osc.start(now); osc.stop(now + 0.3);
-    } else if (type === 'win') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(400, now);
-        osc.frequency.setValueAtTime(600, now + 0.1);
-        osc.frequency.setValueAtTime(800, now + 0.2);
-        gain.gain.setValueAtTime(0.1, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.6);
-        osc.start(now); osc.stop(now + 0.6);
-    } else if (type === 'lose') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(300, now);
-        osc.frequency.linearRampToValueAtTime(100, now + 0.5);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.5);
-        osc.start(now); osc.stop(now + 0.5);
-    }
-};
-
-// --- DATA & CONFIG ---
-const CARDS_DB = [
-    { id: 'heal', name: 'Curación', cost: 2, icon: '❤️', effect: (g) => g.healUnits(3) },
-    { id: 'strike', name: 'Ataque', cost: 3, icon: '✈️', effect: (g) => g.dealDamage(2) },
-    { id: 'recruit', name: 'Reclutas', cost: 1, icon: '🪖', effect: (g) => g.addUnits(2) }
-];
-
+// --- STATE MANAGEMENT ---
 const state = {
-    theme: 'historical',
-    profile: JSON.parse(localStorage.getItem('hex_profile')) || { level: 1, xp: 0, wins: 0, losses: 0, history: [], achievements: [] },
+    profile: JSON.parse(localStorage.getItem('hex_profile')) || { level: 1, xp: 0, wins: 0, losses: 0, history: [] },
     customization: JSON.parse(localStorage.getItem('hex_custom')) || { color: '#4cc9f0' },
     fogEnabled: false,
-    gameMode: 'menu', // menu, pvp, ai, tutorial
+    gameMode: 'menu',
     aiDifficulty: 'medium',
     isTutorial: false
 };
 
 const saveProfile = () => localStorage.setItem('hex_profile', JSON.stringify(state.profile));
-const saveCustom = () => {
-    localStorage.setItem('hex_custom', JSON.stringify(state.customization));
-    notify("Configuración guardada");
-};
+const saveCustom = () => localStorage.setItem('hex_custom', JSON.stringify(state.customization));
 
 // --- GAME ENGINE ---
 class HexGame {
@@ -523,10 +408,9 @@ class HexGame {
         this.players = [];
         this.turn = 0;
         this.currentPlayer = 0;
-        this.phase = 'roll'; // roll, action, end
+        this.phase = 'roll';
         this.diceValue = 1;
         this.selectedHex = null;
-        this.tempDefense = 0;
     }
 
     init() {
@@ -564,8 +448,8 @@ class HexGame {
 
     setupEntities() {
         this.players = [
-            { id: 0, name: 'Jugador 1', color: state.customization.color, bases: 0, units: 0, mana: 0, hand: [], isBot: false },
-            { id: 1, name: 'Enemigo', color: '#f72585', bases: 0, units: 0, mana: 0, hand: [], isBot: false }
+            { id: 0, name: 'Jugador 1', color: state.customization.color, bases: 0, units: 0, isBot: false },
+            { id: 1, name: 'Enemigo', color: '#f72585', bases: 0, units: 0, isBot: false }
         ];
         
         this.mapData.forEach(h => {
@@ -581,73 +465,73 @@ class HexGame {
         state.gameMode = mode;
         state.aiDifficulty = difficulty;
         state.fogEnabled = document.getElementById('fog-check').checked;
-        state.isTutorial = (mode === 'tutorial');
+        state.isTutorial = false;
         
         this.generateDefaultMap();
-        this.players[1].isBot = (mode === 'ai' || mode === 'tutorial');
-        this.players[1].name = mode === 'tutorial' ? 'IA (Tutorial)' : `IA (${difficulty})`;
+        this.players[1].isBot = (mode === 'ai');
+        this.players[1].name = `IA (${difficulty})`;
         
         this.turn = 0;
         this.currentPlayer = 0;
         this.phase = 'roll';
         this.selectedHex = null;
         
-        this.players.forEach(p => { p.mana = 0; p.hand = []; });
-        
         closeModal('main-menu-modal');
         closeModal('ai-difficulty-modal');
         
         document.getElementById('game-status').innerText = mode === 'pvp' ? 'PvP Local' : `vs ${this.players[1].name}`;
+        this.startTurn();
+        notify(`¡Partida Iniciada!`);
+    }
+
+    startTutorial() {
+        state.isTutorial = true;
+        state.gameMode = 'ai';
+        state.aiDifficulty = 'easy';
+        state.fogEnabled = false;
         
-        if (state.isTutorial) {
-            tutorial.start();
-        } else {
-            this.startTurn();
-            notify(`¡Partida Iniciada! Modo: ${mode.toUpperCase()}`);
-        }
+        this.generateDefaultMap();
+        this.players[1].isBot = true;
+        this.players[1].name = 'IA (Tutorial)';
+        
+        this.turn = 0;
+        this.currentPlayer = 0;
+        this.phase = 'roll';
+        this.selectedHex = null;
+        
+        closeModal('main-menu-modal');
+        document.getElementById('game-status').innerText = 'Tutorial';
+        
+        // Start tutorial logic
+        tutorial.start();
     }
 
     startTurn() {
         const p = this.players[this.currentPlayer];
         this.phase = 'roll';
         this.selectedHex = null;
-        this.tempDefense = 0;
         
-        if (p.mana < 5) p.mana++;
-        if (p.hand.length < 3 && this.turn > 0) {
-            const randomCard = CARDS_DB[Math.floor(Math.random() * CARDS_DB.length)];
-            p.hand.push(randomCard);
-        }
-
         this.updateUI();
-        
-        // Button States
-        const btnRoll = document.getElementById('btn-roll');
-        const btnEnd = document.getElementById('btn-end');
-        
-        if (state.isTutorial && this.currentPlayer === 1) {
-            btnRoll.innerText = "🤖 IA";
-            btnRoll.disabled = true;
-        } else {
-            btnRoll.innerText = "TIRAR DADO";
-            btnRoll.disabled = false;
-        }
-        
-        btnEnd.disabled = true;
+        document.getElementById('btn-roll').disabled = false;
+        document.getElementById('btn-end').disabled = true;
         document.getElementById('dice-val').innerText = '🎲';
         document.getElementById('dice-val').classList.remove('dice-rolling');
 
-        if (p.isBot) {
+        if (p.isBot && !state.isTutorial) {
             setTimeout(() => this.botTurn(), 1000);
+        } else if (state.isTutorial) {
+            // In tutorial, we wait for player input guided by steps
+            if (p.isBot) {
+                setTimeout(() => this.botTurn(), 1000);
+            }
         }
     }
 
     rollDice() {
         if (this.phase !== 'roll') return;
-        // Prevent rolling during bot turn in tutorial
-        if (state.isTutorial && this.currentPlayer === 1) return;
+        // Block input if it's bot turn in tutorial
+        if (state.isTutorial && this.players[this.currentPlayer].isBot) return;
 
-        playSound('roll');
         const diceEl = document.getElementById('dice-val');
         diceEl.classList.add('dice-rolling');
         
@@ -672,9 +556,9 @@ class HexGame {
 
     handleHexClick(hex) {
         if (this.phase !== 'action') return;
-        if (this.players[this.currentPlayer].isBot) return; // Block input during bot turn
+        // Critical Fix: Block human input if it's bot's turn in tutorial
+        if (state.isTutorial && this.players[this.currentPlayer].isBot) return;
 
-        // Select own unit
         if (hex.owner === this.currentPlayer && hex.units > 0) {
             this.selectedHex = hex;
             this.renderMap();
@@ -682,7 +566,6 @@ class HexGame {
             return;
         }
 
-        // Move or Attack
         if (this.selectedHex) {
             const dist = this.getDistance(this.selectedHex, hex);
             if (dist <= this.diceValue) {
@@ -693,7 +576,6 @@ class HexGame {
                 } else if (hex.type !== 'water' && hex.type !== 'mountain') {
                     this.captureHex(this.selectedHex, hex);
                 }
-                if (state.isTutorial) tutorial.checkStep();
             }
         }
     }
@@ -703,15 +585,13 @@ class HexGame {
             from.units--;
             to.units++;
             to.owner = from.owner;
-            playSound('click');
             this.endActionPhase();
         } else {
-            notify("Necesitas 2+ unidades para mover.");
+            notify("Necesitas al menos 2 unidades para mover.");
         }
     }
 
     attackUnit(from, to) {
-        playSound('battle');
         const attackRoll = this.diceValue;
         const defenseRoll = Math.floor(Math.random() * 6) + 1;
         
@@ -728,11 +608,10 @@ class HexGame {
                 this.checkWinCondition();
             } else {
                 from.units--;
-                msg += "Enemigo debilitado.";
             }
         } else {
             from.units--;
-            msg += "Ataque fallido.";
+            msg += "Fallido.";
         }
         
         notify(msg);
@@ -743,7 +622,6 @@ class HexGame {
         from.units--;
         to.owner = from.owner;
         to.units = 1;
-        playSound('click');
         this.endActionPhase();
     }
 
@@ -751,6 +629,7 @@ class HexGame {
         this.selectedHex = null;
         this.renderMap();
         this.updateUI();
+        if (state.isTutorial) tutorial.checkStep();
     }
 
     endTurn() {
@@ -760,32 +639,26 @@ class HexGame {
         this.startTurn();
     }
 
-    // --- ADVANCED AI ---
     botTurn() {
+        if (state.isTutorial && this.currentPlayer === 0) return; // Should not happen but safety check
+
         const bot = this.players[this.currentPlayer];
         const human = this.players[this.currentPlayer === 0 ? 1 : 0];
-        const difficulty = state.aiDifficulty;
         
-        // 1. Roll Dice
-        this.rollDice();
-        
+        // Simulate Dice Roll visually
+        const diceEl = document.getElementById('dice-val');
+        diceEl.classList.add('dice-rolling');
         setTimeout(() => {
-            // 2. Use Cards (Smartly)
-            if (bot.hand.length > 0) {
-                // Hard AI uses cards optimally
-                if (difficulty === 'hard' || Math.random() > 0.5) {
-                    const card = bot.hand.pop();
-                    card.effect(this);
-                    notify(`IA usó ${card.name}`);
-                }
-            }
+            this.diceValue = Math.floor(Math.random() * 6) + 1;
+            diceEl.innerText = this.diceValue;
+            diceEl.classList.remove('dice-rolling');
+            this.phase = 'action';
 
-            // 3. Strategy Logic
+            // AI Logic based on difficulty
             const myUnits = this.mapData.filter(h => h.owner === this.currentPlayer && h.units > 0);
             if (myUnits.length === 0) { this.endTurn(); return; }
 
             let acted = false;
-            // Sort by strength for better prioritization
             myUnits.sort((a,b) => b.units - a.units);
 
             for (let unit of myUnits) {
@@ -793,80 +666,31 @@ class HexGame {
                 const neighbors = this.getNeighbors(unit);
                 let target = null;
 
-                if (difficulty === 'easy') {
-                    // Random valid move
+                if (state.aiDifficulty === 'hard' || state.isTutorial) {
+                    // Prioritize attacking weak enemies or capturing neutrals
+                    target = neighbors.find(n => n.owner === human.id && n.units < unit.units);
+                    if (!target) target = neighbors.find(n => n.owner === null && n.type !== 'water' && n.type !== 'mountain');
+                } else if (state.aiDifficulty === 'medium') {
                     const valid = neighbors.filter(n => this.getDistance(unit, n) <= this.diceValue && n.type !== 'water');
                     if (valid.length > 0) target = valid[Math.floor(Math.random() * valid.length)];
-                } 
-                else if (difficulty === 'medium') {
-                    // Prioritize weak enemies, then neutrals
-                    target = neighbors.find(n => n.owner === human.id && n.units < unit.units && this.getDistance(unit, n) <= this.diceValue);
-                    if (!target) {
-                        const validNeutral = neighbors.find(n => n.owner === null && n.type !== 'water' && this.getDistance(unit, n) <= this.diceValue);
-                        if (validNeutral) target = validNeutral;
-                    }
-                } 
-                else if (difficulty === 'hard') {
-                    // Strategic: Protect base, group forces, attack weaknesses
-                    // First: Can I kill an enemy?
-                    target = neighbors.find(n => n.owner === human.id && n.units < unit.units && this.getDistance(unit, n) <= this.diceValue);
-                    
-                    // Second: Reinforce front line if enemy nearby
-                    if (!target) {
-                        const enemyNearby = neighbors.some(n => n.owner === human.id);
-                        if (enemyNearby && unit.units < 3) {
-                             // Move towards enemy or reinforce neighbor
-                             const friend = neighbors.find(n => n.owner === this.currentPlayer && n.units < 5);
-                             if (friend) target = friend;
-                        }
-                    }
-                    
-                    // Third: Expand to neutral
-                    if (!target) {
-                        target = neighbors.find(n => n.owner === null && n.type !== 'water' && this.getDistance(unit, n) <= this.diceValue);
-                    }
+                } else {
+                    // Easy: Random
+                    const valid = neighbors.filter(n => this.getDistance(unit, n) <= this.diceValue);
+                    if (valid.length > 0) target = valid[Math.floor(Math.random() * valid.length)];
                 }
 
                 if (target) {
                     if (target.owner === human.id) this.attackUnit(unit, target);
                     else if (target.owner === null) this.captureHex(unit, target);
-                    else this.moveUnit(unit, target);
+                    else if (target.owner === this.currentPlayer && unit.units > 1) this.moveUnit(unit, target);
                     acted = true;
                 }
             }
 
-            setTimeout(() => this.endTurn(), 1000);
-        }, 800);
+            setTimeout(() => this.endTurn(), 800);
+        }, 600);
     }
 
-    // --- CARD EFFECTS ---
-    healUnits(amount) {
-        const p = this.players[this.currentPlayer];
-        this.mapData.filter(h => h.owner === p.id).forEach(h => h.units += amount);
-        notify(`Curación: +${amount}`);
-        this.updateUI();
-    }
-    dealDamage(amount) {
-        const enemies = this.mapData.filter(h => h.owner !== this.currentPlayer && h.owner !== null);
-        if (enemies.length > 0) {
-            const t = enemies[Math.floor(Math.random() * enemies.length)];
-            t.units = Math.max(0, t.units - amount);
-            notify(`Ataque aéreo: -${amount}`);
-            if(t.units === 0) { t.owner = this.currentPlayer; t.units = 1; }
-            this.updateUI();
-        }
-    }
-    addUnits(amount) {
-        const p = this.players[this.currentPlayer];
-        const bases = this.mapData.filter(h => h.owner === p.id && (h.type === 'p1_base' || h.type === 'p2_base'));
-        if (bases.length > 0) {
-            bases[0].units += amount;
-            notify(`Reclutas: +${amount}`);
-            this.updateUI();
-        }
-    }
-
-    // --- UTILS ---
     getDistance(h1, h2) {
         return Math.round(Math.sqrt(Math.pow(h1.x - h2.x, 2) + Math.pow(h1.y - h2.y, 2)) / (this.hexSize * 1.5));
     }
@@ -888,20 +712,21 @@ class HexGame {
     }
 
     gameOver(winnerId) {
-        playSound(winnerId === 0 ? 'win' : 'lose');
         const win = winnerId === 0 && !this.players[0].isBot;
-        
-        if (state.isTutorial && win) {
-            tutorial.complete();
-            return;
+        if (!state.isTutorial) {
+            updateStats(win);
+            alert(win ? "¡VICTORIA!" : "DERROTA");
+            showModal('main-menu-modal');
+        } else {
+            if (winnerId === 0) {
+                notify("¡Tutorial Completado!");
+                setTimeout(() => {
+                    tutorial.nextStep(); // Advance to finish
+                }, 1000);
+            }
         }
-
-        updateStats(win);
-        alert(win ? "¡VICTORIA!" : "DERROTA");
-        showModal('main-menu-modal');
     }
 
-    // --- RENDERING ---
     renderMap() {
         this.svg.innerHTML = '';
         const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
@@ -910,7 +735,8 @@ class HexGame {
             const p = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
             p.setAttribute("id", id);
             p.setAttribute("patternUnits", "userSpaceOnUse");
-            p.setAttribute("width", "40"); p.setAttribute("height", "40");
+            p.setAttribute("width", "40");
+            p.setAttribute("height", "40");
             p.innerHTML = `<rect width="40" height="40" fill="${color}"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20">${char}</text>`;
             return p;
         };
@@ -922,12 +748,13 @@ class HexGame {
         this.svg.appendChild(defs);
 
         this.mapData.forEach(hex => {
-            // Fog Logic
-            if (state.fogEnabled && !hex.revealed && this.players[this.currentPlayer].id === 0) {
+            // Fog of War Logic
+            if (state.fogEnabled && !hex.revealed && this.currentPlayer === 0) {
                 const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
                 const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
                 poly.setAttribute("points", this.getHexPoints(hex.x, hex.y));
                 poly.setAttribute("fill", "#000");
+                poly.setAttribute("fill-opacity", "0.9");
                 g.appendChild(poly);
                 this.svg.appendChild(g);
                 return;
@@ -944,12 +771,7 @@ class HexGame {
 
             poly.setAttribute("points", this.getHexPoints(hex.x, hex.y));
             poly.setAttribute("fill", fill);
-            
-            let className = 'hex';
-            if (this.selectedHex === hex) className += ' selected';
-            if (tutorial.activeHex === hex.id) className += ' tutorial-highlight';
-            
-            poly.setAttribute("class", className);
+            poly.setAttribute("class", `hex ${this.selectedHex === hex ? 'selected' : ''}`);
             
             if (this.selectedHex && this.getDistance(this.selectedHex, hex) <= this.diceValue) {
                 if (hex.owner === this.currentPlayer) poly.classList.add('valid-move');
@@ -960,9 +782,12 @@ class HexGame {
 
             if (hex.units > 0) {
                 const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                text.setAttribute("x", hex.x); text.setAttribute("y", hex.y);
-                text.setAttribute("fill", "white"); text.setAttribute("font-weight", "bold");
-                text.setAttribute("font-size", "14"); text.setAttribute("text-anchor", "middle");
+                text.setAttribute("x", hex.x);
+                text.setAttribute("y", hex.y);
+                text.setAttribute("fill", "white");
+                text.setAttribute("font-weight", "bold");
+                text.setAttribute("font-size", "14");
+                text.setAttribute("text-anchor", "middle");
                 text.setAttribute("dominant-baseline", "middle");
                 text.setAttribute("style", "text-shadow: 0 0 3px black;");
                 text.textContent = hex.units;
@@ -971,8 +796,10 @@ class HexGame {
 
             if (hex.type.includes('base')) {
                 const icon = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                icon.setAttribute("x", hex.x); icon.setAttribute("y", hex.y - 15);
-                icon.setAttribute("font-size", "20"); icon.setAttribute("text-anchor", "middle");
+                icon.setAttribute("x", hex.x);
+                icon.setAttribute("y", hex.y - 15);
+                icon.setAttribute("font-size", "20");
+                icon.setAttribute("text-anchor", "middle");
                 icon.textContent = "🏰";
                 g.appendChild(icon);
             }
@@ -980,19 +807,6 @@ class HexGame {
             g.onclick = () => this.handleHexClick(hex);
             this.svg.appendChild(g);
         });
-
-        // Fog Overlay
-        if (state.fogEnabled) {
-            this.mapData.forEach(hex => {
-                if (!hex.revealed) {
-                    const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-                    poly.setAttribute("points", this.getHexPoints(hex.x, hex.y));
-                    poly.setAttribute("fill", "black");
-                    poly.setAttribute("fill-opacity", "0.8");
-                    this.svg.appendChild(poly);
-                }
-            });
-        }
     }
 
     getHexPoints(x, y) {
@@ -1026,39 +840,15 @@ class HexGame {
 
         document.getElementById('p1-units').innerText = this.mapData.filter(h => h.owner === 0).reduce((a,b)=>a+b.units,0);
         document.getElementById('p1-bases').innerText = this.mapData.filter(h => h.type === 'p1_base' && h.owner === 0).length;
-        document.getElementById('p1-mana').innerText = `💧 ${p1.mana}/5`;
         
         document.getElementById('p2-units').innerText = this.mapData.filter(h => h.owner === 1).reduce((a,b)=>a+b.units,0);
         document.getElementById('p2-bases').innerText = this.mapData.filter(h => h.type === 'p2_base' && h.owner === 1).length;
-        document.getElementById('p2-mana').innerText = `💧 ${p2.mana}/5`;
 
         document.getElementById('p1-panel').classList.toggle('active', this.currentPlayer === 0);
         document.getElementById('p2-panel').classList.toggle('active', this.currentPlayer === 1);
 
-        this.renderCards('p1-cards', p1);
-        this.renderCards('p2-cards', p2);
-
         this.revealFog();
         this.renderMap();
-    }
-
-    renderCards(containerId, player) {
-        const container = document.getElementById(containerId);
-        container.innerHTML = '';
-        player.hand.forEach((card, idx) => {
-            const el = document.createElement('div');
-            el.className = 'card';
-            el.innerHTML = `<span class="card-cost">${card.cost}</span><span class="card-icon">${card.icon}</span><span>${card.name}</span>`;
-            el.onclick = () => {
-                if (this.currentPlayer === 0 && player.mana >= card.cost && this.phase === 'action') {
-                    player.mana -= card.cost;
-                    player.hand.splice(idx, 1);
-                    card.effect(this);
-                    this.updateUI();
-                }
-            };
-            container.appendChild(el);
-        });
     }
 
     renderCustomization() {
@@ -1071,12 +861,83 @@ class HexGame {
             div.style.backgroundColor = c;
             div.onclick = () => {
                 state.customization.color = c;
+                saveCustom();
                 this.renderCustomization();
             };
             picker.appendChild(div);
         });
     }
 }
+
+// --- TUTORIAL LOGIC (FIXED) ---
+const tutorial = {
+    step: 0,
+    steps: [
+        { text: "Bienvenido al entrenamiento. Primero, haz clic en 'TIRAR DADO' para iniciar tu turno.", action: 'roll' },
+        { text: "¡Bien! El dado determina cuántos hexágonos puedes mover o atacar. Ahora selecciona una de tus tropas (hexágonos azules con número).", action: 'select' },
+        { text: "Excelente. Observa los hexágonos resaltados. Mueve tus tropas capturando un territorio neutral (gris) o atacando al enemigo (rosa).", action: 'move' },
+        { text: "¡Acción completada! Cuando termines de mover todas tus tropas, pulsa 'FINALIZAR TURNO'.", action: 'end' },
+        { text: "Ahora es turno de la IA. Observa cómo se mueve...", action: 'wait' },
+        { text: "¡Has completado el tutorial! Ahora puedes jugar partidas reales.", action: 'finish' }
+    ],
+    
+    start() {
+        this.step = 0;
+        document.getElementById('tutorial-overlay').classList.add('active');
+        this.updateText();
+    },
+    
+    updateText() {
+        if (this.step < this.steps.length) {
+            document.getElementById('tut-text').innerText = this.steps[this.step].text;
+            document.getElementById('tut-step').innerText = `Paso ${this.step + 1}/${this.steps.length}`;
+            const btn = document.getElementById('tut-btn');
+            if (this.steps[this.step].action === 'wait') {
+                btn.disabled = true;
+                btn.innerText = "Esperando...";
+            } else {
+                btn.disabled = false;
+                btn.innerText = "Continuar ➡";
+            }
+        } else {
+            document.getElementById('tutorial-overlay').classList.remove('active');
+            state.isTutorial = false;
+            showModal('main-menu-modal');
+        }
+    },
+    
+    nextStep() {
+        if (this.step < this.steps.length) {
+            this.step++;
+            this.updateText();
+            if (this.step < this.steps.length && this.steps[this.step].action === 'wait') {
+                // Let the game flow naturally
+            }
+        }
+    },
+
+    checkStep() {
+        if (!state.isTutorial) return;
+        
+        const currentAction = this.steps[this.step].action;
+        const phase = game.phase;
+        const selected = game.selectedHex !== null;
+
+        // Auto-advance logic based on game state
+        if (currentAction === 'roll' && phase === 'action') {
+            setTimeout(() => this.nextStep(), 500);
+        } else if (currentAction === 'select' && selected) {
+            setTimeout(() => this.nextStep(), 500);
+        } else if (currentAction === 'move' && phase === 'action' && !selected) {
+            // Assuming a move was made if selection cleared and still in action phase
+            setTimeout(() => this.nextStep(), 500);
+        } else if (currentAction === 'end' && phase === 'roll' && game.currentPlayer === 1) {
+             setTimeout(() => this.nextStep(), 500);
+        } else if (currentAction === 'wait' && phase === 'roll' && game.currentPlayer === 0) {
+            setTimeout(() => this.nextStep(), 500);
+        }
+    }
+};
 
 // --- PROFILE & STATS ---
 function updateStats(win) {
@@ -1102,23 +963,14 @@ const game = new HexGame();
 game.init();
 
 // --- UI HELPERS ---
-function toggleTheme() {
-    // Simple toggle for future expansion, currently keeps historical
-    notify("Tema actual: Clásico");
-}
-
 function showModal(id) {
-    document.querySelectorAll('.modal-overlay').forEach(m => {
-        if (m.id !== 'tutorial-overlay') m.classList.remove('active');
-    });
+    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     if (id === 'profile-modal') game.updateProfileUI();
-    playSound('click');
 }
 
 function closeModal(id) {
     document.getElementById(id).classList.remove('active');
-    playSound('click');
 }
 
 function switchTab(tabName) {
@@ -1147,92 +999,6 @@ game.updateProfileUI = function() {
     
     const hist = document.getElementById('match-history');
     hist.innerHTML = p.history.map(h => `<li>📅 ${h.date}: ${h.result}</li>`).join('');
-    
-    const ach = document.getElementById('recent-achievements');
-    ach.innerHTML = p.achievements.slice(-3).map(a => `<span style="background:var(--hex-stroke); padding:2px 5px; border-radius:3px; font-size:0.7rem;">🏆 ${a}</span>`).join('');
-};
-
-// --- TUTORIAL SYSTEM (FIXED) ---
-const tutorial = {
-    step: 0,
-    active: false,
-    activeHex: null,
-    
-    steps: [
-        { text: "¡Bienvenido! Primero, tira el dado para determinar tu movimiento.", action: "roll" },
-        { text: "¡Excelente! Ahora selecciona una de tus tropas (hexágonos azules).", action: "select" },
-        { text: "Mueve tus tropas a un territorio neutral (gris) o ataca al enemigo (rosa).", action: "move" },
-        { text: "Observa cómo la IA responde. Espera su turno...", action: "wait" },
-        { text: "Es tu turno de nuevo. Usa cartas si tienes maná suficiente.", action: "play" },
-        { text: "¡Has completado el tutorial! Ahora puedes jugar partidas reales.", action: "end" }
-    ],
-
-    start: function() {
-        this.step = 0;
-        this.active = true;
-        document.getElementById('tutorial-overlay').classList.add('active');
-        this.updateBox();
-    },
-
-    updateBox: function() {
-        if (this.step >= this.steps.length) return;
-        const s = this.steps[this.step];
-        document.getElementById('tut-text').innerText = s.text;
-        document.getElementById('tut-step').innerText = `Paso ${this.step + 1}/${this.steps.length}`;
-        
-        const btn = document.getElementById('tut-btn');
-        if (s.action === 'wait') {
-            btn.disabled = true;
-            btn.innerText = "Esperando...";
-        } else {
-            btn.disabled = false;
-            btn.innerText = "Entendido";
-        }
-    },
-
-    checkStep: function() {
-        if (!this.active) return;
-        const s = this.steps[this.step];
-        
-        if (s.action === 'roll' && game.phase === 'action') {
-            this.nextStep();
-        } else if (s.action === 'select' && game.selectedHex) {
-            this.nextStep();
-        } else if (s.action === 'move' && game.turn > 0) {
-            this.nextStep();
-        }
-    },
-
-    nextStep: function() {
-        if (!this.active) return;
-        this.step++;
-        
-        if (this.step >= this.steps.length) {
-            this.complete();
-            return;
-        }
-        
-        const s = this.steps[this.step];
-        if (s.action === 'wait') {
-            // Wait for bot to finish
-            const checkBot = setInterval(() => {
-                if (game.currentPlayer === 0) {
-                    clearInterval(checkBot);
-                    this.updateBox();
-                }
-            }, 500);
-        } else {
-            this.updateBox();
-        }
-    },
-
-    complete: function() {
-        this.active = false;
-        document.getElementById('tutorial-overlay').classList.remove('active');
-        notify("¡Tutorial Completado! +100 XP");
-        updateStats(true); // Count as win for stats
-        showModal('main-menu-modal');
-    }
 };
 
 </script>
