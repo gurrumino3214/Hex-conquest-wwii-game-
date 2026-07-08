@@ -72,7 +72,8 @@
             color: var(--bg-color);
         }
 
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        button:active:not(:disabled) { transform: translateY(0); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
 
         /* Game Area */
         #game-container {
@@ -233,11 +234,13 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Customization */
-        .color-picker { display: flex; gap: 10px; justify-content: center; margin: 15px 0; }
-        .color-option { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
-        .color-option.selected { border-color: white; transform: scale(1.2); }
-
+        /* Fog of War Overlay */
+        .fog {
+            fill: #000;
+            fill-opacity: 0.85;
+            pointer-events: none;
+            transition: fill-opacity 0.5s;
+        }
     </style>
 </head>
 <body>
@@ -269,8 +272,8 @@
 
     <div class="controls">
         <div class="dice-display" id="dice-val">🎲</div>
-        <button id="btn-roll" onclick="game.rollDice()">Tirar Dado</button>
-        <button id="btn-end" onclick="game.endTurn()" disabled>Finalizar Turno</button>
+        <button id="btn-roll" onclick="game.rollDice()">TIRAR DADO</button>
+        <button id="btn-end" onclick="game.endTurn()" disabled>FINALIZAR TURNO</button>
     </div>
 
     <div class="player-info" id="p2-panel">
@@ -290,7 +293,7 @@
         <h2>HEX CONQUEST</h2>
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('modes')">Modos</button>
-            <button class="tab-btn" onclick="switchTab('custom')">Personalizar</button>
+            <button class="tab-btn" onclick="switchTab('scenarios-tab')">Escenarios</button>
         </div>
 
         <!-- Modes Tab -->
@@ -305,19 +308,18 @@
                     <div class="scenario-desc">Desafía a la inteligencia artificial.</div>
                 </div>
                 <div class="mode-card" onclick="game.startTutorial()">
-                    <div class="scenario-title">📜 Tutorial</div>
+                    <div class="scenario-title">🎓 Tutorial</div>
                     <div class="scenario-desc">Aprende jugando contra la IA.</div>
                 </div>
             </div>
-            <div style="margin-top:15px; display:flex; gap:10px; justify-content:center;">
+            <div style="margin-top:15px; display:flex; gap:10px; justify-content:center; align-items:center;">
                 <label><input type="checkbox" id="fog-check"> Niebla de Guerra</label>
             </div>
         </div>
 
-        <!-- Customization Tab -->
-        <div id="tab-custom" class="tab-content">
-            <h3>Color de Tropas</h3>
-            <div class="color-picker" id="color-picker"></div>
+        <!-- Scenarios Tab -->
+        <div id="tab-scenarios-tab" class="tab-content">
+            <div id="scenarios-list" class="modal-grid"></div>
         </div>
     </div>
 </div>
@@ -329,11 +331,11 @@
         <div class="modal-grid">
             <div class="mode-card" onclick="game.setupGame('ai', 'easy')">
                 <div class="scenario-title">🟢 Fácil</div>
-                <div class="scenario-desc">Movimientos básicos.</div>
+                <div class="scenario-desc">Movimientos aleatorios.</div>
             </div>
             <div class="mode-card" onclick="game.setupGame('ai', 'medium')">
                 <div class="scenario-title">🟡 Medio</div>
-                <div class="scenario-desc">Estrategia equilibrada.</div>
+                <div class="scenario-desc">Estrategia básica.</div>
             </div>
             <div class="mode-card" onclick="game.setupGame('ai', 'hard')">
                 <div class="scenario-title">🔴 Difícil</div>
@@ -341,6 +343,21 @@
             </div>
         </div>
         <button onclick="closeModal('ai-difficulty-modal')">Cancelar</button>
+    </div>
+</div>
+
+<!-- Scenario Info Modal -->
+<div id="scenario-info-modal" class="modal-overlay">
+    <div class="modal">
+        <h2 id="si-title">Título</h2>
+        <div style="font-size:3rem; margin:10px;" id="si-emoji">🏰</div>
+        <p id="si-period" style="color:var(--highlight); font-weight:bold; margin-bottom:10px;">Año</p>
+        <p id="si-desc" style="margin-bottom:20px; line-height:1.5;">Descripción</p>
+        <div style="background:var(--hex-bg); padding:10px; border-radius:5px; margin-bottom:20px;">
+            <strong>Objetivo:</strong> <span id="si-objective"></span>
+        </div>
+        <button onclick="game.startScenario()" style="width:100%; margin-bottom:10px;">▶️ Iniciar Misión</button>
+        <button onclick="closeModal('scenario-info-modal')">Cancelar</button>
     </div>
 </div>
 
@@ -369,35 +386,40 @@
     </div>
 </div>
 
-<!-- Tutorial Overlay -->
-<div id="tutorial-overlay" class="modal-overlay">
-    <div class="modal" style="pointer-events:auto;">
+<!-- Tutorial Overlay (Fixed: No blocking layer) -->
+<div id="tutorial-overlay" class="modal-overlay" style="pointer-events:none; background:transparent;">
+    <div class="modal" style="pointer-events:auto; width: 400px;" id="tutorial-box">
         <h2 id="tut-title">Tutorial</h2>
-        <p id="tut-text" style="margin-bottom: 20px; font-size: 1.1rem;">Instrucciones...</p>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span id="tut-step" style="font-size:0.9rem; opacity:0.8;">Paso 1/5</span>
-            <button onclick="tutorial.nextStep()" id="tut-btn">Continuar ➡</button>
+        <p id="tut-text">Instrucciones...</p>
+        <div style="margin-top:15px; display:flex; justify-content:space-between;">
+            <span id="tut-step">Paso 1/6</span>
+            <button onclick="tutorial.nextStep()">Continuar ➡</button>
         </div>
     </div>
 </div>
 
 <script>
 /**
- * HEX CONQUEST - CORE LOGIC RESTORED
+ * HEX CONQUEST - RESTORED & IMPROVED
+ * Original Style + Profile, Fog, Advanced AI, Fixed Tutorial
  */
+
+// --- DATA & CONFIG ---
+const SCENARIOS = [
+    { id: 'stalingrad', title: 'Stalingrado', emoji: '🇷🇺', period: '1942-1943', desc: 'La batalla más sangrienta de la historia.', objective: 'Elimina todas las bases nazis.', difficulty: 4 },
+    { id: 'normandy', title: 'Desembarco', emoji: '🇺🇸', period: '1944', desc: 'Operación Overlord.', objective: 'Captura 3 bases enemigas.', difficulty: 5 },
+    { id: 'thermopylae', title: 'Termópilas', emoji: '🛡️', period: '480 a.C.', desc: '300 espartanos contra el imperio persa.', objective: 'Sobrevive 15 turnos.', difficulty: 3 }
+];
 
 // --- STATE MANAGEMENT ---
 const state = {
     profile: JSON.parse(localStorage.getItem('hex_profile')) || { level: 1, xp: 0, wins: 0, losses: 0, history: [] },
-    customization: JSON.parse(localStorage.getItem('hex_custom')) || { color: '#4cc9f0' },
     fogEnabled: false,
     gameMode: 'menu',
-    aiDifficulty: 'medium',
-    isTutorial: false
+    aiDifficulty: 'medium'
 };
 
 const saveProfile = () => localStorage.setItem('hex_profile', JSON.stringify(state.profile));
-const saveCustom = () => localStorage.setItem('hex_custom', JSON.stringify(state.customization));
 
 // --- GAME ENGINE ---
 class HexGame {
@@ -408,15 +430,17 @@ class HexGame {
         this.players = [];
         this.turn = 0;
         this.currentPlayer = 0;
-        this.phase = 'roll';
+        this.phase = 'roll'; // roll, action, end
         this.diceValue = 1;
         this.selectedHex = null;
+        this.isTutorial = false;
+        this.tutorialStep = 0;
     }
 
     init() {
-        this.renderCustomization();
         this.updateProfileUI();
-        this.generateDefaultMap();
+        this.generateScenarios();
+        if(this.mapData.length === 0) this.generateDefaultMap();
         this.renderMap();
     }
 
@@ -448,7 +472,7 @@ class HexGame {
 
     setupEntities() {
         this.players = [
-            { id: 0, name: 'Jugador 1', color: state.customization.color, bases: 0, units: 0, isBot: false },
+            { id: 0, name: 'Jugador 1', color: '#4cc9f0', bases: 0, units: 0, isBot: false },
             { id: 1, name: 'Enemigo', color: '#f72585', bases: 0, units: 0, isBot: false }
         ];
         
@@ -465,7 +489,7 @@ class HexGame {
         state.gameMode = mode;
         state.aiDifficulty = difficulty;
         state.fogEnabled = document.getElementById('fog-check').checked;
-        state.isTutorial = false;
+        this.isTutorial = false;
         
         this.generateDefaultMap();
         this.players[1].isBot = (mode === 'ai');
@@ -481,29 +505,36 @@ class HexGame {
         
         document.getElementById('game-status').innerText = mode === 'pvp' ? 'PvP Local' : `vs ${this.players[1].name}`;
         this.startTurn();
-        notify(`¡Partida Iniciada!`);
+        notify(`¡Partida Iniciada! Modo: ${mode.toUpperCase()}`);
     }
 
     startTutorial() {
-        state.isTutorial = true;
-        state.gameMode = 'ai';
-        state.aiDifficulty = 'easy';
-        state.fogEnabled = false;
-        
+        this.isTutorial = true;
+        state.fogEnabled = false; // No fog in tutorial
         this.generateDefaultMap();
         this.players[1].isBot = true;
-        this.players[1].name = 'IA (Tutorial)';
+        this.players[1].name = "IA (Tutorial)";
         
         this.turn = 0;
         this.currentPlayer = 0;
         this.phase = 'roll';
         this.selectedHex = null;
-        
+        this.tutorialStep = 0;
+
         closeModal('main-menu-modal');
-        document.getElementById('game-status').innerText = 'Tutorial';
+        document.getElementById('game-status').innerText = "Tutorial";
         
-        // Start tutorial logic
-        tutorial.start();
+        // Start Tutorial Logic
+        setTimeout(() => tutorial.start(), 500);
+        this.startTurn();
+    }
+
+    startScenario() {
+        const sId = document.getElementById('scenario-info-modal').dataset.id;
+        const scenario = SCENARIOS.find(s => s.id === sId);
+        this.setupGame('ai', 'medium');
+        notify(`Misión: ${scenario.objective}`);
+        closeModal('scenario-info-modal');
     }
 
     startTurn() {
@@ -517,21 +548,14 @@ class HexGame {
         document.getElementById('dice-val').innerText = '🎲';
         document.getElementById('dice-val').classList.remove('dice-rolling');
 
-        if (p.isBot && !state.isTutorial) {
+        if (p.isBot) {
             setTimeout(() => this.botTurn(), 1000);
-        } else if (state.isTutorial) {
-            // In tutorial, we wait for player input guided by steps
-            if (p.isBot) {
-                setTimeout(() => this.botTurn(), 1000);
-            }
         }
     }
 
     rollDice() {
         if (this.phase !== 'roll') return;
-        // Block input if it's bot turn in tutorial
-        if (state.isTutorial && this.players[this.currentPlayer].isBot) return;
-
+        
         const diceEl = document.getElementById('dice-val');
         diceEl.classList.add('dice-rolling');
         
@@ -549,20 +573,19 @@ class HexGame {
                 document.getElementById('btn-end').disabled = false;
                 notify(`Sacaste un ${this.diceValue}`);
                 
-                if (state.isTutorial) tutorial.checkStep();
+                // Check tutorial step
+                if(this.isTutorial) tutorial.checkStep();
             }
         }, 50);
     }
 
     handleHexClick(hex) {
         if (this.phase !== 'action') return;
-        // Critical Fix: Block human input if it's bot's turn in tutorial
-        if (state.isTutorial && this.players[this.currentPlayer].isBot) return;
+        if (this.players[this.currentPlayer].isBot) return;
 
         if (hex.owner === this.currentPlayer && hex.units > 0) {
             this.selectedHex = hex;
             this.renderMap();
-            if (state.isTutorial) tutorial.checkStep();
             return;
         }
 
@@ -604,14 +627,15 @@ class HexGame {
                 to.owner = from.owner;
                 to.units = 1;
                 from.units--;
-                msg += "¡Victoria!";
+                msg += "¡Victoria! Territorio capturado.";
                 this.checkWinCondition();
             } else {
                 from.units--;
+                msg += "Defensa exitosa, pero perdiste tropas.";
             }
         } else {
             from.units--;
-            msg += "Fallido.";
+            msg += "Ataque fallido.";
         }
         
         notify(msg);
@@ -629,7 +653,7 @@ class HexGame {
         this.selectedHex = null;
         this.renderMap();
         this.updateUI();
-        if (state.isTutorial) tutorial.checkStep();
+        if(this.isTutorial) tutorial.checkStep();
     }
 
     endTurn() {
@@ -640,21 +664,15 @@ class HexGame {
     }
 
     botTurn() {
-        if (state.isTutorial && this.currentPlayer === 0) return; // Should not happen but safety check
-
         const bot = this.players[this.currentPlayer];
         const human = this.players[this.currentPlayer === 0 ? 1 : 0];
         
-        // Simulate Dice Roll visually
-        const diceEl = document.getElementById('dice-val');
-        diceEl.classList.add('dice-rolling');
+        // Simulate Roll
+        this.diceValue = Math.floor(Math.random() * 6) + 1;
+        notify(`IA sacó un ${this.diceValue}`);
+        this.phase = 'action';
+        
         setTimeout(() => {
-            this.diceValue = Math.floor(Math.random() * 6) + 1;
-            diceEl.innerText = this.diceValue;
-            diceEl.classList.remove('dice-rolling');
-            this.phase = 'action';
-
-            // AI Logic based on difficulty
             const myUnits = this.mapData.filter(h => h.owner === this.currentPlayer && h.units > 0);
             if (myUnits.length === 0) { this.endTurn(); return; }
 
@@ -666,29 +684,35 @@ class HexGame {
                 const neighbors = this.getNeighbors(unit);
                 let target = null;
 
-                if (state.aiDifficulty === 'hard' || state.isTutorial) {
-                    // Prioritize attacking weak enemies or capturing neutrals
+                // Advanced AI Logic based on difficulty
+                if (state.aiDifficulty === 'hard' || this.isTutorial) {
+                    // Priority: Kill weak enemy -> Capture neutral -> Reinforce
                     target = neighbors.find(n => n.owner === human.id && n.units < unit.units);
-                    if (!target) target = neighbors.find(n => n.owner === null && n.type !== 'water' && n.type !== 'mountain');
+                    if (!target) target = neighbors.find(n => n.owner === null && n.type !== 'water');
                 } else if (state.aiDifficulty === 'medium') {
-                    const valid = neighbors.filter(n => this.getDistance(unit, n) <= this.diceValue && n.type !== 'water');
-                    if (valid.length > 0) target = valid[Math.floor(Math.random() * valid.length)];
+                    // Priority: Attack if advantage, else random valid
+                    const enemies = neighbors.filter(n => n.owner === human.id);
+                    if(enemies.length > 0 && unit.units > enemies[0].units) target = enemies[0];
+                    else {
+                        const valid = neighbors.filter(n => n.owner === null && n.type !== 'water');
+                        if(valid.length > 0) target = valid[0];
+                    }
                 } else {
-                    // Easy: Random
-                    const valid = neighbors.filter(n => this.getDistance(unit, n) <= this.diceValue);
+                    // Easy: Random valid move
+                    const valid = neighbors.filter(n => this.getDistance(unit, n) <= this.diceValue && n.type !== 'water');
                     if (valid.length > 0) target = valid[Math.floor(Math.random() * valid.length)];
                 }
 
                 if (target) {
                     if (target.owner === human.id) this.attackUnit(unit, target);
                     else if (target.owner === null) this.captureHex(unit, target);
-                    else if (target.owner === this.currentPlayer && unit.units > 1) this.moveUnit(unit, target);
+                    else this.moveUnit(unit, target);
                     acted = true;
                 }
             }
 
-            setTimeout(() => this.endTurn(), 800);
-        }, 600);
+            setTimeout(() => this.endTurn(), 1000);
+        }, 800);
     }
 
     getDistance(h1, h2) {
@@ -713,48 +737,30 @@ class HexGame {
 
     gameOver(winnerId) {
         const win = winnerId === 0 && !this.players[0].isBot;
-        if (!state.isTutorial) {
+        if(!this.isTutorial) {
             updateStats(win);
             alert(win ? "¡VICTORIA!" : "DERROTA");
             showModal('main-menu-modal');
         } else {
-            if (winnerId === 0) {
+            // Tutorial End
+            if(win) {
                 notify("¡Tutorial Completado!");
-                setTimeout(() => {
-                    tutorial.nextStep(); // Advance to finish
-                }, 1000);
+                updateStats(true); // Give XP for tutorial
+                setTimeout(() => showModal('main-menu-modal'), 2000);
             }
         }
     }
 
     renderMap() {
         this.svg.innerHTML = '';
-        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
         
-        const createPattern = (id, color, char) => {
-            const p = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
-            p.setAttribute("id", id);
-            p.setAttribute("patternUnits", "userSpaceOnUse");
-            p.setAttribute("width", "40");
-            p.setAttribute("height", "40");
-            p.innerHTML = `<rect width="40" height="40" fill="${color}"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20">${char}</text>`;
-            return p;
-        };
-
-        defs.appendChild(createPattern('pat-plain', 'var(--hex-bg)', ''));
-        defs.appendChild(createPattern('pat-mountain', 'var(--mountain-color)', '🏔️'));
-        defs.appendChild(createPattern('pat-forest', 'var(--forest-color)', '🌲'));
-        defs.appendChild(createPattern('pat-water', 'var(--water-color)', '🌊'));
-        this.svg.appendChild(defs);
-
         this.mapData.forEach(hex => {
-            // Fog of War Logic
+            // Fog of War Check
             if (state.fogEnabled && !hex.revealed && this.currentPlayer === 0) {
                 const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
                 const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
                 poly.setAttribute("points", this.getHexPoints(hex.x, hex.y));
                 poly.setAttribute("fill", "#000");
-                poly.setAttribute("fill-opacity", "0.9");
                 g.appendChild(poly);
                 this.svg.appendChild(g);
                 return;
@@ -763,10 +769,10 @@ class HexGame {
             const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
             const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
             
-            let fill = 'url(#pat-plain)';
-            if (hex.type === 'mountain') fill = 'url(#pat-mountain)';
-            if (hex.type === 'forest') fill = 'url(#pat-forest)';
-            if (hex.type === 'water') fill = 'url(#pat-water)';
+            let fill = '#16213e'; // plain
+            if (hex.type === 'mountain') fill = '#555';
+            if (hex.type === 'forest') fill = '#2d6a4f';
+            if (hex.type === 'water') fill = '#1d3557';
             if (hex.owner !== null) fill = this.players[hex.owner].color;
 
             poly.setAttribute("points", this.getHexPoints(hex.x, hex.y));
@@ -807,6 +813,20 @@ class HexGame {
             g.onclick = () => this.handleHexClick(hex);
             this.svg.appendChild(g);
         });
+
+        // Render Fog Overlay
+        if (state.fogEnabled && this.currentPlayer === 0) {
+            this.mapData.forEach(hex => {
+                if (!hex.revealed) {
+                    const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                    poly.setAttribute("points", this.getHexPoints(hex.x, hex.y));
+                    poly.setAttribute("fill", "black");
+                    poly.setAttribute("fill-opacity", "0.85");
+                    poly.setAttribute("class", "fog");
+                    this.svg.appendChild(poly);
+                }
+            });
+        }
     }
 
     getHexPoints(x, y) {
@@ -850,91 +870,63 @@ class HexGame {
         this.revealFog();
         this.renderMap();
     }
-
-    renderCustomization() {
-        const colors = ['#4cc9f0', '#f72585', '#4361ee', '#4895ef', '#f8961e'];
-        const picker = document.getElementById('color-picker');
-        picker.innerHTML = '';
-        colors.forEach(c => {
-            const div = document.createElement('div');
-            div.className = `color-option ${state.customization.color === c ? 'selected' : ''}`;
-            div.style.backgroundColor = c;
-            div.onclick = () => {
-                state.customization.color = c;
-                saveCustom();
-                this.renderCustomization();
-            };
-            picker.appendChild(div);
-        });
+    
+    generateScenarios() {
+        const list = document.getElementById('scenarios-list');
+        list.innerHTML = SCENARIOS.map(s => `
+            <div class="scenario-card" onclick="showScenarioInfo('${s.id}')">
+                <div class="scenario-title">${s.emoji} ${s.title}</div>
+                <div class="scenario-desc">${s.period}</div>
+                <div class="difficulty">${'★'.repeat(s.difficulty)}</div>
+            </div>
+        `).join('');
+    }
+    
+    updateProfileUI() {
+        const p = state.profile;
+        document.getElementById('prof-level').innerText = p.level;
+        document.getElementById('prof-xp').style.width = `${Math.min(100, (p.xp / (p.level * 1000)) * 100)}%`;
+        document.getElementById('stat-wins').innerText = p.wins;
+        document.getElementById('stat-losses').innerText = p.losses;
+        document.getElementById('stat-total').innerText = p.total;
+        
+        const hist = document.getElementById('match-history');
+        hist.innerHTML = p.history.map(h => `<li>📅 ${h.date}: ${h.result}</li>`).join('');
     }
 }
 
 // --- TUTORIAL LOGIC (FIXED) ---
 const tutorial = {
-    step: 0,
     steps: [
-        { text: "Bienvenido al entrenamiento. Primero, haz clic en 'TIRAR DADO' para iniciar tu turno.", action: 'roll' },
-        { text: "¡Bien! El dado determina cuántos hexágonos puedes mover o atacar. Ahora selecciona una de tus tropas (hexágonos azules con número).", action: 'select' },
-        { text: "Excelente. Observa los hexágonos resaltados. Mueve tus tropas capturando un territorio neutral (gris) o atacando al enemigo (rosa).", action: 'move' },
-        { text: "¡Acción completada! Cuando termines de mover todas tus tropas, pulsa 'FINALIZAR TURNO'.", action: 'end' },
-        { text: "Ahora es turno de la IA. Observa cómo se mueve...", action: 'wait' },
-        { text: "¡Has completado el tutorial! Ahora puedes jugar partidas reales.", action: 'finish' }
+        { text: "Bienvenido. Primero, debes tirar el dado para determinar tus movimientos.", check: () => game.phase === 'action' },
+        { text: "¡Bien! Ahora selecciona una de tus tropas (hexágonos azules).", check: () => game.selectedHex !== null },
+        { text: "Excelente. Los hexágonos parpadeantes son objetivos válidos. Ataca al enemigo (rosa).", check: () => game.phase === 'roll' }, // After attack
+        { text: "El enemigo jugará su turno. Espera...", check: () => game.currentPlayer === 0 && game.phase === 'roll' },
+        { text: "Es tu turno de nuevo. Intenta capturar un territorio neutral (gris).", check: () => game.mapData.some(h => h.owner === 0 && h.units > 5) },
+        { text: "¡Has aprendido lo básico! Ahora gana la partida destruyendo la base enemiga.", check: () => false } // Final step
     ],
-    
-    start() {
-        this.step = 0;
+    start: function() {
+        this.currentStep = 0;
         document.getElementById('tutorial-overlay').classList.add('active');
         this.updateText();
     },
-    
-    updateText() {
-        if (this.step < this.steps.length) {
-            document.getElementById('tut-text').innerText = this.steps[this.step].text;
-            document.getElementById('tut-step').innerText = `Paso ${this.step + 1}/${this.steps.length}`;
-            const btn = document.getElementById('tut-btn');
-            if (this.steps[this.step].action === 'wait') {
-                btn.disabled = true;
-                btn.innerText = "Esperando...";
-            } else {
-                btn.disabled = false;
-                btn.innerText = "Continuar ➡";
-            }
-        } else {
+    nextStep: function() {
+        this.currentStep++;
+        if(this.currentStep >= this.steps.length) {
             document.getElementById('tutorial-overlay').classList.remove('active');
-            state.isTutorial = false;
-            showModal('main-menu-modal');
+            return;
         }
+        this.updateText();
     },
-    
-    nextStep() {
-        if (this.step < this.steps.length) {
-            this.step++;
-            this.updateText();
-            if (this.step < this.steps.length && this.steps[this.step].action === 'wait') {
-                // Let the game flow naturally
-            }
-        }
+    updateText: function() {
+        const step = this.steps[this.currentStep];
+        document.getElementById('tut-text').innerText = step.text;
+        document.getElementById('tut-step').innerText = `Paso ${this.currentStep + 1}/${this.steps.length}`;
     },
-
-    checkStep() {
-        if (!state.isTutorial) return;
-        
-        const currentAction = this.steps[this.step].action;
-        const phase = game.phase;
-        const selected = game.selectedHex !== null;
-
-        // Auto-advance logic based on game state
-        if (currentAction === 'roll' && phase === 'action') {
-            setTimeout(() => this.nextStep(), 500);
-        } else if (currentAction === 'select' && selected) {
-            setTimeout(() => this.nextStep(), 500);
-        } else if (currentAction === 'move' && phase === 'action' && !selected) {
-            // Assuming a move was made if selection cleared and still in action phase
-            setTimeout(() => this.nextStep(), 500);
-        } else if (currentAction === 'end' && phase === 'roll' && game.currentPlayer === 1) {
-             setTimeout(() => this.nextStep(), 500);
-        } else if (currentAction === 'wait' && phase === 'roll' && game.currentPlayer === 0) {
-            setTimeout(() => this.nextStep(), 500);
+    checkStep: function() {
+        const step = this.steps[this.currentStep];
+        if(step.check()) {
+            setTimeout(() => this.nextStep(), 1000);
         }
     }
 };
@@ -989,17 +981,19 @@ function notify(msg) {
     setTimeout(() => el.remove(), 3000);
 }
 
-game.updateProfileUI = function() {
-    const p = state.profile;
-    document.getElementById('prof-level').innerText = p.level;
-    document.getElementById('prof-xp').style.width = `${Math.min(100, (p.xp / (p.level * 1000)) * 100)}%`;
-    document.getElementById('stat-wins').innerText = p.wins;
-    document.getElementById('stat-losses').innerText = p.losses;
-    document.getElementById('stat-total').innerText = p.total;
-    
-    const hist = document.getElementById('match-history');
-    hist.innerHTML = p.history.map(h => `<li>📅 ${h.date}: ${h.result}</li>`).join('');
-};
+let selectedScenarioId = null;
+function showScenarioInfo(id) {
+    selectedScenarioId = id;
+    const s = SCENARIOS.find(x => x.id === id);
+    document.getElementById('si-title').innerText = s.title;
+    document.getElementById('si-emoji').innerText = s.emoji;
+    document.getElementById('si-period').innerText = s.period;
+    document.getElementById('si-desc').innerText = s.desc;
+    document.getElementById('si-objective').innerText = s.objective;
+    document.getElementById('scenario-info-modal').dataset.id = id;
+    closeModal('main-menu-modal');
+    showModal('scenario-info-modal');
+}
 
 </script>
 </body>
