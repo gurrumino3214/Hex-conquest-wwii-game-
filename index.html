@@ -792,7 +792,7 @@
     </div>
     <div class="modal" id="faction-info-modal"><div class="modal-box"><div class="modal-title" id="faction-info-title"></div><div class="info-modal-content" id="faction-info-content"></div><button class="modal-btn btn-primary" onclick="document.getElementById('faction-info-modal').classList.remove('show')">Cerrar</button></div></div>
     <div class="modal" id="combat-modal"><div class="modal-box"><div class="modal-title">⚔️ Combate</div><div id="combat-result"></div><button class="modal-btn btn-primary" onclick="closeCombat()">Continuar</button></div></div>
-    <div class="modal" id="victory-modal"><div class="modal-box"><div class="modal-title" id="victory-title"></div><p id="victory-text"></p><button class="modal-btn btn-primary" onclick="goToMenu()">📋 Menú</button></div></div>
+    <div class="modal" id="victory-modal"><div class="modal-box"><div class="modal-title" id="victory-title"></div><p id="victory-text"></p><div id="victory-buttons" style="display:flex;gap:10px;justify-content:center;margin-top:15px;"><button class="modal-btn btn-primary" onclick="goToMenu()">📋 Menú</button><button class="modal-btn btn-gold" id="replay-btn" onclick="replayGame()">🔄 Volver a Jugar</button></div></div></div>
 
     <script>
         // ═══════════════ DATOS DE TEMAS Y FACCIONES ═══════════════
@@ -974,6 +974,9 @@
         let slotSelections={};
         let editorBrush='plains', customMapData=null;
         let gameState = {map:[], activePlayers:[], humanPlayers:[], currentPlayer:0, diceValue:0, selectedHex:null, phase:'roll', eliminated:[], turn:1, scores:{}, pendingCombat:null, mapSize:9, stats:{lastTurnConquests:0, totalUnits:{}, defendedBase:[], territoryCount:{}, cityCount:{}, maxMoveDistance:0}, tutorialMode:false, tutorialStep:0, tutorialCombatDone:false };
+        
+        // Variables para guardar la configuración y poder replay
+        let savedGameConfig = null;
 
         function getThemeData() { return THEMES[gameTheme].data; }
         function getAllFactions() { return THEMES[gameTheme].factions; }
@@ -1322,15 +1325,32 @@
         function eliminatePlayer(p) { if (gameState.eliminated.includes(p)) return; gameState.eliminated.push(p); for (const row of gameState.map) for (const cell of row) if (cell.owner === p && cell.type !== 'base') { cell.owner = null; cell.units = 0; } }
         function checkVictory() { const active = gameState.activePlayers.filter(p => !gameState.eliminated.includes(p)); if (active.length === 1) { showVictory(active[0]); return true; } return false; }
         function showVictory(w) {
-            document.getElementById('victory-title').textContent = `¡${getThemeData()[w].leader} Triunfa!`;
-            let victoryMessage = `${getThemeData()[w].flag || getThemeData()[w].miniEmoji} ${getThemeData()[w].name} domina el mundo`;
+            const isHumanWinner = gameState.humanPlayers.includes(w);
             
-            // Easter Egg: Ganar con Japón en modo difícil
-            if (w === 'japon' && gameTheme === 'ww2' && aiDifficulty === 'hard') {
-                victoryMessage = '🎉 ¡Lo lograste! No te bombardearon por segunda vez';
+            if (isHumanWinner) {
+                // El jugador humano ganó
+                document.getElementById('victory-title').textContent = `¡${getThemeData()[w].leader} Triunfa!`;
+                let victoryMessage = `${getThemeData()[w].flag || getThemeData()[w].miniEmoji} ${getThemeData()[w].name} domina el mundo`;
+                
+                // Easter Egg: Ganar con Japón en modo difícil
+                if (w === 'japon' && gameTheme === 'ww2' && aiDifficulty === 'hard') {
+                    victoryMessage = '🎉 ¡Lo lograste! No te bombardearon por segunda vez';
+                }
+                
+                document.getElementById('victory-text').textContent = victoryMessage;
+                document.getElementById('replay-btn').textContent = '🔄 Volver a Jugar';
+                document.getElementById('replay-btn').classList.remove('btn-secondary');
+                document.getElementById('replay-btn').classList.add('btn-gold');
+            } else {
+                // El jugador humano perdió
+                const humanPlayer = gameState.humanPlayers[0];
+                document.getElementById('victory-title').textContent = '💀 Perdiste';
+                document.getElementById('victory-text').textContent = `${getThemeData()[w].flag || getThemeData()[w].miniEmoji} ${getThemeData()[w].name} te ha derrotado.`;
+                document.getElementById('replay-btn').textContent = '🔄 Volver a Jugar';
+                document.getElementById('replay-btn').classList.remove('btn-secondary');
+                document.getElementById('replay-btn').classList.add('btn-gold');
             }
             
-            document.getElementById('victory-text').textContent = victoryMessage;
             document.getElementById('victory-modal').classList.add('show');
             gameState.winner = w;
             checkAchievements();
@@ -2044,6 +2064,19 @@
             initGame();
         }
         function initGame() {
+            // Guardar la configuración actual para poder hacer replay
+            savedGameConfig = {
+                gameMode: gameMode,
+                selectedMapSize: selectedMapSize,
+                mapType: mapType,
+                aiDifficulty: aiDifficulty,
+                selectedIACountry: selectedIACountry,
+                selectedIACount: selectedIACount,
+                selectedHumanCount: selectedHumanCount,
+                slotSelections: {...slotSelections},
+                selectedPvPAICount: selectedPvPAICount
+            };
+            
             const size = selectedMapSize; let human=[], all=[];
             if (gameMode==='ai') {
                 human=[selectedIACountry];
@@ -2112,6 +2145,30 @@
         }
 
         function goToMenu() { ['victory-modal','combat-modal'].forEach(m=>document.getElementById(m).classList.remove('show')); document.getElementById('menu-modal').classList.add('show'); }
+        
+        // Función para volver a jugar con la misma configuración
+        function replayGame() {
+            ['victory-modal','combat-modal'].forEach(m => document.getElementById(m).classList.remove('show'));
+            
+            // Reiniciar el juego con la configuración guardada
+            if (savedGameConfig) {
+                gameMode = savedGameConfig.gameMode;
+                selectedMapSize = savedGameConfig.selectedMapSize;
+                mapType = savedGameConfig.mapType;
+                aiDifficulty = savedGameConfig.aiDifficulty;
+                selectedIACountry = savedGameConfig.selectedIACountry;
+                selectedIACount = savedGameConfig.selectedIACount;
+                selectedHumanCount = savedGameConfig.selectedHumanCount;
+                slotSelections = {...savedGameConfig.slotSelections};
+                selectedPvPAICount = savedGameConfig.selectedPvPAICount;
+                
+                initGame();
+            } else {
+                // Si no hay configuración guardada, ir al menú
+                goToMenu();
+            }
+        }
+        
         function saveGame() { localStorage.setItem('hex_save', JSON.stringify(gameState)); alert('✅ Partida guardada'); }
         function loadGame() { const s=localStorage.getItem('hex_save'); if(s) { gameState=JSON.parse(s); document.getElementById('menu-modal').classList.remove('show'); renderMap(); alert('📂 Partida cargada'); } }
 
