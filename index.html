@@ -963,7 +963,13 @@
             { id:'city_builder', name:'Constructor de Ciudades', desc:'Controla 5 ciudades simultáneamente.', check: gs => (gs.stats.cityCount[gs.winner] || 0) >= 5 },
             { id:'base_defender', name:'Defensor de la Base', desc:'Defiende tu base exitosamente 3 veces.', check: gs => gs.stats.defendedBase?.length >= 3 },
             { id:'comeback_kid', name:'Niño del Regreso', desc:'Gana después de tener solo 1 territorio.', check: gs => gs.winner !== undefined && gs.stats.minTerritories === 1 },
-            { id:'perfect_start', name:'Inicio Perfecto', desc:'Gana tus primeras 3 batallas consecutivas.', check: gs => gs.stats.consecutiveWins >= 3 && gs.winner !== undefined }
+            { id:'perfect_start', name:'Inicio Perfecto', desc:'Gana tus primeras 3 batallas consecutivas.', check: gs => gs.stats.consecutiveWins >= 3 && gs.winner !== undefined },
+            // Logros Secretos (Easter Eggs)
+            { id:'secret_japan', name:'🎉 ¡Lo Lograste!', desc:'Gana con Japón en modo difícil (Easter Egg).', secret: true, check: gs => gs.winner==='japon' && gameTheme==='ww2' && aiDifficulty==='hard' },
+            { id:'secret_perfect', name:'👑 Perfección Total', desc:'Gana sin perder ninguna batalla.', secret: true, check: gs => gs.winner !== undefined && gs.stats.consecutiveWins === gs.turn },
+            { id:'secret_speedrun', name:'⚡ Velocidad Luz', desc:'Gana en menos de 5 turnos.', secret: true, check: gs => gs.turn < 5 && gs.winner !== undefined },
+            { id:'secret_underdog', name:'🐺 El Último Guerrero', desc:'Gana comenzando con solo 1 territorio.', secret: true, check: gs => gs.winner !== undefined && gs.stats.startTerritories === 1 },
+            { id:'secret_diplomat', name:'🕊️ Maestro Diplomático', desc:'Gana sin eliminar ningún jugador.', secret: true, check: gs => gs.winner !== undefined && gameState.eliminated.length === 0 }
         ];
         let unlockedAchievements = JSON.parse(localStorage.getItem('ww2_achievements') || '[]');
 
@@ -1190,6 +1196,22 @@
             gs.stats.totalUnits = totalUnits;
             gs.stats.territoryCount = territoryCount;
             gs.stats.cityCount = cityCount;
+            
+            // Actualizar startTerritories si es el primer turno
+            if (gs.turn === 1 && gs.stats.startTerritories === 0) {
+                const humanPlayer = gs.humanPlayers[0];
+                if (humanPlayer) {
+                    gs.stats.startTerritories = territoryCount[humanPlayer] || 1;
+                }
+            }
+            
+            // Actualizar minTerritories para el jugador humano
+            const humanPlayer = gs.humanPlayers[0];
+            if (humanPlayer && territoryCount[humanPlayer] !== undefined) {
+                if (territoryCount[humanPlayer] < gs.stats.minTerritories) {
+                    gs.stats.minTerritories = territoryCount[humanPlayer];
+                }
+            }
         }
         function getNeighbors(r, c) {
             const s = gameState.mapSize, e = r % 2 === 0;
@@ -1299,10 +1321,17 @@
             setTimeout(() => combatOverlay.remove(), 300);
 
             if (attackerWins) {
+                // Victoria del atacante - incrementar racha de victorias consecutivas
+                if (!gameState.stats.consecutiveWins) gameState.stats.consecutiveWins = 0;
+                gameState.stats.consecutiveWins++;
+                
                 if (d.type === 'base') { eliminatePlayer(d.owner); d.type = 'city'; d.owner = a.owner; d.units = 3; }
                 else { d.owner = a.owner; d.units = 1; }
                 a.units--; if (a.units <= 0 && a.type !== 'base') a.owner = null;
             } else {
+                // Derrota del atacante - resetear racha de victorias consecutivas
+                gameState.stats.consecutiveWins = 0;
+                
                 a.units--; if (a.units <= 0 && a.type !== 'base') a.owner = null;
                 if (d.type === 'base') { if (!gameState.stats.defendedBase) gameState.stats.defendedBase = []; if (!gameState.stats.defendedBase.includes(d.owner)) gameState.stats.defendedBase.push(d.owner); }
             }
@@ -1779,20 +1808,46 @@
                 if (!unlockedAchievements.includes(ach.id) && ach.check(gs)) {
                     unlockedAchievements.push(ach.id);
                     newUnlocks = true;
-                    showNotification(`🏆 Logro desbloqueado: ${ach.name}`, 3000);
+                    // Mostrar notificación especial para logros secretos
+                    if (ach.secret) {
+                        showNotification(`🌟 ¡LOGRO SECRETO DESBLOQUEADO! ${ach.name}`, 4000);
+                    } else {
+                        showNotification(`🏆 Logro desbloqueado: ${ach.name}`, 3000);
+                    }
                 }
             });
             if (newUnlocks) localStorage.setItem('ww2_achievements', JSON.stringify(unlockedAchievements));
         }
         function showAchievements() {
             const container = document.getElementById('achievements-list');
-            container.innerHTML = ACHIEVEMENTS.map(ach => {
+            const normalAchievements = ACHIEVEMENTS.filter(ach => !ach.secret);
+            const secretAchievements = ACHIEVEMENTS.filter(ach => ach.secret);
+            
+            let html = '<div class=\"section-title\" style=\"margin-top:0;\">🏆 Logros Normales</div>';
+            html += normalAchievements.map(ach => {
                 const unlocked = unlockedAchievements.includes(ach.id);
                 return `<div style="padding:6px; margin:4px 0; border-radius:8px; background:${unlocked?'#eafaf1':'#f8f8f8'}; border:1px solid ${unlocked?'#27ae60':'#ddd'}; display:flex; align-items:center; gap:8px;">
                     <span style="font-size:20px;">${unlocked?'✅':'🔒'}</span>
                     <div><b>${ach.name}</b><br><span style="font-size:10px;color:#666;">${ach.desc}</span></div>
                 </div>`;
             }).join('');
+            
+            // Sección de logros secretos (solo se muestra si hay al menos uno desbloqueado)
+            const hasSecretUnlocked = secretAchievements.some(ach => unlockedAchievements.includes(ach.id));
+            if (hasSecretUnlocked) {
+                html += '<div class="section-title" style="margin-top:15px;">🌟 Logros Secretos</div>';
+                html += secretAchievements.map(ach => {
+                    const unlocked = unlockedAchievements.includes(ach.id);
+                    return `<div style="padding:6px; margin:4px 0; border-radius:8px; background:${unlocked?'#f3e5f5':'#f8f8f8'}; border:1px solid ${unlocked?'#9c27b0':'#ddd'}; display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:20px;">${unlocked?'🌟':'❓'}</span>
+                        <div><b>${ach.name}</b><br><span style="font-size:10px;color:#666;">${ach.desc}</span></div>
+                    </div>`;
+                }).join('');
+            } else {
+                html += '<div style="padding:10px; margin:15px 0; border-radius:8px; background:#f8f8f8; border:1px dashed #ccc; text-align:center; color:#999; font-size:11px;">❓ ¿Hay logros secretos? ¡Sigue jugando para descubrirlos!</div>';
+            }
+            
+            container.innerHTML = html;
         }
 
         // ══════════ ESCENARIOS ══════════
@@ -1840,7 +1895,7 @@
             // Mostrar contexto antes de iniciar el escenario
             showScenarioContext(contextTitle, contextDesc, () => {
                 setGameTheme(theme);
-                gameState = { map, activePlayers: active, humanPlayers: human, currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {}, pendingCombat: null, mapSize: size, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[]}, tutorialMode: false, customUnits: scenarioContexts[scenario].customUnits };
+                gameState = { map, activePlayers: active, humanPlayers: human, currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {}, pendingCombat: null, mapSize: size, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[], territoryCount:{}, cityCount:{}, maxMoveDistance:0, startTerritories:0, minTerritories:999, consecutiveWins:0}, tutorialMode: false, customUnits: scenarioContexts[scenario].customUnits };
                 active.forEach(p => gameState.scores[p]=0);
                 document.getElementById('menu-modal').classList.remove('show'); renderMap();
                 if (!human.includes(active[0])) setTimeout(aiTurn, 600);
@@ -2117,7 +2172,7 @@
                     currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll',
                     eliminated: [], turn: 1, scores: { [humanPlayer]: 1000 },
                     pendingCombat: null, mapSize: size,
-                    stats: { lastTurnConquests: 0, totalUnits: {}, defendedBase: [] },
+                    stats: { lastTurnConquests: 0, totalUnits: {}, defendedBase: [], territoryCount: {}, cityCount: {}, maxMoveDistance: 0, startTerritories: 1, minTerritories: 1, consecutiveWins: 0 },
                     tutorialMode: false
                 };
 
@@ -2135,7 +2190,7 @@
                 currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll',
                 eliminated: [], turn: 1, scores: {},
                 pendingCombat: null, mapSize: size,
-                stats: { lastTurnConquests: 0, totalUnits: {}, defendedBase: [], territoryCount: {}, cityCount: {}, maxMoveDistance: 0 },
+                stats: { lastTurnConquests: 0, totalUnits: {}, defendedBase: [], territoryCount: {}, cityCount: {}, maxMoveDistance: 0, startTerritories: 0, minTerritories: 999, consecutiveWins: 0 },
                 tutorialMode: false
             };
             all.forEach(p => gameState.scores[p] = 0);
