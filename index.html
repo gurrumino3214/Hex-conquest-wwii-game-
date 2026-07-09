@@ -13,6 +13,8 @@
             --shadow:0 4px 12px rgba(0,0,0,0.1); --shadow-lg:0 8px 24px rgba(0,0,0,0.15); --btn-radius:25px;
             --hex-size: 54px;
         }
+        /* Audio elements hidden */
+        .audio-element { display:none; }
         body { background:linear-gradient(135deg,#fdf6e8,#f0e4cc); color:#4a3728; font-family:'Nunito',sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; }
         #top-bar { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold-light); flex-shrink:0; z-index:100; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
         #turn-info { display:flex; flex-direction:column; gap:2px; min-width:0; }
@@ -659,28 +661,28 @@
             </div>
             <div class="tab-panel" id="tab-scenarios">
                 <div class="section-title">🏛️ Históricos (WWII)</div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('stalingrad')" style="flex:1;">🇷🇺 Stalingrado (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('stalingrad')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('normandy')" style="flex:1;">🇺🇸 Normandía (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('normandy')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('midway')" style="flex:1;">🇯🇵 Midway (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('midway')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('berlin')" style="flex:1;">🇩🇪 Caída de Berlín (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('berlin')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('stalingrad')" style="flex:1;">🇷🇺 Stalingrado (7×7)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('stalingrad')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('normandy')" style="flex:1;">🇺🇸 Normandía (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('normandy')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('midway')" style="flex:1;">🇯🇵 Midway (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('midway')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('berlin')" style="flex:1;">🇩🇪 Caída de Berlín (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('berlin')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
                 <div class="section-title">🏺 Antigüedad</div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('termpilas')" style="flex:1;">🛡️ Termópilas (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('termpilas')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('cannas')" style="flex:1;">⚔️ Cannas (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('cannas')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('actium')" style="flex:1;">⚓ Accio (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('actium')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('termpilas')" style="flex:1;">🛡️ Termópilas (7×7)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('termpilas')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('cannas')" style="flex:1;">⚔️ Cannas (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('cannas')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('actium')" style="flex:1;">⚓ Accio (7×7)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('actium')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
                 <div class="section-title">🎮 Videojuegos</div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('consolewar')" style="flex:1;">🕹️ Guerra de Consolas (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('consolewar')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('hyrule')" style="flex:1;">🗡️ Hyrule (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('hyrule')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('consolewar')" style="flex:1;">🕹️ Guerra de Consolas (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('consolewar')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('hyrule')" style="flex:1;">🗡️ Hyrule (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('hyrule')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
                 <div class="section-title">🎬 Películas / Series</div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('starwars')" style="flex:1;">🌌 Star Wars (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('starwars')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('got')" style="flex:1;">🐉 Juego de Tronos (11×11)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('got')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('starwars')" style="flex:1;">🌌 Star Wars (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('starwars')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('got')" style="flex:1;">🐉 Juego de Tronos (11×11)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('got')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
                 <div class="section-title">🎌 Anime / Manga</div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('leafbattle')" style="flex:1;">🍃 Batalla de la Hoja (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('leafbattle')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('titanbattle')" style="flex:1;">⚔️ Batalla de Titanes (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('titanbattle')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('leafbattle')" style="flex:1;">🍃 Batalla de la Hoja (7×7)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('leafbattle')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('titanbattle')" style="flex:1;">⚔️ Batalla de Titanes (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('titanbattle')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
                 <div class="section-title">📚 Literatura</div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('middleearth')" style="flex:1;">💍 Tierra Media (11×11)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('middleearth')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('narnia')" style="flex:1;">🦁 Narnia (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('narnia')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('middleearth')" style="flex:1;">💍 Tierra Media (11×11)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('middleearth')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('narnia')" style="flex:1;">🦁 Narnia (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('narnia')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
                 <div class="section-title">⛪ Religioso</div>
-                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('crusades')" style="flex:1;">✝️ Cruzadas (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('crusades')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('crusades')" style="flex:1;">✝️ Cruzadas (9×9)</button><button class="modal-btn btn-secondary" onclick="playSound('info');showScenarioInfo('crusades')" style="min-width:24.24px;padding:4.04px;font-size:12.12px;">ℹ️</button></div>
             </div>
             <div class="tab-panel" id="tab-tutorial">
                 <div class="section-title">📖 Cómo Jugar</div>
@@ -2058,6 +2060,88 @@
 
         let lastTouchEnd=0;
         document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTouchEnd<=300)e.preventDefault();lastTouchEnd=now;},false);
+
+        // Audio system for game sounds
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(type) {
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            const now = audioContext.currentTime;
+            
+            switch(type) {
+                case 'click':
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(800, now);
+                    oscillator.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+                    gainNode.gain.setValueAtTime(0.3, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.1);
+                    break;
+                    
+                case 'dice':
+                    oscillator.type = 'square';
+                    oscillator.frequency.setValueAtTime(600, now);
+                    oscillator.frequency.setValueAtTime(700, now + 0.05);
+                    oscillator.frequency.setValueAtTime(800, now + 0.1);
+                    gainNode.gain.setValueAtTime(0.2, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.15);
+                    break;
+                    
+                case 'move':
+                    oscillator.type = 'triangle';
+                    oscillator.frequency.setValueAtTime(400, now);
+                    oscillator.frequency.linearRampToValueAtTime(600, now + 0.08);
+                    gainNode.gain.setValueAtTime(0.25, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.08);
+                    break;
+                    
+                case 'attack':
+                    oscillator.type = 'sawtooth';
+                    oscillator.frequency.setValueAtTime(300, now);
+                    oscillator.frequency.exponentialRampToValueAtTime(150, now + 0.2);
+                    gainNode.gain.setValueAtTime(0.3, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.2);
+                    break;
+                    
+                case 'capture':
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(523, now);
+                    oscillator.frequency.setValueAtTime(659, now + 0.1);
+                    oscillator.frequency.setValueAtTime(784, now + 0.2);
+                    oscillator.frequency.setValueAtTime(1047, now + 0.3);
+                    gainNode.gain.setValueAtTime(0.3, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.4);
+                    break;
+                    
+                case 'info':
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(1000, now);
+                    oscillator.frequency.exponentialRampToValueAtTime(1500, now + 0.15);
+                    gainNode.gain.setValueAtTime(0.2, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.15);
+                    break;
+            }
+        }
     </script>
 </body>
 </html>
