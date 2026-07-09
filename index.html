@@ -1371,9 +1371,13 @@
             } while (gameState.eliminated.includes(gameState.activePlayers[gameState.currentPlayer]));
             const p = gameState.activePlayers[gameState.currentPlayer];
             document.getElementById('action-text').textContent = `Turno de ${getThemeData()[p].flag || getThemeData()[p].miniEmoji} ${getThemeData()[p].name}`;
-            // En tutorial, la IA siempre juega después del jugador
-            if (!gameState.humanPlayers.includes(p) && !gameState.tutorialMode) setTimeout(aiTurn, 500);
-            else if (gameState.tutorialMode && !gameState.humanPlayers.includes(p)) setTimeout(aiTurn, 500);
+            
+            // Si es turno de la IA, ejecutar su turno automáticamente
+            // Si es turno del jugador humano, detenerse y esperar su acción
+            if (!gameState.humanPlayers.includes(p)) {
+                setTimeout(aiTurn, 500);
+            }
+            // Para jugadores humanos, el juego se detiene aquí y espera su input
         }
         
         // ══════════ SISTEMA DE REFUERZOS ══════════
