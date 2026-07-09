@@ -24,7 +24,7 @@
         .player-badge.rebels { border-color:#3498db; } .player-badge.empire { border-color:#7f8c8d; } .player-badge.jedi { border-color:#27ae60; } .player-badge.sith { border-color:#c0392b; } .player-badge.avengers { border-color:#e74c3c; } .player-badge.thanos { border-color:#8e44ad; } .player-badge.hogwarts { border-color:#1abc9c; } .player-badge.decepticons { border-color:#e67e22; } .player-badge.wakanda { border-color:#2c3e50; }
         .player-badge.konoha { border-color:#e67e22; } .player-badge.akatsuki { border-color:#c0392b; } .player-badge.marine { border-color:#2980b9; } .player-badge.pirates { border-color:#e74c3c; } .player-badge.hunters { border-color:#27ae60; } .player-badge.chimera { border-color:#8e44ad; } .player-badge.saiyans { border-color:#f1c40f; } .player-badge.namek { border-color:#2ecc71; } .player-badge.guts { border-color:#7f8c8d; }
         .player-badge.justice { border-color:#3498db; } .player-badge.avengers_c { border-color:#e74c3c; } .player-badge.xmen { border-color:#f1c40f; } .player-badge.brotherhood { border-color:#8e44ad; } .player-badge.spiderman { border-color:#e91e63; } .player-badge.sinister { border-color:#e67e22; } .player-badge.doom { border-color:#2c3e50; } .player-badge.injustice { border-color:#c0392b; } .player-badge.watchmen { border-color:#1abc9c; }
-        .player-badge.fellowship { border-color:#27ae60; } .player-badge.mordor { border-color:#c0392b; } .player-badge.westeros { border-color:#7f8c8d; } .player-badge.targaryen { border-color:#e74c3c; } .player-badge.hogwarts_l { border-color:#1abc9c; } .player-badge.oz { border-color:#f1c40f; } .player-badge.discworld { border-color:#3498db; } .player-badge.narnia { border-color:#e67e22; } .player-badge.riverdale { border-color:#8e44ad; }
+        .player-badge.fellowship { border-color:#27ae60; } .player-badge.mordor { border-color:#c0392b; } .player-badge.westeros { border-color:#7f8c8d; } .player-badge.targaryen { border-color:#e74c3c; } .player-badge.lannister { border-color:#f1c40f; } .player-badge.hogwarts_l { border-color:#1abc9c; } .player-badge.oz { border-color:#f1c40f; } .player-badge.discworld { border-color:#3498db; } .player-badge.narnia { border-color:#e67e22; } .player-badge.witch { border-color:#a8e6cf; } .player-badge.riverdale { border-color:#8e44ad; }
         .player-badge.christianity { border-color:#f1c40f; } .player-badge.islam { border-color:#27ae60; } .player-badge.judaism { border-color:#3498db; } .player-badge.hinduism { border-color:#e74c3c; } .player-badge.buddhism { border-color:#f39c12; } .player-badge.sikhism { border-color:#d35400; } .player-badge.jainism { border-color:#2ecc71; } .player-badge.zoroastrianism { border-color:#e67e22; } .player-badge.shinto { border-color:#e74c3c; }
         #dice-area { display:flex; gap:8px; align-items:center; flex-shrink:0; }
         .dice-btn, .exit-btn { border:none; color:white; padding:8px 16px; border-radius:25px; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s; font-family:'Fredoka',sans-serif; }
@@ -599,7 +599,7 @@
 </head>
 <body class="light">
     <div id="game-container">
-        <div id="top-bar"><div id="turn-info"><div id="turn-label">Turno <span id="turn-num">1</span></div><span class="player-badge urss" id="current-player">🇷🇺 URSS</span></div><div id="dice-area"><button class="dice-btn" id="roll-btn" onclick="rollDice()">🎲 TIRAR DADO</button><button class="exit-btn" onclick="exitToMenu()">🚪 Salir</button><div id="dice-result">-</div></div></div>
+        <div id="top-bar"><div id="turn-info"><div id="turn-label">Turno <span id="turn-num">1</span></div><span class="player-badge urss" id="current-player">🇷🇺 URSS</span></div><div id="dice-area"><button class="dice-btn" id="roll-btn" onclick="rollDice()">🎲 TIRAR DADO</button><button class="exit-btn" onclick="gameState && gameState.tutorialMode ? goToScenarioSelection() : exitToMenu()" id="exit-scenario-btn">🚪 Escenarios</button><div id="dice-result">-</div></div></div>
         <div id="score-board"></div>
         <div id="map-wrapper"><div id="hex-grid"></div></div>
         <div id="bottom-panel"><div id="action-text">Bienvenido a Hex Conquest</div><div id="players-bar"></div></div>
@@ -658,21 +658,28 @@
                 <button class="modal-btn btn-primary" onclick="startGame()">⚔️ ¡INICIAR GUERRA!</button>
             </div>
             <div class="tab-panel" id="tab-scenarios">
+                <button class="modal-btn btn-secondary" onclick="goToMenu()" style="margin-bottom:12px;">← Volver al Menú</button>
                 <div class="section-title">🏛️ Históricos (WWII)</div>
                 <button class="modal-btn btn-gold" onclick="startScenario('stalingrad')">🇷🇺 Stalingrado (7×7)</button>
                 <button class="modal-btn btn-gold" onclick="startScenario('normandy')">🇺🇸 Normandía (9×9)</button>
                 <button class="modal-btn btn-gold" onclick="startScenario('midway')">🇯🇵 Midway (9×9)</button>
+                <button class="modal-btn btn-gold" onclick="startScenario('berlin')">🇩🇪 Caída de Berlín (9×9)</button>
                 <div class="section-title">🏺 Antigüedad</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('termpilas')">🛡️ Termópilas (7×7)</button>
                 <button class="modal-btn btn-secondary" onclick="startScenario('cannas')">⚔️ Cannas (9×9)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('actium')">⚓ Accio (7×7)</button>
                 <div class="section-title">🎮 Videojuegos</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('consolewar')">🕹️ Guerra de Consolas (9×9)</button>
-                <div class="section-title">🎬 Películas</div>
+                <button class="modal-btn btn-secondary" onclick="startScenario('hyrule')">🗡️ Hyrule (9×9)</button>
+                <div class="section-title">🎬 Películas / Series</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('starwars')">🌌 Star Wars (9×9)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('got')">🐉 Juego de Tronos (11×11)</button>
                 <div class="section-title">🎌 Anime / Manga</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('leafbattle')">🍃 Batalla de la Hoja (7×7)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('titanbattle')">⚔️ Batalla de Titanes (9×9)</button>
                 <div class="section-title">📚 Literatura</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('middleearth')">💍 Tierra Media (11×11)</button>
+                <button class="modal-btn btn-secondary" onclick="startScenario('narnia')">🦁 Narnia (9×9)</button>
                 <div class="section-title">⛪ Religioso</div>
                 <button class="modal-btn btn-secondary" onclick="startScenario('crusades')">✝️ Cruzadas (9×9)</button>
             </div>
@@ -861,16 +868,18 @@
                 }
             },
             literature: {
-                factions: ['fellowship','mordor','westeros','targaryen','hogwarts_l','oz','discworld','narnia','riverdale'],
+                factions: ['fellowship','mordor','westeros','targaryen','lannister','hogwarts_l','oz','discworld','narnia','witch','riverdale'],
                 data: {
                     fellowship:{name:'Comunidad',flag:'💍',base9:[0,0],miniEmoji:'🧝',leader:'Frodo',fullName:'Comunidad del Anillo',lore:'Un anillo para gobernarlos a todos.',stats:{atk:3,def:4,mov:4,reinf:4},pros:['Movilidad','Cruce libre'],cons:['Ataque medio'],bonuses:{moveBonus:1,riverFree:true}},
                     mordor:{name:'Mordor',flag:'👁️',base9:[0,8],miniEmoji:'🔥',leader:'Sauron',fullName:'Mordor',lore:'El Señor Oscuro.',stats:{atk:7,def:3,mov:2,reinf:2},pros:['Ataque máximo'],cons:['Lento'],bonuses:{atkBonus:4}},
                     westeros:{name:'Westeros',flag:'🐺',base9:[8,0],miniEmoji:'❄️',leader:'Jon Snow',fullName:'Poniente',lore:'Se acerca el invierno.',stats:{atk:4,def:4,mov:3,reinf:4},pros:['Equilibrado'],cons:['Ninguno'],bonuses:{balancedBonus:1}},
                     targaryen:{name:'Targaryen',flag:'🐉',base9:[8,8],miniEmoji:'🔥',leader:'Daenerys',fullName:'Casa Targaryen',lore:'Fuego y sangre.',stats:{atk:6,def:2,mov:4,reinf:3},pros:['Ataque devastador','Movilidad'],cons:['Defensa frágil'],bonuses:{atkBonus:3,moveBonus:1}},
+                    lannister:{name:'Lannister',flag:'🦁',base9:[0,4],miniEmoji:'💰',leader:'Cersei',fullName:'Casa Lannister',lore:'Escucho su rugido.',stats:{atk:5,def:5,mov:2,reinf:5},pros:['Refuerzos dorados','Defensa sólida'],cons:['Lento'],bonuses:{reinforceBonus:3,baseDefBonus:3}},
                     hogwarts_l:{name:'Hogwarts',flag:'⚡',base9:[4,4],miniEmoji:'🧙‍♂️',leader:'Harry',fullName:'Hogwarts',lore:'La magia es poder.',stats:{atk:3,def:5,mov:3,reinf:4},pros:['Defensa mágica','Cruce libre'],cons:['Ataque moderado'],bonuses:{baseDefBonus:5,riverFree:true}},
                     oz:{name:'Oz',flag:'🌈',base9:[4,0],miniEmoji:'👠',leader:'Dorothy',fullName:'Tierra de Oz',lore:'No hay lugar como el hogar.',stats:{atk:2,def:2,mov:5,reinf:6},pros:['Refuerzos masivos','Muy móvil'],cons:['Defensa y ataque bajos'],bonuses:{reinforceBonus:4,moveBonus:2}},
                     discworld:{name:'Mundo Disco',flag:'🐢',base9:[4,8],miniEmoji:'🧳',leader:'Rincewind',fullName:'Mundodisco',lore:'La Gran Tortuga A\'Tuin.',stats:{atk:1,def:7,mov:6,reinf:3},pros:['Defensa absoluta','Hipermovilidad'],cons:['Ataque inexistente'],bonuses:{baseDefBonus:7,moveBonus:3}},
                     narnia:{name:'Narnia',flag:'🦁',base9:[2,2],miniEmoji:'🚪',leader:'Aslan',fullName:'Narnia',lore:'Un león y un armario.',stats:{atk:5,def:5,mov:3,reinf:3},pros:['Ataque y defensa altos'],cons:['Movimiento normal'],bonuses:{baseDefBonus:6,atkBonus:2}},
+                    witch:{name:'Bruja Blanca',flag:'❄️',base9:[8,4],miniEmoji:'🧊',leader:'Jadis',fullName:'La Bruja Blanca',lore:'Reina del invierno eterno.',stats:{atk:6,def:4,mov:3,reinf:4},pros:['Ataque helado','Refuerzos mágicos'],cons:['Defensa media'],bonuses:{atkBonus:2,reinforceBonus:2}},
                     riverdale:{name:'Riverdale',flag:'📖',base9:[6,6],miniEmoji:'📚',leader:'Sherlock',fullName:'221B Baker Street',lore:'Elemental, querido Watson.',stats:{atk:2,def:2,mov:3,reinf:8},pros:['Refuerzos infinitos'],cons:['Muy débil'],bonuses:{reinforceBonus:6}}
                 }
             },
@@ -1454,7 +1463,29 @@
             if (!gameState.tutorialMode && !checkVictory()) endTurn();
         }
 
-        function exitToMenu() { if (confirm('¿Salir?')) goToMenu(); }
+        function exitToMenu() { 
+            if (gameState && gameState.tutorialMode) {
+                // En tutorial, salir directamente sin confirmación
+                gameState.tutorialMode = false;
+                goToMenu();
+            } else if (confirm('¿Salir?')) {
+                goToMenu();
+            }
+        }
+        
+        function goToScenarioSelection() {
+            // Cerrar cualquier modal de juego y mostrar el menú con la pestaña de escenarios
+            ['victory-modal','combat-modal','tutorial-context-modal'].forEach(m => {
+                const modal = document.getElementById(m);
+                if (modal) modal.remove();
+            });
+            document.getElementById('menu-modal').classList.add('show');
+            // Activar la pestaña de escenarios
+            document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelector('[data-tab="scenarios"]').classList.add('active');
+            document.getElementById('tab-scenarios').classList.add('active');
+        }
         
         // Escenarios del tutorial con contexto histórico/narrativo
         const tutorialScenarios = [
@@ -1647,24 +1678,36 @@
                 'stalingrad': { title: "🇷🇺 Batalla de Stalingrado", desc: "1942-1943: El punto de inflexión en el Frente Oriental. Las fuerzas soviéticas defienden la ciudad contra el avance alemán." },
                 'normandy': { title: "🇺🇸 Día D - Normandía", desc: "6 de junio de 1944: La mayor operación anfibia de la historia. Los Aliados desembarcan en las playas de Normandía." },
                 'midway': { title: "🇯🇵 Batalla de Midway", desc: "Junio 1942: El combate naval que cambió el curso de la guerra en el Pacífico." },
+                'berlin': { title: "🇩🇪 Caída de Berlín", desc: "Abril-Mayo 1945: La batalla final por la capital del Tercer Reich. Los soviéticos avanzan desde el este mientras los aliados occidentales presionan desde el oeste." },
                 'termpilas': { title: "🛡️ Las Termópilas", desc: "480 a.C.: Leónidas y sus 300 espartanos enfrentan al ejército persa de Jerjes." },
                 'cannas': { title: "⚔️ Batalla de Cannas", desc: "216 a.C.: Aníbal derrota a Roma en una de las batallas más estudiadas de la historia." },
+                'actium': { title: "⚓ Batalla de Accio", desc: "31 a.C.: La batalla naval decisiva entre Octaviano y Marco Antonio que definió el futuro de Roma." },
                 'consolewar': { title: "🕹️ Guerra de Consolas", desc: "Los gigantes de los videojuegos compiten por el dominio del mercado." },
+                'hyrule': { title: "🗡️ Hyrule", desc: "Link y la Princesa Zelda luchan contra Ganon por el control del reino de Hyrule." },
                 'starwars': { title: "🌌 Star Wars", desc: "La Rebelión lucha contra el Imperio Galáctico en una guerra interestelar." },
+                'got': { title: "🐉 Juego de Tronos", desc: "Las grandes casas de Westeros compiten por el Trono de Hierro en una lucha mortal por el poder." },
                 'leafbattle': { title: "🍃 Batalla de la Hoja", desc: "Naruto y la Aldea Oculta de la Hoja se enfrentan a la Akatsuki." },
+                'titanbattle': { title: "⚔️ Batalla de Titanes", desc: "Eren Jaeger y la Legión de Reconocimiento luchan contra los titanes por la supervivencia de la humanidad." },
                 'middleearth': { title: "💍 Tierra Media", desc: "La Comunidad del Anillo busca destruir el Anillo Único en el Monte del Destino." },
+                'narnia': { title: "🦁 Narnia", desc: "Los hermanos Pevensie lideran la lucha contra la Bruja Blanca para liberar Narnia del invierno eterno." },
                 'crusades': { title: "✝️ Las Cruzadas", desc: "Siglos XI-XIII: Las guerras religiosas por el control de Tierra Santa." }
             };
             
             if (scenario === 'stalingrad') { theme='ww2'; map=generateScenarioMap('stalingrad'); human=['urss']; active=['urss','nazis']; size=7; contextTitle = scenarioContexts['stalingrad'].title; contextDesc = scenarioContexts['stalingrad'].desc; }
             else if (scenario === 'normandy') { theme='ww2'; map=generateScenarioMap('normandy'); human=['usa']; active=['usa','uk','nazis']; size=9; contextTitle = scenarioContexts['normandy'].title; contextDesc = scenarioContexts['normandy'].desc; }
             else if (scenario === 'midway') { theme='ww2'; map=generateScenarioMap('midway'); human=['usa']; active=['usa','japon']; size=9; contextTitle = scenarioContexts['midway'].title; contextDesc = scenarioContexts['midway'].desc; }
+            else if (scenario === 'berlin') { theme='ww2'; map=generateScenarioMap('berlin'); human=['urss']; active=['urss','nazis','usa','uk']; size=9; contextTitle = scenarioContexts['berlin'].title; contextDesc = scenarioContexts['berlin'].desc; }
             else if (scenario === 'termpilas') { theme='ancient'; map=generateScenarioMap('termpilas'); human=['sparta']; active=['sparta','japon']; size=7; contextTitle = scenarioContexts['termpilas'].title; contextDesc = scenarioContexts['termpilas'].desc; }
             else if (scenario === 'cannas') { theme='ancient'; map=generateScenarioMap('cannas'); human=['nazis']; active=['nazis','italia']; size=9; contextTitle = scenarioContexts['cannas'].title; contextDesc = scenarioContexts['cannas'].desc; }
+            else if (scenario === 'actium') { theme='ancient'; map=generateScenarioMap('actium'); human=['urss']; active=['urss','italia']; size=7; contextTitle = scenarioContexts['actium'].title; contextDesc = scenarioContexts['actium'].desc; }
             else if (scenario === 'consolewar') { theme='gaming'; map=generateScenarioMap('consolewar'); human=['urss']; active=['urss','italia','nazis']; size=9; contextTitle = scenarioContexts['consolewar'].title; contextDesc = scenarioContexts['consolewar'].desc; }
+            else if (scenario === 'hyrule') { theme='gaming'; map=generateScenarioMap('hyrule'); human=['rebels']; active=['rebels','empire','jedi']; size=9; contextTitle = scenarioContexts['hyrule'].title; contextDesc = scenarioContexts['hyrule'].desc; }
             else if (scenario === 'starwars') { theme='movies'; map=generateScenarioMap('starwars'); human=['rebels']; active=['rebels','empire','jedi','sith']; size=9; contextTitle = scenarioContexts['starwars'].title; contextDesc = scenarioContexts['starwars'].desc; }
+            else if (scenario === 'got') { theme='movies'; map=generateScenarioMap('got'); human=['westeros']; active=['westeros','targaryen','lannister']; size=11; contextTitle = scenarioContexts['got'].title; contextDesc = scenarioContexts['got'].desc; }
             else if (scenario === 'leafbattle') { theme='anime'; map=generateScenarioMap('leafbattle'); human=['konoha']; active=['konoha','akatsuki']; size=7; contextTitle = scenarioContexts['leafbattle'].title; contextDesc = scenarioContexts['leafbattle'].desc; }
+            else if (scenario === 'titanbattle') { theme='anime'; map=generateScenarioMap('titanbattle'); human=['hunters']; active=['hunters','chimera']; size=9; contextTitle = scenarioContexts['titanbattle'].title; contextDesc = scenarioContexts['titanbattle'].desc; }
             else if (scenario === 'middleearth') { theme='literature'; map=generateScenarioMap('middleearth'); human=['fellowship']; active=['fellowship','mordor']; size=11; contextTitle = scenarioContexts['middleearth'].title; contextDesc = scenarioContexts['middleearth'].desc; }
+            else if (scenario === 'narnia') { theme='literature'; map=generateScenarioMap('narnia'); human=['narnia']; active=['narnia','witch']; size=9; contextTitle = scenarioContexts['narnia'].title; contextDesc = scenarioContexts['narnia'].desc; }
             else if (scenario === 'crusades') { theme='religion'; map=generateScenarioMap('crusades'); human=['christianity']; active=['christianity','islam','judaism']; size=9; contextTitle = scenarioContexts['crusades'].title; contextDesc = scenarioContexts['crusades'].desc; }
             else return;
             
@@ -1711,12 +1754,18 @@
             if (type==='stalingrad') { const s=7,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[3][0]={type:'base',owner:'urss',units:5};m[3][6]={type:'base',owner:'nazis',units:5};return m;}
             if (type==='normandy') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}for(let c=0;c<s;c++)m[0][c].type='river';m[4][0]={type:'base',owner:'usa',units:5};m[4][8]={type:'base',owner:'uk',units:5};m[4][4]={type:'base',owner:'nazis',units:5};return m;}
             if (type==='midway') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'river',owner:null,units:0});m.push(rd);}for(let r=1;r<s-1;r++)for(let c=1;c<s-1;c++)if(Math.random()<0.3)m[r][c].type='plains';m[0][4]={type:'base',owner:'usa',units:5};m[8][4]={type:'base',owner:'japon',units:5};return m;}
+            if (type==='berlin') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'city',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'urss',units:6};m[8][4]={type:'base',owner:'nazis',units:6};m[4][0]={type:'base',owner:'usa',units:5};m[4][8]={type:'base',owner:'uk',units:5};return m;}
             if (type==='termpilas') { const s=7,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'mountain',owner:null,units:0});m.push(rd);}for(let r=1;r<6;r++)for(let c=2;c<5;c++)m[r][c].type='plains';m[3][0]={type:'base',owner:'sparta',units:5};m[3][6]={type:'base',owner:'japon',units:8};return m;}
             if (type==='cannas') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'nazis',units:6};m[8][4]={type:'base',owner:'italia',units:8};return m;}
+            if (type==='actium') { const s=7,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'river',owner:null,units:0});m.push(rd);}for(let r=2;r<5;r++)for(let c=2;c<5;c++)m[r][c].type='plains';m[3][0]={type:'base',owner:'urss',units:5};m[3][6]={type:'base',owner:'italia',units:6};return m;}
             if (type==='consolewar') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'city',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'urss',units:5};m[8][4]={type:'base',owner:'italia',units:5};m[4][0]={type:'base',owner:'nazis',units:5};return m;}
+            if (type==='hyrule') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'rebels',units:5};m[8][4]={type:'base',owner:'empire',units:6};m[4][4]={type:'base',owner:'jedi',units:4};return m;}
             if (type==='starwars') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'rebels',units:5};m[8][4]={type:'base',owner:'empire',units:7};m[4][0]={type:'base',owner:'jedi',units:3};m[4][8]={type:'base',owner:'sith',units:6};return m;}
+            if (type==='got') { const s=11,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[5][0]={type:'base',owner:'westeros',units:6};m[5][10]={type:'base',owner:'targaryen',units:6};m[0][5]={type:'base',owner:'lannister',units:7};return m;}
             if (type==='leafbattle') { const s=7,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[3][0]={type:'base',owner:'konoha',units:6};m[3][6]={type:'base',owner:'akatsuki',units:8};return m;}
+            if (type==='titanbattle') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[0][4]={type:'base',owner:'hunters',units:5};m[8][4]={type:'base',owner:'chimera',units:7};return m;}
             if (type==='middleearth') { const s=11,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[5][0]={type:'base',owner:'fellowship',units:5};m[5][10]={type:'base',owner:'mordor',units:10};return m;}
+            if (type==='narnia') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[4][0]={type:'base',owner:'narnia',units:5};m[4][8]={type:'base',owner:'witch',units:7};return m;}
             if (type==='crusades') { const s=9,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[4][0]={type:'base',owner:'christianity',units:6};m[4][8]={type:'base',owner:'islam',units:6};m[0][4]={type:'base',owner:'judaism',units:4};return m;}
             return [];
         }
