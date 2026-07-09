@@ -791,7 +791,7 @@
         </div>
     </div>
     <div class="modal" id="faction-info-modal"><div class="modal-box"><div class="modal-title" id="faction-info-title"></div><div class="info-modal-content" id="faction-info-content"></div><button class="modal-btn btn-primary" onclick="document.getElementById('faction-info-modal').classList.remove('show')">Cerrar</button></div></div>
-    <div class="modal" id="combat-modal"><div class="modal-box"><div class="modal-title">⚔️ Combate</div><div id="combat-result"></div><button class="modal-btn btn-primary" onclick="closeCombat()">Continuar</button></div></div>
+    <div class="modal" id="combat-modal"><div class="modal-box"><div class="modal-title">⚔️ Combate</div><div id="combat-result"></div><div style="margin-top:15px;padding:10px;background:#f8f8f8;border-radius:8px;font-size:12px;text-align:left;"><strong>📖 Cómo funciona:</strong><br>• 🎲 Ambos jugadores tiran un dado (1-6)<br>• ⚔️ El atacante suma su bonificación de ataque<br>• 🛡️ El defensor suma +2 si defiende una base<br>• 🏆 Gana quien tenga el valor más alto<br>• 💀 Si empata, gana el defensor</div><button class="modal-btn btn-primary" onclick="closeCombat()">Continuar</button></div></div>
     <div class="modal" id="victory-modal"><div class="modal-box"><div class="modal-title" id="victory-title"></div><p id="victory-text"></p><div id="victory-buttons" style="display:flex;gap:10px;justify-content:center;margin-top:15px;"><button class="modal-btn btn-primary" onclick="goToMenu()">📋 Menú</button><button class="modal-btn btn-gold" id="replay-btn" onclick="replayGame()">🔄 Volver a Jugar</button></div></div></div>
 
     <script>
