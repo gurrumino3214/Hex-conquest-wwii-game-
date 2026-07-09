@@ -1099,7 +1099,7 @@
                 for (let c = 0; c < size; c++) {
                     const k = `${r},${c}`;
                     let t = 'plains', o = null, u = 0;
-                    if (bases[k]) { t = 'base'; o = bases[k]; u = 5; }
+                    if (bases[k]) { t = 'base'; o = bases[k]; u = 5; } // Empieza con 5 tropas
                     else if (Math.random() < 0.04) t = 'river';
                     else if (Math.random() < 0.02) t = 'mountain';
                     else if (Math.random() < 0.03) t = 'city';
@@ -1114,20 +1114,20 @@
             factions.forEach(p => {
                 const [br, bc] = getBasePos(p, size);
                 for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = br + dr, nc = bc + dc; if (nr >= 0 && nr < size && nc >= 0 && nc < size) map[nr][nc].type = 'plains'; }
-                map[br][bc] = { type: 'base', owner: p, units: 5 };
+                map[br][bc] = { type: 'base', owner: p, units: 5 }; // Empieza con 5 tropas
             });
             return map;
         }
         function generateArchipelagoMap(size, factions) {
             const map = []; for (let r = 0; r < size; r++) { const row = []; for (let c = 0; c < size; c++) row.push({ type: 'river', owner: null, units: 0 }); map.push(row); }
             for (let i = 0; i < size * 2; i++) { const r = Math.floor(Math.random() * size), c = Math.floor(Math.random() * size); for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const nr = r + dr, nc = c + dc; if (nr >= 0 && nr < size && nc >= 0 && nc < size && Math.random() < 0.6) map[nr][nc].type = 'plains'; } }
-            factions.forEach(p => { const [br, bc] = getBasePos(p, size); map[br][bc] = { type: 'base', owner: p, units: 5 }; });
+            factions.forEach(p => { const [br, bc] = getBasePos(p, size); map[br][bc] = { type: 'base', owner: p, units: 5 }; }); // Empieza con 5 tropas
             return map;
         }
         function generatePvPBalancedMap(size, factions) {
             const map = []; for (let r = 0; r < size; r++) { const row = []; for (let c = 0; c < size; c++) row.push({ type: 'plains', owner: null, units: 0 }); map.push(row); }
             const corners = [[0, 0], [0, size - 1], [size - 1, 0], [size - 1, size - 1], [Math.floor(size / 2), Math.floor(size / 2)]];
-            for (let i = 0; i < Math.min(factions.length, corners.length); i++) { const [r, c] = corners[i]; map[r][c] = { type: 'base', owner: factions[i], units: 5 }; }
+            for (let i = 0; i < Math.min(factions.length, corners.length); i++) { const [r, c] = corners[i]; map[r][c] = { type: 'base', owner: factions[i], units: 5 }; } // Empieza con 5 tropas
             return map;
         }
 
@@ -1340,7 +1340,12 @@
             let attempts = 0;
             do {
                 gameState.currentPlayer = (gameState.currentPlayer + 1) % gameState.activePlayers.length;
-                if (gameState.currentPlayer === 0) gameState.turn++;
+                if (gameState.currentPlayer === 0) {
+                    gameState.turn++;
+                    // ══════════ REFUERZOS CADA 3 TURNOS ══════════
+                    // Cada 3 turnos, todos los jugadores reciben 1 tropa extra en sus bases (máximo 5 extras, total 10)
+                    applyReinforcements();
+                }
                 attempts++;
                 if (attempts > gameState.activePlayers.length) { document.getElementById('action-text').textContent = '💀 Empate.'; return; }
             } while (gameState.eliminated.includes(gameState.activePlayers[gameState.currentPlayer]));
@@ -1349,6 +1354,35 @@
             // En tutorial, la IA siempre juega después del jugador
             if (!gameState.humanPlayers.includes(p) && !gameState.tutorialMode) setTimeout(aiTurn, 500);
             else if (gameState.tutorialMode && !gameState.humanPlayers.includes(p)) setTimeout(aiTurn, 500);
+        }
+        
+        // ══════════ SISTEMA DE REFUERZOS ══════════
+        function applyReinforcements() {
+            const MAX_TROOPS = 10;
+            const BASE_TROOPS = 5;
+            const MAX_EXTRA_TROOPS = 5;
+            
+            // Calcular cuántas tropas extras corresponden según el turno
+            // Turno 1-3: 0 extras (5 tropas)
+            // Turno 4-6: 1 extra (6 tropas)
+            // Turno 7-9: 2 extras (7 tropas)
+            // Turno 10-12: 3 extras (8 tropas)
+            // Turno 13-15: 4 extras (9 tropas)
+            // Turno 16+: 5 extras (10 tropas)
+            const extraTroops = Math.min(MAX_EXTRA_TROOPS, Math.floor((gameState.turn - 1) / 3));
+            const targetTroops = BASE_TROOPS + extraTroops;
+            
+            // Aplicar refuerzos a todas las bases de los jugadores activos
+            for (const row of gameState.map) {
+                for (const cell of row) {
+                    if (cell.type === 'base' && cell.owner && gameState.activePlayers.includes(cell.owner)) {
+                        // Solo actualizar si hay menos tropas que el objetivo
+                        if (cell.units < targetTroops) {
+                            cell.units = Math.min(MAX_TROOPS, targetTroops);
+                        }
+                    }
+                }
+            }
         }
         function aiTurn() {
             const p = gameState.activePlayers[gameState.currentPlayer];
@@ -1603,7 +1637,7 @@
         
         function startTutorial() {
             const map = []; for (let r = 0; r < 5; r++) { const rd = []; for (let c = 0; c < 5; c++) rd.push({ type: 'plains', owner: null, units: 0 }); map.push(rd); }
-            map[0][0] = { type: 'base', owner: 'urss', units: 5 }; map[4][4] = { type: 'base', owner: 'nazis', units: 2 };
+            map[0][0] = { type: 'base', owner: 'urss', units: 5 }; map[4][4] = { type: 'base', owner: 'nazis', units: 2 }; // Empieza con 5 tropas
             gameState = { map, activePlayers: ['urss','nazis'], humanPlayers: ['urss'], currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {urss:0,nazis:0}, pendingCombat: null, mapSize: 5, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[]}, tutorialMode: true, tutorialStep: 0, tutorialCombatDone: false };
             aiDifficulty='easy'; document.getElementById('menu-modal').classList.remove('show'); renderMap();
             showTutorialContext(0);
