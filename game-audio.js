@@ -116,43 +116,44 @@ function playSound(type) {
     }
 }
 
-// Música inspirada en Dorian Concept
-// Características: acordes de jazz complejos, progresiones sofisticadas, 
+// Música inspirada en Dorian Concept pero más harmoniosa
+// Características: acordes de jazz complejos pero consonantes, progresiones sofisticadas, 
 // texturas ambientales ricas, melodías improvisatorias, polirritmias sutiles
+// Se mantiene la estética electrónica/jazz pero con mayor cohesión armónica
 function initBackgroundMusic() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     backgroundMusic = new AudioContext();
     
-    // Acordes complejos estilo Dorian Concept (jazz/electrónico)
-    // Usamos voicings de acordes con 7mas, 9nas, 11vas y 13vas
+    // Progresión de acordes más harmoniosa manteniendo la complejidad jazzística
+    // Usamos voicings abiertos y extensiones que crean tensión-resolución natural
     const chordProgression = [
-        // Cm9 - Dórico atmosférico
-        { notes: [261.63, 311.13, 392.00, 466.16, 587.33], duration: 2000 }, // C4, Eb4, G4, Bb4, D5
-        // F13sus4 - Tensión suave
-        { notes: [349.23, 440.00, 523.25, 587.33, 698.46], duration: 2000 }, // F4, A4, C5, D5, F5
-        // Abmaj9 - Calidez
-        { notes: [207.65, 329.63, 415.30, 523.25, 622.25], duration: 2000 }, // Ab3, E4, Ab4, C5, Eb5
-        // G7alt - Tensión dominante
-        { notes: [196.00, 311.13, 370.00, 493.88, 587.33], duration: 2000 }, // G3, Eb4, Gb4, B4, D5
-        // Em11 - Suspenso
-        { notes: [164.81, 246.94, 329.63, 392.00, 493.88], duration: 2000 }, // E3, B3, E4, G4, B4
-        // Am9 - Melancolía
-        { notes: [220.00, 261.63, 349.23, 440.00, 523.25], duration: 2000 }, // A3, C4, F4, A4, C5
-        // Dbmaj7#11 - Lisérgico
-        { notes: [138.59, 277.18, 349.23, 440.00, 554.37], duration: 2000 }, // Db3, F#4, F5, A5, C#6
-        // Bbm6/9 - Nostalgia
-        { notes: [185.00, 293.66, 370.00, 440.00, 554.37], duration: 2000 }  // Bb3, D4, Gb4, A4, C#5
+        // Cm9 - Base atmosférica (tónica)
+        { notes: [261.63, 311.13, 392.00, 466.16, 587.33], duration: 2500 }, // C4, Eb4, G4, Bb4, D5
+        // Fm11 - Movimiento suave (subdominante menor)
+        { notes: [174.61, 261.63, 349.23, 415.30, 523.25], duration: 2500 }, // F3, C4, F4, Ab4, C5
+        // Abmaj9 - Calidez y resolución parcial (relativo mayor)
+        { notes: [207.65, 329.63, 415.30, 523.25, 622.25], duration: 2500 }, // Ab3, E4, Ab4, C5, Eb5
+        // G7sus4 - Tensión controlada que resuelve naturalmente
+        { notes: [196.00, 293.66, 392.00, 440.00, 587.33], duration: 2500 }, // G3, D4, G4, A4, D5
+        // Em9 - Suspenso melancólico (vi menor)
+        { notes: [164.81, 246.94, 329.63, 392.00, 493.88], duration: 2500 }, // E3, B3, E4, G4, B4
+        // Am11 - Preparación (ii menor)
+        { notes: [220.00, 261.63, 349.23, 440.00, 523.25], duration: 2500 }, // A3, C4, F4, A4, C5
+        // Dbmaj9 - Color lisérgico pero integrado (bVI mayor)
+        { notes: [138.59, 233.08, 349.23, 415.30, 554.37], duration: 2500 }, // Db3, Bb3, F4, Ab4, C#5
+        // Bbm9/G - Resolución nostálgica que vuelve a Cm
+        { notes: [185.00, 277.18, 370.00, 440.00, 554.37], duration: 2500 }  // Bb3, Db4, Gb4, A4, C#5
     ];
     
     let currentChord = 0;
     let patternPhase = 0;
     
-    // Patrones rítmicos polirrítmicos (3 contra 4, etc.)
+    // Patrones rítmicos polirrítmicos más suaves y fluídos
     const rhythmicPatterns = [
-        [0, 250, 500, 1000, 1500],      // Patrón base
-        [0, 333, 666, 1000, 1333],      // Triplet feel
-        [0, 200, 450, 800, 1200],       // Swing sutil
-        [0, 300, 550, 900, 1400]        // Polirritmia
+        [0, 300, 600, 1200, 1800],      // Patrón base expandido
+        [0, 400, 800, 1200, 1600],      // Cuatro sobre tres
+        [0, 250, 550, 950, 1400],       // Swing más marcado
+        [0, 350, 750, 1150, 1600]       // Polirritmia 5:4
     ];
     
     function playChord(chordIndex, patternIndex) {
@@ -161,93 +162,123 @@ function initBackgroundMusic() {
         const chord = chordProgression[chordIndex];
         const pattern = rhythmicPatterns[patternIndex % rhythmicPatterns.length];
         
-        // Crear pad ambiental de fondo
+        // Crear pad ambiental de fondo más presente y harmonioso
         createPad(chord.notes, chord.duration);
         
-        // Reproducir notas del acorde en patrón rítmico
+        // Reproducir notas del acorde en patrón rítmico con mayor cohesión
         pattern.forEach((timeOffset, noteIdx) => {
             setTimeout(() => {
                 if (!isMusicPlaying) return;
                 
-                // Seleccionar nota(s) del acorde para este golpe
-                const noteChoice = chord.notes[noteIdx % chord.notes.length];
-                const octaveMultiplier = Math.random() > 0.7 ? 2 : 1; // Ocasionalmente subir octava
+                // Seleccionar notas del acorde para este golpe (priorizar fundamentales y quintas)
+                const fundamentalFreq = chord.notes[0];
+                const fifthFreq = chord.notes.length > 2 ? chord.notes[2] : chord.notes[1];
+                const thirdFreq = chord.notes.length > 1 ? chord.notes[1] : chord.notes[0];
                 
-                // Tocar nota principal con envolvente compleja
+                // Patrón melódico que enfatiza la armonía
+                let noteChoice;
+                if (noteIdx === 0 || noteIdx === 3) {
+                    noteChoice = fundamentalFreq; // Fundamental en tiempos fuertes
+                } else if (noteIdx === 1 || noteIdx === 4) {
+                    noteChoice = fifthFreq; // Quinta en tiempos intermedios
+                } else {
+                    noteChoice = thirdFreq; // Tercera para color
+                }
+                
+                const octaveMultiplier = Math.random() > 0.8 ? 2 : 1; // Menos frecuente subir octava
+                
+                // Tocar nota principal con envolvente más expresiva
                 playNoteWithEnvelope(
                     noteChoice * octaveMultiplier, 
-                    musicVolume * 0.4,
-                    800 + Math.random() * 400
+                    musicVolume * 0.45,
+                    1000 + Math.random() * 300
                 );
                 
-                // Añadir armonía superior ocasional
-                if (Math.random() > 0.6) {
-                    const harmonic = chord.notes[(noteIdx + 2) % chord.notes.length] * 2;
-                    playNoteWithEnvelope(harmonic, musicVolume * 0.15, 600);
+                // Añadir armonía superior más integrada (terceras y sextas)
+                if (Math.random() > 0.5) {
+                    const harmonicIdx = (noteIdx + 2) % chord.notes.length;
+                    const harmonic = chord.notes[harmonicIdx] * (noteIdx > 2 ? 2 : 1);
+                    playNoteWithEnvelope(harmonic, musicVolume * 0.2, 700);
                 }
                 
             }, timeOffset);
         });
         
-        // Línea de bajo sutil cada 2 compases
+        // Línea de bajo más presente y melódica
         if (patternPhase % 2 === 0 && patternIndex === 0) {
             setTimeout(() => {
                 if (!isMusicPlaying) return;
-                playBassNote(chord.notes[0] / 2, musicVolume * 0.5);
-            }, 100);
+                playBassNote(chord.notes[0] / 2, musicVolume * 0.55);
+            }, 150);
+            
+            // Nota de paso en el bajo para mayor movimiento
+            setTimeout(() => {
+                if (!isMusicPlaying) return;
+                const passingNote = chord.notes[0] / 2 * 1.5; // Quinta del bajo
+                playBassNote(passingNote, musicVolume * 0.35);
+            }, 1200);
         }
         
         patternPhase++;
         
-        // Programar siguiente acorde
+        // Programar siguiente acorde con transición más suave
         setTimeout(() => {
             currentChord = (currentChord + 1) % chordProgression.length;
             playChord(currentChord, patternPhase);
-        }, chord.duration);
+        }, chord.duration - 300); // Overlap sutil entre acordes
     }
     
-    // Crear pad ambiental sostenido
+    // Crear pad ambiental más rico y harmonioso
     function createPad(notes, duration) {
         const masterGain = backgroundMusic.createGain();
-        masterGain.gain.setValueAtTime(musicVolume * 0.25, backgroundMusic.currentTime);
-        masterGain.gain.exponentialRampToValueAtTime(musicVolume * 0.15, backgroundMusic.currentTime + duration / 1000);
+        masterGain.gain.setValueAtTime(musicVolume * 0.3, backgroundMusic.currentTime);
+        masterGain.gain.exponentialRampToValueAtTime(musicVolume * 0.2, backgroundMusic.currentTime + duration / 1000);
         masterGain.connect(backgroundMusic.destination);
         
         notes.forEach((freq, idx) => {
             const osc = backgroundMusic.createOscillator();
+            const osc2 = backgroundMusic.createOscillator();
             const gain = backgroundMusic.createGain();
             const filter = backgroundMusic.createBiquadFilter();
             
             // Osciladores múltiples para textura rica
-            osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+            osc.type = idx % 3 === 0 ? 'sine' : 'triangle';
             osc.frequency.value = freq;
             
+            // Segundo oscilador para chorus más ancho
+            osc2.type = 'sine';
+            osc2.frequency.value = freq;
+            osc2.detune.value = (idx - 2) * 4 + Math.random() * 3;
+            
             // Ligeras variaciones de afinación para chorus natural
-            const detuneAmount = (idx - 2) * 3 + Math.random() * 2;
+            const detuneAmount = (idx - 2) * 2.5 + Math.random() * 1.5;
             osc.detune.value = detuneAmount;
             
-            // Filtro paso bajo con modulación lenta
+            // Filtro paso bajo con modulación más suave
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800 + idx * 200, backgroundMusic.currentTime);
-            filter.frequency.linearRampToValueAtTime(1200 + idx * 300, backgroundMusic.currentTime + duration / 2000);
-            filter.Q.value = 0.5;
+            filter.frequency.setValueAtTime(1000 + idx * 150, backgroundMusic.currentTime);
+            filter.frequency.linearRampToValueAtTime(1500 + idx * 200, backgroundMusic.currentTime + duration / 1500);
+            filter.Q.value = 0.3;
             
-            // Envolvente ADSR suave
+            // Envolvente ADSR más larga y suave
             gain.gain.setValueAtTime(0, backgroundMusic.currentTime);
-            gain.gain.linearRampToValueAtTime(1 / notes.length, backgroundMusic.currentTime + 0.1);
-            gain.gain.linearRampToValueAtTime(0.7 / notes.length, backgroundMusic.currentTime + duration / 1000);
-            gain.gain.linearRampToValueAtTime(0, backgroundMusic.currentTime + duration / 1000 + 0.5);
+            gain.gain.linearRampToValueAtTime(1.2 / notes.length, backgroundMusic.currentTime + 0.15);
+            gain.gain.linearRampToValueAtTime(0.9 / notes.length, backgroundMusic.currentTime + duration / 1200);
+            gain.gain.linearRampToValueAtTime(0, backgroundMusic.currentTime + duration / 1000 + 0.8);
             
             osc.connect(filter);
+            osc2.connect(filter);
             filter.connect(gain);
             gain.connect(masterGain);
             
             osc.start(backgroundMusic.currentTime);
-            osc.stop(backgroundMusic.currentTime + duration / 1000 + 0.5);
+            osc2.start(backgroundMusic.currentTime + 0.05);
+            osc.stop(backgroundMusic.currentTime + duration / 1000 + 0.8);
+            osc2.stop(backgroundMusic.currentTime + duration / 1000 + 0.8);
         });
     }
     
-    // Tocar nota con envolvente expresiva
+    // Tocar nota con envolvente más expresiva y musical
     function playNoteWithEnvelope(freq, volume, duration) {
         const osc = backgroundMusic.createOscillator();
         const osc2 = backgroundMusic.createOscillator();
@@ -258,24 +289,24 @@ function initBackgroundMusic() {
         osc.type = 'sine';
         osc.frequency.value = freq;
         
-        // Segundo oscilador para armónicos
-        osc2.type = 'triangle';
+        // Segundo oscilador para armónicos más ricos
+        osc2.type = 'sine';
         osc2.frequency.value = freq;
-        osc2.detune.value = 5 + Math.random() * 3; // Ligero detune
+        osc2.detune.value = 3 + Math.random() * 2; // Detune más sutil
         
-        // Filtro con envelope
+        // Filtro con envelope más musical
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(500, backgroundMusic.currentTime);
-        filter.frequency.exponentialRampToValueAtTime(2000, backgroundMusic.currentTime + 0.05);
-        filter.frequency.exponentialRampToValueAtTime(800, backgroundMusic.currentTime + duration / 1000);
-        filter.Q.value = 1;
+        filter.frequency.setValueAtTime(600, backgroundMusic.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(2500, backgroundMusic.currentTime + 0.08);
+        filter.frequency.exponentialRampToValueAtTime(1000, backgroundMusic.currentTime + duration / 1000);
+        filter.Q.value = 0.8;
         
-        // Envolvente compleja (ataque rápido, decaimiento, sustain, release)
+        // Envolvente compleja más expresiva (ataque, decaimiento, sustain, release)
         gain.gain.setValueAtTime(0, backgroundMusic.currentTime);
-        gain.gain.linearRampToValueAtTime(volume, backgroundMusic.currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(volume * 0.7, backgroundMusic.currentTime + 0.1);
-        gain.gain.exponentialRampToValueAtTime(volume * 0.3, backgroundMusic.currentTime + duration / 1000);
-        gain.gain.exponentialRampToValueAtTime(0.001, backgroundMusic.currentTime + duration / 1000 + 0.3);
+        gain.gain.linearRampToValueAtTime(volume, backgroundMusic.currentTime + 0.03);
+        gain.gain.exponentialRampToValueAtTime(volume * 0.75, backgroundMusic.currentTime + 0.15);
+        gain.gain.exponentialRampToValueAtTime(volume * 0.4, backgroundMusic.currentTime + duration / 1000);
+        gain.gain.exponentialRampToValueAtTime(0.001, backgroundMusic.currentTime + duration / 1000 + 0.4);
         
         osc.connect(filter);
         osc2.connect(filter);
@@ -284,35 +315,43 @@ function initBackgroundMusic() {
         
         osc.start(backgroundMusic.currentTime);
         osc2.start(backgroundMusic.currentTime);
-        osc.stop(backgroundMusic.currentTime + duration / 1000 + 0.3);
-        osc2.stop(backgroundMusic.currentTime + duration / 1000 + 0.3);
+        osc.stop(backgroundMusic.currentTime + duration / 1000 + 0.4);
+        osc2.stop(backgroundMusic.currentTime + duration / 1000 + 0.4);
     }
     
-    // Nota de bajo profunda
+    // Nota de bajo profunda más melódica
     function playBassNote(freq, volume) {
         const osc = backgroundMusic.createOscillator();
+        const osc2 = backgroundMusic.createOscillator();
         const gain = backgroundMusic.createGain();
         const filter = backgroundMusic.createBiquadFilter();
         
         osc.type = 'triangle';
         osc.frequency.value = freq;
         
+        osc2.type = 'sine';
+        osc2.frequency.value = freq;
+        osc2.detune.value = 2;
+        
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(400, backgroundMusic.currentTime);
-        filter.frequency.exponentialRampToValueAtTime(200, backgroundMusic.currentTime + 0.5);
-        filter.Q.value = 0.5;
+        filter.frequency.setValueAtTime(500, backgroundMusic.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(250, backgroundMusic.currentTime + 0.6);
+        filter.Q.value = 0.4;
         
         gain.gain.setValueAtTime(0, backgroundMusic.currentTime);
-        gain.gain.linearRampToValueAtTime(volume, backgroundMusic.currentTime + 0.05);
-        gain.gain.exponentialRampToValueAtTime(volume * 0.4, backgroundMusic.currentTime + 0.3);
-        gain.gain.exponentialRampToValueAtTime(0.001, backgroundMusic.currentTime + 0.8);
+        gain.gain.linearRampToValueAtTime(volume, backgroundMusic.currentTime + 0.08);
+        gain.gain.exponentialRampToValueAtTime(volume * 0.5, backgroundMusic.currentTime + 0.4);
+        gain.gain.exponentialRampToValueAtTime(0.001, backgroundMusic.currentTime + 1.0);
         
         osc.connect(filter);
+        osc2.connect(filter);
         filter.connect(gain);
         gain.connect(backgroundMusic.destination);
         
         osc.start(backgroundMusic.currentTime);
-        osc.stop(backgroundMusic.currentTime + 0.8);
+        osc2.start(backgroundMusic.currentTime);
+        osc.stop(backgroundMusic.currentTime + 1.0);
+        osc2.stop(backgroundMusic.currentTime + 1.0);
     }
     
     // Iniciar progresión después de un breve delay
