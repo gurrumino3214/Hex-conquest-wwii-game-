@@ -930,6 +930,40 @@
             { id:'avengers_assemble', name:'Avengers Unidos', desc:'Gana con los Vengadores (Cómics).', check: gs => gs.winner==='avengers_c' },
             { id:'ring_bearer', name:'Portador del Anillo', desc:'Gana con la Comunidad del Anillo.', check: gs => gs.winner==='fellowship' },
             { id:'crusader', name:'Cruzado', desc:'Gana las Cruzadas con el Cristianismo.', check: gs => gs.winner==='christianity' },
+            // Logros de Victoria por Facciones WWII
+            { id:'eagle_lands', name:'El Águila Aterriza', desc:'Gana con USA (WWII).', check: gs => gs.winner==='usa' && gameTheme==='ww2' },
+            { id:'sun_rises', name:'El Sol Naciente', desc:'Gana con Japón (WWII).', check: gs => gs.winner==='japon' && gameTheme==='ww2' },
+            { id:'empire_never_dies', name:'El Imperio Nunca Muere', desc:'Gana con UK (WWII).', check: gs => gs.winner==='uk' && gameTheme==='ww2' },
+            { id:'liberte_victoire', name:'Liberté, Victoire!', desc:'Gana con Francia (WWII).', check: gs => gs.winner==='francia' && gameTheme==='ww2' },
+            { id:'maple_conquest', name:'Conquista del Arce', desc:'Gana con Canadá (WWII).', check: gs => gs.winner==='canada' && gameTheme==='ww2' },
+            { id:'dragon_rises', name:'El Dragón Se Levanta', desc:'Gana con China (WWII).', check: gs => gs.winner==='china' && gameTheme==='ww2' },
+            { id:'mare_nostrum', name:'Mare Nostrum', desc:'Gana con Italia (WWII).', check: gs => gs.winner==='italia' && gameTheme==='ww2' },
+            // Logros de Victoria por Temas
+            { id:'athens_glory', name:'Gloria de Atenas', desc:'Gana con Atenas (Antigüedad).', check: gs => gs.winner==='athens' && gameTheme==='ancient' },
+            { id:'purple_phoenix', name:'Fénix Púrpura', desc:'Gana con Fenicia (Antigüedad).', check: gs => gs.winner==='phoenicia' && gameTheme==='ancient' },
+            { id:'square_enix_win', name:'Maestro Final', desc:'Gana con Square Enix (Videojuegos).', check: gs => gs.winner==='square' && gameTheme==='gaming' },
+            { id:'ea_empire', name:'Imperio EA', desc:'Gana con EA (Videojuegos).', check: gs => gs.winner==='ea' && gameTheme==='gaming' },
+            { id:'sith_lord', name:'Señor Sith', desc:'Gana con los Sith (Star Wars).', check: gs => gs.winner==='sith' && gameTheme==='movies' },
+            { id:'jedi_master', name:'Maestro Jedi', desc:'Gana con los Jedi (Star Wars).', check: gs => gs.winner==='jedi' && gameTheme==='movies' },
+            { id:'winter_is_coming', name:'Winter is Coming', desc:'Gana con los Stark (GoT).', check: gs => gs.winner==='westeros' && gameTheme==='movies' },
+            { id:'dracarys', name:'Dracarys', desc:'Gana con los Targaryen (GoT).', check: gs => gs.winner==='targaryen' && gameTheme==='movies' },
+            { id:'lion_roars', name:'El León Ruge', desc:'Gana con los Lannister (GoT).', check: gs => gs.winner==='lannister' && gameTheme==='movies' },
+            { id:'akatsuki_victory', name:'Victoria Akatsuki', desc:'Gana con Akatsuki (Naruto).', check: gs => gs.winner==='akatsuki' && gameTheme==='anime' },
+            { id:'titan_slayer', name:'Asesino de Titanes', desc:'Gana contra los Titanes (AoT).', check: gs => gs.winner==='hunters' && gameTheme==='anime' },
+            { id:'dark_lord', name:'Señor Oscuro', desc:'Gana con Mordor (LOTR).', check: gs => gs.winner==='mordor' && gameTheme==='literature' },
+            { id:'white_witch', name:'Bruja Blanca', desc:'Gana con la Bruja Blanca (Narnia).', check: gs => gs.winner==='witch' && gameTheme==='literature' },
+            { id:'islam_victory', name:'Media Luna', desc:'Gana con el Islam (Cruzadas).', check: gs => gs.winner==='islam' && gameTheme==='religion' },
+            { id:'star_of_david', name:'Estrella de David', desc:'Gana con el Judaísmo (Cruzadas).', check: gs => gs.winner==='judaism' && gameTheme==='religion' },
+            // Logros de Estadísticas
+            { id:'conqueror_10', name:'Conquistador', desc:'Conquista 10 territorios en una partida.', check: gs => (gs.stats.totalUnits[gs.winner] || 0) >= 10 },
+            { id:'warlord_20', name:'Señor de la Guerra', desc:'Conquista 20 territorios en una partida.', check: gs => (gs.stats.totalUnits[gs.winner] || 0) >= 20 },
+            { id:'emperor_30', name:'Emperador', desc:'Conquista 30 territorios en una partida.', check: gs => (gs.stats.totalUnits[gs.winner] || 0) >= 30 },
+            { id:'quick_strike', name:'Golpe Rápido', desc:'Gana en menos de 10 turnos.', check: gs => gs.turn < 10 && gs.winner !== undefined },
+            { id:'marathon', name:'Maratón', desc:'Juega una partida de más de 50 turnos.', check: gs => gs.turn > 50 && gs.winner !== undefined },
+            { id:'city_builder', name:'Constructor de Ciudades', desc:'Controla 5 ciudades simultáneamente.', check: gs => (gs.stats.cityCount[gs.winner] || 0) >= 5 },
+            { id:'base_defender', name:'Defensor de la Base', desc:'Defiende tu base exitosamente 3 veces.', check: gs => gs.stats.defendedBase?.length >= 3 },
+            { id:'comeback_kid', name:'Niño del Regreso', desc:'Gana después de tener solo 1 territorio.', check: gs => gs.winner !== undefined && gs.stats.minTerritories === 1 },
+            { id:'perfect_start', name:'Inicio Perfecto', desc:'Gana tus primeras 3 batallas consecutivas.', check: gs => gs.stats.consecutiveWins >= 3 && gs.winner !== undefined }
         ];
         let unlockedAchievements = JSON.parse(localStorage.getItem('ww2_achievements') || '[]');
 
