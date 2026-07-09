@@ -658,30 +658,29 @@
                 <button class="modal-btn btn-primary" onclick="startGame()">⚔️ ¡INICIAR GUERRA!</button>
             </div>
             <div class="tab-panel" id="tab-scenarios">
-                <button class="modal-btn btn-secondary" onclick="goToMenu()" style="margin-bottom:12px;">← Volver al Menú</button>
                 <div class="section-title">🏛️ Históricos (WWII)</div>
-                <button class="modal-btn btn-gold" onclick="startScenario('stalingrad')">🇷🇺 Stalingrado (7×7)</button>
-                <button class="modal-btn btn-gold" onclick="startScenario('normandy')">🇺🇸 Normandía (9×9)</button>
-                <button class="modal-btn btn-gold" onclick="startScenario('midway')">🇯🇵 Midway (9×9)</button>
-                <button class="modal-btn btn-gold" onclick="startScenario('berlin')">🇩🇪 Caída de Berlín (9×9)</button>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('stalingrad')" style="flex:1;">🇷🇺 Stalingrado (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('stalingrad')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('normandy')" style="flex:1;">🇺🇸 Normandía (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('normandy')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('midway')" style="flex:1;">🇯🇵 Midway (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('midway')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-gold" onclick="startScenario('berlin')" style="flex:1;">🇩🇪 Caída de Berlín (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('berlin')" style="min-width:40px;padding:12px;">ℹ️</button></div>
                 <div class="section-title">🏺 Antigüedad</div>
-                <button class="modal-btn btn-secondary" onclick="startScenario('termpilas')">🛡️ Termópilas (7×7)</button>
-                <button class="modal-btn btn-secondary" onclick="startScenario('cannas')">⚔️ Cannas (9×9)</button>
-                <button class="modal-btn btn-secondary" onclick="startScenario('actium')">⚓ Accio (7×7)</button>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('termpilas')" style="flex:1;">🛡️ Termópilas (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('termpilas')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('cannas')" style="flex:1;">⚔️ Cannas (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('cannas')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('actium')" style="flex:1;">⚓ Accio (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('actium')" style="min-width:40px;padding:12px;">ℹ️</button></div>
                 <div class="section-title">🎮 Videojuegos</div>
-                <button class="modal-btn btn-secondary" onclick="startScenario('consolewar')">🕹️ Guerra de Consolas (9×9)</button>
-                <button class="modal-btn btn-secondary" onclick="startScenario('hyrule')">🗡️ Hyrule (9×9)</button>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('consolewar')" style="flex:1;">🕹️ Guerra de Consolas (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('consolewar')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('hyrule')" style="flex:1;">🗡️ Hyrule (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('hyrule')" style="min-width:40px;padding:12px;">ℹ️</button></div>
                 <div class="section-title">🎬 Películas / Series</div>
-                <button class="modal-btn btn-secondary" onclick="startScenario('starwars')">🌌 Star Wars (9×9)</button>
-                <button class="modal-btn btn-secondary" onclick="startScenario('got')">🐉 Juego de Tronos (11×11)</button>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('starwars')" style="flex:1;">🌌 Star Wars (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('starwars')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('got')" style="flex:1;">🐉 Juego de Tronos (11×11)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('got')" style="min-width:40px;padding:12px;">ℹ️</button></div>
                 <div class="section-title">🎌 Anime / Manga</div>
-                <button class="modal-btn btn-secondary" onclick="startScenario('leafbattle')">🍃 Batalla de la Hoja (7×7)</button>
-                <button class="modal-btn btn-secondary" onclick="startScenario('titanbattle')">⚔️ Batalla de Titanes (9×9)</button>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('leafbattle')" style="flex:1;">🍃 Batalla de la Hoja (7×7)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('leafbattle')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('titanbattle')" style="flex:1;">⚔️ Batalla de Titanes (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('titanbattle')" style="min-width:40px;padding:12px;">ℹ️</button></div>
                 <div class="section-title">📚 Literatura</div>
-                <button class="modal-btn btn-secondary" onclick="startScenario('middleearth')">💍 Tierra Media (11×11)</button>
-                <button class="modal-btn btn-secondary" onclick="startScenario('narnia')">🦁 Narnia (9×9)</button>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('middleearth')" style="flex:1;">💍 Tierra Media (11×11)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('middleearth')" style="min-width:40px;padding:12px;">ℹ️</button></div>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('narnia')" style="flex:1;">🦁 Narnia (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('narnia')" style="min-width:40px;padding:12px;">ℹ️</button></div>
                 <div class="section-title">⛪ Religioso</div>
-                <button class="modal-btn btn-secondary" onclick="startScenario('crusades')">✝️ Cruzadas (9×9)</button>
+                <div style="display:flex;gap:8px;margin-bottom:8px;"><button class="modal-btn btn-secondary" onclick="startScenario('crusades')" style="flex:1;">✝️ Cruzadas (9×9)</button><button class="modal-btn btn-secondary" onclick="showScenarioInfo('crusades')" style="min-width:40px;padding:12px;">ℹ️</button></div>
             </div>
             <div class="tab-panel" id="tab-tutorial">
                 <div class="section-title">📖 Cómo Jugar</div>
@@ -1749,6 +1748,170 @@
                 window._scenarioCallback();
                 window._scenarioCallback = null;
             }
+        }
+        
+        // ══════════ INFO DE ESCENARIOS ══════════
+        function showScenarioInfo(scenario) {
+            const scenarioDetails = {
+                'stalingrad': { 
+                    title: "🇷🇺 Batalla de Stalingrado", 
+                    desc: "1942-1943: El punto de inflexión en el Frente Oriental.",
+                    factions: "🇷🇺 URSS vs 🇩🇪 Alemania Nazi",
+                    size: "7×7",
+                    objective: "Como URSS, defiende tu base y conquista la base alemana.",
+                    tip: "💡 Los ríos pueden ralentizar tu avance. Planifica bien tus movimientos."
+                },
+                'normandy': { 
+                    title: "🇺🇸 Día D - Normandía", 
+                    desc: "6 de junio de 1944: La mayor operación anfibia de la historia.",
+                    factions: "🇺🇸 USA + 🇬🇧 Reino Unido vs 🇩🇪 Alemania Nazi",
+                    size: "9×9",
+                    objective: "Como USA, coordina con los británicos para liberar Europa.",
+                    tip: "💡 El río en el centro del mapa es crucial. Controla los puentes."
+                },
+                'midway': { 
+                    title: "🇯🇵 Batalla de Midway", 
+                    desc: "Junio 1942: El combate naval que cambió el curso de la guerra en el Pacífico.",
+                    factions: "🇺🇸 USA vs 🇯🇵 Japón",
+                    size: "9×9",
+                    objective: "Como USA, detén el avance japonés en el Pacífico.",
+                    tip: "💡 Las islas son estratégicas. Úsalas como bases de operaciones."
+                },
+                'berlin': { 
+                    title: "🇩🇪 Caída de Berlín", 
+                    desc: "Abril-Mayo 1945: La batalla final por la capital del Tercer Reich.",
+                    factions: "🇷🇺 URSS + 🇺🇸 USA + 🇬🇧 Reino Unido vs 🇩🇪 Alemania Nazi",
+                    size: "9×9",
+                    objective: "Como URSS, sé el primero en conquistar Berlín.",
+                    tip: "💡 Compite contra tus aliados por la gloria. ¡La velocidad es clave!"
+                },
+                'termpilas': { 
+                    title: "🛡️ Las Termópilas", 
+                    desc: "480 a.C.: Leónidas y sus 300 espartanos enfrentan al ejército persa.",
+                    factions: "🛡️ Esparta vs ⚔️ Persia",
+                    size: "7×7",
+                    objective: "Como Esparta, resiste el avance enemigo el mayor tiempo posible.",
+                    tip: "💡 Las montañas son tu aliado. Defiende el paso estrecho."
+                },
+                'cannas': { 
+                    title: "⚔️ Batalla de Cannas", 
+                    desc: "216 a.C.: Aníbal derrota a Roma en una de las batallas más estudiadas.",
+                    factions: "🇨🇦 Cartago vs 🏛️ Roma",
+                    size: "9×9",
+                    objective: "Como Cartago, rodea y aniquila al ejército romano.",
+                    tip: "💡 Usa tácticas de envolvimiento. No ataques de frente."
+                },
+                'actium': { 
+                    title: "⚓ Batalla de Accio", 
+                    desc: "31 a.C.: La batalla naval decisiva entre Octaviano y Marco Antonio.",
+                    factions: "⚓ Roma de Octaviano vs Roma de Marco Antonio",
+                    size: "7×7",
+                    objective: "Como Octaviano, derrota a Marco Antonio y Cleopatra.",
+                    tip: "💡 El control del mar es esencial. Mantén tus líneas de suministro."
+                },
+                'consolewar': { 
+                    title: "🕹️ Guerra de Consolas", 
+                    desc: "Los gigantes de los videojuegos compiten por el dominio del mercado.",
+                    factions: "🎮 Capcom vs Square Enix vs EA",
+                    size: "9×9",
+                    objective: "Elige tu compañía y domina la industria.",
+                    tip: "💡 Las ciudades generan más unidades. Controla los centros urbanos."
+                },
+                'hyrule': { 
+                    title: "🗡️ Hyrule", 
+                    desc: "Link y la Princesa Zelda luchan contra Ganon por el control del reino.",
+                    factions: "🗡️ Resistencia de Hyrule vs Imperio Oscuro vs Jedi",
+                    size: "9×9",
+                    objective: "Libera Hyrule del mal o conviértete en el nuevo gobernante.",
+                    tip: "💡 Equilibra ataque y defensa. No descuides tu base."
+                },
+                'starwars': { 
+                    title: "🌌 Star Wars", 
+                    desc: "La Rebelión lucha contra el Imperio Galáctico en una guerra interestelar.",
+                    factions: "⭐ Rebelión vs 🌑 Imperio vs 🟢 Jedi vs 🔴 Sith",
+                    size: "9×9",
+                    objective: "Únete a la lucha por el destino de la galaxia.",
+                    tip: "💡 La Fuerza está contigo... pero también necesitas estrategia."
+                },
+                'got': { 
+                    title: "🐉 Juego de Tronos", 
+                    desc: "Las grandes casas de Westeros compiten por el Trono de Hierro.",
+                    factions: "🐺 Stark/Westeros vs 🐉 Targaryen vs 🦁 Lannister",
+                    size: "11×11",
+                    objective: "Conquista el Trono de Hierro o reclama tu derecho de nacimiento.",
+                    tip: "💡 En el juego de tronos, ganas o mueres. Sé implacable."
+                },
+                'leafbattle': { 
+                    title: "🍃 Batalla de la Hoja", 
+                    desc: "Naruto y la Aldea Oculta de la Hoja se enfrentan a la Akatsuki.",
+                    factions: "🍃 Konoha vs ☁️ Akatsuki",
+                    size: "7×7",
+                    objective: "Protege la Aldea de la Hoja o captura a los Jinchuriki.",
+                    tip: "💡 El trabajo en equipo es el secreto del ninja."
+                },
+                'titanbattle': { 
+                    title: "⚔️ Batalla de Titanes", 
+                    desc: "Eren Jaeger y la Legión de Reconocimiento luchan contra los titanes.",
+                    factions: "⚔️ Humanidad vs 🦴 Titanes/Quimera",
+                    size: "9×9",
+                    objective: "Elimina a todos los titanes o devora a la humanidad.",
+                    tip: "💡 Apunta a la nuca. Es el punto débil de los titanes."
+                },
+                'middleearth': { 
+                    title: "💍 Tierra Media", 
+                    desc: "La Comunidad del Anillo busca destruir el Anillo Único.",
+                    factions: "💚 Comunidad vs 🔴 Mordor",
+                    size: "11×11",
+                    objective: "Destruye el Anillo en el Monte del Destino o domina la Tierra Media.",
+                    tip: "💡 Un anillo para gobernarlos a todos... pero necesitarás un ejército."
+                },
+                'narnia': { 
+                    title: "🦁 Narnia", 
+                    desc: "Los hermanos Pevensie lideran la lucha contra la Bruja Blanca.",
+                    factions: "🦁 Narnia vs ❄️ Bruja Blanca",
+                    size: "9×9",
+                    objective: "Libera Narnia del invierno eterno o congela a tus enemigos.",
+                    tip: "💡 Aslan está contigo, pero debes ser valiente."
+                },
+                'crusades': { 
+                    title: "✝️ Las Cruzadas", 
+                    desc: "Siglos XI-XIII: Las guerras religiosas por el control de Tierra Santa.",
+                    factions: "✝️ Cristianismo vs ☪️ Islam vs ✡️ Judaísmo",
+                    size: "9×9",
+                    objective: "Controla Tierra Santa en nombre de tu fe.",
+                    tip: "💡 La diplomacia puede ser tan poderosa como la espada."
+                }
+            };
+            
+            const info = scenarioDetails[scenario];
+            if (!info) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.id = 'scenario-info-modal';
+            modal.innerHTML = `
+                <div class="modal-box" style="max-width:500px;text-align:left;">
+                    <h2 style="color:#6b4226;margin-bottom:12px;font-size:20px;text-align:center;">${info.title}</h2>
+                    <div style="background:linear-gradient(135deg,#f9f6f0,#fff8e8);border-radius:12px;padding:16px;margin-bottom:12px;border:2px solid #e0d0b8;">
+                        <p style="font-size:13px;line-height:1.6;color:#5d4037;margin-bottom:12px;">${info.desc}</p>
+                        <div style="background:#e8f5e9;border-radius:8px;padding:10px;margin-bottom:8px;">
+                            <p style="font-size:12px;color:#2e7d32;margin:0;"><b>👥 Facciones:</b> ${info.factions}</p>
+                        </div>
+                        <div style="background:#e3f2fd;border-radius:8px;padding:10px;margin-bottom:8px;">
+                            <p style="font-size:12px;color:#1565c0;margin:0;"><b>📏 Tamaño:</b> ${info.size}</p>
+                        </div>
+                        <div style="background:#fff3e0;border-radius:8px;padding:10px;margin-bottom:8px;">
+                            <p style="font-size:12px;color:#e65100;margin:0;"><b>🎯 Objetivo:</b> ${info.objective}</p>
+                        </div>
+                        <div style="background:#f3e5f5;border-radius:8px;padding:10px;">
+                            <p style="font-size:12px;color:#6a1b9a;margin:0;">${info.tip}</p>
+                        </div>
+                    </div>
+                    <button class="modal-btn btn-primary" onclick="startScenario('${scenario}');document.getElementById('scenario-info-modal').remove();" style="margin-bottom:8px;">▶ Iniciar Escenario</button>
+                    <button class="modal-btn btn-secondary" onclick="document.getElementById('scenario-info-modal').remove();">← Volver</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
         }
         function generateScenarioMap(type) {
             if (type==='stalingrad') { const s=7,m=[]; for(let r=0;r<s;r++){const rd=[];for(let c=0;c<s;c++)rd.push({type:'plains',owner:null,units:0});m.push(rd);}m[3][0]={type:'base',owner:'urss',units:5};m[3][6]={type:'base',owner:'nazis',units:5};return m;}
