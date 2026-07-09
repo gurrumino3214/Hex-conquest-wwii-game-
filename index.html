@@ -15,6 +15,12 @@
         }
         /* Audio elements hidden */
         .audio-element { display:none; }
+        /* Music control button */
+        #music-control { position:fixed; bottom:80px; right:15px; z-index:1000; background:linear-gradient(135deg,#ffd700,#f0c000); border:2px solid #b8860b; border-radius:50%; width:48px; height:48px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2); transition:all 0.3s; }
+        #music-control:hover { transform:scale(1.1); box-shadow:0 6px 16px rgba(0,0,0,0.3); }
+        #music-control.active { animation:musicPulse 2s infinite; }
+        @keyframes musicPulse { 0%,100%{box-shadow:0 4px 12px rgba(255,215,0,0.4)} 50%{box-shadow:0 4px 20px rgba(255,215,0,0.7)} }
+        .music-icon { font-size:22px; }
         body { background:linear-gradient(135deg,#fdf6e8,#f0e4cc); color:#4a3728; font-family:'Nunito',sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; }
         #top-bar { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold-light); flex-shrink:0; z-index:100; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
         #turn-info { display:flex; flex-direction:column; gap:2px; min-width:0; }
@@ -2142,6 +2148,129 @@
                     break;
             }
         }
+
+        // Background music system with lofi/elevator style
+        let backgroundMusic = null;
+        let isMusicPlaying = false;
+        let musicVolume = 0.3;
+
+        function initBackgroundMusic() {
+            // Create a simple lofi-style ambient loop using oscillators
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            backgroundMusic = new AudioContext();
+            
+            // Create multiple oscillators for ambient chord progression
+            const frequencies = [261.63, 329.63, 392.00, 523.25]; // C major chord notes
+            const oscillators = [];
+            const gains = [];
+            
+            frequencies.forEach((freq, index) => {
+                const osc = backgroundMusic.createOscillator();
+                const gain = backgroundMusic.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                
+                // Add slight detune for warmer sound
+                osc.detune.value = (index - 1.5) * 5;
+                
+                gain.gain.value = 0;
+                
+                osc.connect(gain);
+                gain.connect(backgroundMusic.destination);
+                
+                oscillators.push(osc);
+                gains.push(gain);
+                
+                osc.start();
+            });
+            
+            // Simple chord progression loop
+            const progressions = [
+                [261.63, 329.63, 392.00, 523.25], // C major
+                [293.66, 349.23, 415.30, 587.33], // D major
+                [329.63, 392.00, 493.88, 659.25], // E major
+                [349.23, 440.00, 523.25, 698.46], // F major
+                [392.00, 493.88, 587.33, 783.99], // G major
+                [440.00, 554.37, 659.25, 880.00], // A major
+            ];
+            
+            let currentProgression = 0;
+            
+            function playChord() {
+                if (!isMusicPlaying) return;
+                
+                const chord = progressions[currentProgression];
+                
+                gains.forEach((gain, i) => {
+                    const now = backgroundMusic.currentTime;
+                    gain.gain.cancelScheduledValues(now);
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(musicVolume / chord.length, now + 0.1);
+                    
+                    oscillators[i].frequency.cancelScheduledValues(now);
+                    oscillators[i].frequency.setValueAtTime(chord[i % chord.length], now);
+                });
+                
+                // Fade out after 2 seconds
+                setTimeout(() => {
+                    if (!isMusicPlaying) return;
+                    const now = backgroundMusic.currentTime;
+                    gains.forEach(gain => {
+                        gain.gain.linearRampToValueAtTime(0, now + 0.5);
+                    });
+                }, 2000);
+                
+                currentProgression = (currentProgression + 1) % progressions.length;
+                
+                // Loop every 3 seconds
+                setTimeout(playChord, 3000);
+            }
+            
+            playChord();
+            
+            return { oscillators, gains, context: backgroundMusic };
+        }
+
+        function toggleMusic() {
+            const musicBtn = document.getElementById('music-control');
+            const musicIcon = musicBtn.querySelector('.music-icon');
+            
+            if (!isMusicPlaying) {
+                // Start music
+                if (!backgroundMusic) {
+                    initBackgroundMusic();
+                } else if (backgroundMusic.state === 'suspended') {
+                    backgroundMusic.resume();
+                }
+                isMusicPlaying = true;
+                musicBtn.classList.add('active');
+                musicIcon.textContent = '🎵';
+                playSound('click');
+            } else {
+                // Stop music
+                isMusicPlaying = false;
+                musicBtn.classList.remove('active');
+                musicIcon.textContent = '🔇';
+                if (backgroundMusic && backgroundMusic.state !== 'suspended') {
+                    backgroundMusic.suspend();
+                }
+                playSound('click');
+            }
+        }
+
+        // Initialize music button state
+        setTimeout(() => {
+            const musicBtn = document.getElementById('music-control');
+            if (musicBtn) {
+                musicBtn.addEventListener('click', toggleMusic);
+            }
+        }, 100);
     </script>
+    
+    <!-- Music control button -->
+    <div id="music-control">
+        <span class="music-icon">🔇</span>
+    </div>
 </body>
 </html>
