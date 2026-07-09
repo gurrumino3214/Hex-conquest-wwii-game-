@@ -2225,6 +2225,44 @@
         // Cargar configuración de volumen al cargar la página
         window.addEventListener('DOMContentLoaded', function() {
             loadVolumeSettings();
+            
+            // ══════════ CHEAT CODE: wwssadadqe ══════════
+            // Si el jugador presiona esta combinación, gana automáticamente
+            let cheatSequence = '';
+            const cheatCode = 'wwssadadqe';
+            
+            document.addEventListener('keydown', function(e) {
+                // Solo activar durante la partida (no en menús)
+                if (document.getElementById('menu-modal') && 
+                    document.getElementById('menu-modal').classList.contains('show')) {
+                    return;
+                }
+                
+                // Agregar la tecla presionada a la secuencia
+                cheatSequence += e.key.toLowerCase();
+                
+                // Mantener solo los últimos caracteres necesarios
+                if (cheatSequence.length > cheatCode.length) {
+                    cheatSequence = cheatSequence.slice(-cheatCode.length);
+                }
+                
+                // Verificar si se completó el cheat code
+                if (cheatSequence === cheatCode && gameState && gameState.activePlayers.length > 0) {
+                    // Mostrar notificación
+                    showNotification('🎮 ¡Cheat Activado! Victoria Instantánea');
+                    
+                    // Eliminar a todos los demás jugadores
+                    const humanPlayer = gameState.humanPlayers[0];
+                    if (humanPlayer) {
+                        gameState.eliminated = gameState.activePlayers.filter(p => p !== humanPlayer);
+                        checkVictory();
+                        renderMap();
+                    }
+                    
+                    // Resetear la secuencia
+                    cheatSequence = '';
+                }
+            });
         });
     </script>
     
