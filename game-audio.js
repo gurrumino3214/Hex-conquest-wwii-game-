@@ -5,7 +5,8 @@
 let audioContext = null;
 let backgroundMusic = null;
 let isMusicPlaying = false;
-let musicVolume = 0.15;
+let musicVolume = 0.50; // Volumen de música por defecto (50%)
+let sfxVolume = 0.75;   // Volumen de efectos de sonido por defecto (75%)
 let musicTimeout = null;
 
 // Inicializar el contexto de audio
@@ -37,7 +38,7 @@ function playSound(type) {
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(800, now);
             oscillator.frequency.exponentialRampToValueAtTime(1200, now + 0.08);
-            gainNode.gain.setValueAtTime(0.15, now);
+            gainNode.gain.setValueAtTime(sfxVolume * 0.3, now);
             gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
             oscillator.start(now);
             oscillator.stop(now + 0.08);
@@ -50,7 +51,7 @@ function playSound(type) {
             oscillator.frequency.setValueAtTime(500, now + 0.04);
             oscillator.frequency.setValueAtTime(600, now + 0.08);
             oscillator.frequency.setValueAtTime(700, now + 0.12);
-            gainNode.gain.setValueAtTime(0.2, now);
+            gainNode.gain.setValueAtTime(sfxVolume * 0.4, now);
             gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
             oscillator.start(now);
             oscillator.stop(now + 0.16);
@@ -61,7 +62,7 @@ function playSound(type) {
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(300, now);
             oscillator.frequency.linearRampToValueAtTime(450, now + 0.1);
-            gainNode.gain.setValueAtTime(0.2, now);
+            gainNode.gain.setValueAtTime(sfxVolume * 0.4, now);
             gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
             oscillator.start(now);
             oscillator.stop(now + 0.1);
@@ -72,7 +73,7 @@ function playSound(type) {
             oscillator.type = 'triangle';
             oscillator.frequency.setValueAtTime(200, now);
             oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.15);
-            gainNode.gain.setValueAtTime(0.25, now);
+            gainNode.gain.setValueAtTime(sfxVolume * 0.5, now);
             gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
             oscillator.start(now);
             oscillator.stop(now + 0.15);
@@ -85,7 +86,7 @@ function playSound(type) {
             oscillator.frequency.setValueAtTime(659.25, now + 0.08); // E5
             oscillator.frequency.setValueAtTime(783.99, now + 0.16); // G5
             oscillator.frequency.setValueAtTime(1046.50, now + 0.24); // C6
-            gainNode.gain.setValueAtTime(0.25, now);
+            gainNode.gain.setValueAtTime(sfxVolume * 0.5, now);
             gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.32);
             oscillator.start(now);
             oscillator.stop(now + 0.32);
@@ -96,7 +97,7 @@ function playSound(type) {
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(880, now);
             oscillator.frequency.exponentialRampToValueAtTime(1100, now + 0.1);
-            gainNode.gain.setValueAtTime(0.15, now);
+            gainNode.gain.setValueAtTime(sfxVolume * 0.3, now);
             gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
             oscillator.start(now);
             oscillator.stop(now + 0.1);
@@ -107,7 +108,7 @@ function playSound(type) {
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(660, now);
             oscillator.frequency.exponentialRampToValueAtTime(880, now + 0.06);
-            gainNode.gain.setValueAtTime(0.18, now);
+            gainNode.gain.setValueAtTime(sfxVolume * 0.36, now);
             gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
             oscillator.start(now);
             oscillator.stop(now + 0.06);
@@ -258,3 +259,49 @@ window.playSound = playSound;
 window.toggleMusic = toggleMusic;
 window.initAudioContext = initAudioContext;
 window.addButtonSounds = addButtonSounds;
+
+// Funciones para controlar el volumen desde la UI
+function updateMusicVolume(value) {
+    // value es un porcentaje (0-100), convertir a decimal (0.0-1.0)
+    musicVolume = value / 100;
+    document.getElementById('music-volume-value').textContent = value + '%';
+    // Guardar en localStorage
+    localStorage.setItem('hexConquest_musicVolume', musicVolume);
+}
+
+function updateSfxVolume(value) {
+    // value es un porcentaje (0-100), convertir a decimal (0.0-1.0)
+    sfxVolume = value / 100;
+    document.getElementById('sfx-volume-value').textContent = value + '%';
+    // Guardar en localStorage
+    localStorage.setItem('hexConquest_sfxVolume', sfxVolume);
+}
+
+// Cargar volúmenes guardados al iniciar
+function loadVolumeSettings() {
+    const savedMusicVolume = localStorage.getItem('hexConquest_musicVolume');
+    const savedSfxVolume = localStorage.getItem('hexConquest_sfxVolume');
+    
+    if (savedMusicVolume !== null) {
+        musicVolume = parseFloat(savedMusicVolume);
+        const musicSlider = document.getElementById('music-volume-slider');
+        if (musicSlider) {
+            musicSlider.value = musicVolume * 100;
+            document.getElementById('music-volume-value').textContent = Math.round(musicVolume * 100) + '%';
+        }
+    }
+    
+    if (savedSfxVolume !== null) {
+        sfxVolume = parseFloat(savedSfxVolume);
+        const sfxSlider = document.getElementById('sfx-volume-slider');
+        if (sfxSlider) {
+            sfxSlider.value = sfxVolume * 100;
+            document.getElementById('sfx-volume-value').textContent = Math.round(sfxVolume * 100) + '%';
+        }
+    }
+}
+
+// Exportar funciones de volumen
+window.updateMusicVolume = updateMusicVolume;
+window.updateSfxVolume = updateSfxVolume;
+window.loadVolumeSettings = loadVolumeSettings;

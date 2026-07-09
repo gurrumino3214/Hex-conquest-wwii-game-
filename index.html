@@ -749,6 +749,19 @@
                 <div id="achievements-list" style="font-size:12px;text-align:left; max-height:50vh; overflow-y:auto;"></div>
             </div>
             <div class="tab-panel" id="tab-settings">
+                <div class="section-title">🔊 Volumen</div>
+                <div style="margin-bottom:12px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                        <span style="font-size:12px;font-weight:700;color:#6b4226;min-width:80px;">🎵 Música</span>
+                        <input type="range" id="music-volume-slider" min="0" max="100" value="50" style="flex:1;cursor:pointer;" oninput="updateMusicVolume(this.value)">
+                        <span id="music-volume-value" style="font-size:12px;font-weight:700;color:#6b4226;min-width:35px;">50%</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <span style="font-size:12px;font-weight:700;color:#6b4226;min-width:80px;">🔊 Sonidos</span>
+                        <input type="range" id="sfx-volume-slider" min="0" max="100" value="75" style="flex:1;cursor:pointer;" oninput="updateSfxVolume(this.value)">
+                        <span id="sfx-volume-value" style="font-size:12px;font-weight:700;color:#6b4226;min-width:35px;">75%</span>
+                    </div>
+                </div>
                 <div class="section-title">🎨 Tema visual</div>
                 <div id="theme-buttons" style="display:flex; gap:8px; flex-wrap:wrap;">
                     <button class="modal-btn btn-secondary theme-btn active" data-theme="light" onclick="applyTheme('light')">🌞 Claro</button>
@@ -2070,6 +2083,14 @@
     
     <!-- Audio system script (external file) -->
     <script src="game-audio.js"></script>
+    
+    <!-- Load volume settings and initialize sliders -->
+    <script>
+        // Cargar configuración de volumen al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            loadVolumeSettings();
+        });
+    </script>
     
     <!-- Music control button -->
     <div id="music-control">
