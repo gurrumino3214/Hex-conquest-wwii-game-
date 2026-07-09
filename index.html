@@ -717,7 +717,7 @@
                         <span class="step-indicator">4</span>
                         <div class="tutorial-icon">⚔️</div>
                         <h3>Combate</h3>
-                        <p>Si atacas, ambos bandos tiran un dado (1-6). El atacante suma su bonificación y el defensor +2 si está en base. <strong>Quien saque mayor número gana</strong>. ¡El perdedor pierde sus unidades! Si hay empate, gana el defensor.</p>
+                        <p>Si atacas, ambos bandos tiran un dado (1-6). El atacante suma su bonificación de ataque. <strong>Quien saque mayor número gana</strong>. ¡El perdedor pierde sus unidades! Si hay empate, gana el defensor.</p>
                     </div>
                     <div class="tutorial-card">
                         <span class="step-indicator">5</span>
@@ -1288,7 +1288,7 @@
         }
         function startCombat(fr, fc, tr, tc, silent = false) {
             const a = gameState.map[fr][fc], d = gameState.map[tr][tc];
-            const ab = getThemeData()[a.owner].bonuses.atkBonus || 0, db = d.type === 'base' ? (getThemeData()[d.owner].bonuses.baseDefBonus || 2) : 0;
+            const ab = getThemeData()[a.owner].bonuses.atkBonus || 0, db = 0;
             const at = Math.floor(Math.random() * 6) + 1 + ab, dt = Math.floor(Math.random() * 6) + 1 + db;
             const attackerWins = at > dt;
 
