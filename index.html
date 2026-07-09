@@ -1323,7 +1323,14 @@
         function checkVictory() { const active = gameState.activePlayers.filter(p => !gameState.eliminated.includes(p)); if (active.length === 1) { showVictory(active[0]); return true; } return false; }
         function showVictory(w) {
             document.getElementById('victory-title').textContent = `¡${getThemeData()[w].leader} Triunfa!`;
-            document.getElementById('victory-text').textContent = `${getThemeData()[w].flag || getThemeData()[w].miniEmoji} ${getThemeData()[w].name} domina el mundo`;
+            let victoryMessage = `${getThemeData()[w].flag || getThemeData()[w].miniEmoji} ${getThemeData()[w].name} domina el mundo`;
+            
+            // Easter Egg: Ganar con Japón en modo difícil
+            if (w === 'japon' && gameTheme === 'ww2' && aiDifficulty === 'hard') {
+                victoryMessage = '🎉 ¡Lo lograste! No te bombardearon por segunda vez';
+            }
+            
+            document.getElementById('victory-text').textContent = victoryMessage;
             document.getElementById('victory-modal').classList.add('show');
             gameState.winner = w;
             checkAchievements();
