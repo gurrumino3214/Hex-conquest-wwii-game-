@@ -91,7 +91,7 @@ Este proyecto es un juego web de código abierto para fines educativos y de entr
 
 ## 📧 Contacto
 
-Para preguntas o sugerencias, visita el repositorio en GitHub.
+Para preguntas o sugerencias, visita el repositorio en GitHub o envia un gmail a gurrumino.alex@gmail.com
 
 ---
 
