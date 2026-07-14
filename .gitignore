@@ -1,18 +1,1 @@
-```gitignore
-# Dependencies
-node_modules/
-
-# Editors
-.vscode/
-.idea/
-
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-
-# Environment
-.env
-.env.local
-*.env.*
-```
+Nothing needs to be added to .gitignore since only a source file (index.html) was modified and there are no build artifacts, dependencies, or temporary files in the changes.
