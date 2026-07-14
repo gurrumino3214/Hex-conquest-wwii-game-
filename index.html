@@ -759,10 +759,19 @@
             <div class="tab-panel" id="tab-settings">
                 <div class="section-title">🔊 Volumen</div>
                 <div style="margin-bottom:12px;">
-                    <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                        <span style="font-size:12px;font-weight:700;color:#6b4226;min-width:80px;">🎵 Música</span>
+                        <input type="range" id="music-volume-slider" min="0" max="100" value="50" style="flex:1;cursor:pointer;" oninput="updateMusicVolume(this.value)">
+                        <span id="music-volume-value" style="font-size:12px;font-weight:700;color:#6b4226;min-width:35px;">50%</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
                         <span style="font-size:12px;font-weight:700;color:#6b4226;min-width:80px;">🔊 Sonidos</span>
                         <input type="range" id="sfx-volume-slider" min="0" max="100" value="75" style="flex:1;cursor:pointer;" oninput="updateSfxVolume(this.value)">
                         <span id="sfx-volume-value" style="font-size:12px;font-weight:700;color:#6b4226;min-width:35px;">75%</span>
+                    </div>
+                    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;">
+                        <button id="mute-all-btn" class="modal-btn btn-secondary" onclick="toggleMuteAll()" style="flex:1;padding:8px;font-size:11px;">🔇 Silenciar todo</button>
+                        <button id="unmute-all-btn" class="modal-btn btn-gold" onclick="toggleMuteAll()" style="flex:1;padding:8px;font-size:11px;display:none;">🔊 Activar sonido</button>
                     </div>
                 </div>
                 <div class="section-title">🎨 Tema visual</div>
@@ -1515,6 +1524,7 @@
             const btn = document.getElementById('roll-btn');
             btn.disabled = true;
             btn.classList.add('rolling');
+            playSound('dice');
             const pl = gameState.activePlayers[gameState.currentPlayer];
             const isH = gameState.humanPlayers.includes(pl) || gameState.tutorialMode;
             let res;
@@ -1560,6 +1570,7 @@
             if (!gameState.selectedHex) {
                 if (cell.owner === pl && cell.units > 0) {
                     gameState.selectedHex = [r, c]; renderMap(); highlightCells();
+                    playSound('click');
                     if (gameState.tutorialMode) advanceTutorial();
                 }
             } else {
@@ -1567,6 +1578,7 @@
                 if (sr === r && sc === c) { gameState.selectedHex = null; renderMap(); return; }
                 const h = document.querySelector(`.hex[data-row="${r}"][data-col="${c}"]`);
                 if (h && (h.classList.contains('movable') || h.classList.contains('attackable') || h.classList.contains('base-attackable'))) {
+                    playSound('click');
                     if (cell.owner && cell.owner !== pl) startCombat(sr, sc, r, c);
                     else doMove(sr, sc, r, c);
                     if (gameState.tutorialMode) advanceTutorial();
@@ -1579,6 +1591,7 @@
             if (f.units <= 0 && f.type !== 'base') f.owner = null;
             gameState.scores[f.owner] = (gameState.scores[f.owner] || 0) + 10;
             gameState.stats.lastTurnConquests = (gameState.stats.lastTurnConquests || 0) + 1;
+            playSound('move');
             endTurn();
         }
         function startCombat(fr, fc, tr, tc, silent = false) {
@@ -1592,6 +1605,9 @@
             combatOverlay.className = 'combat-overlay';
             document.body.appendChild(combatOverlay);
             setTimeout(() => combatOverlay.remove(), 300);
+
+            // Reproducir sonido de ataque
+            if (!silent) playSound('attack');
 
             if (attackerWins) {
                 // Victoria del atacante - incrementar racha de victorias consecutivas
@@ -2669,9 +2685,286 @@
     
     <!-- Load volume settings and initialize sliders -->
     <script>
-        // Cargar configuración de volumen al cargar la página
+        // ════════════════════════════════════════════════════════════
+        // SISTEMA DE AUDIO - MÚSICA Y EFECTOS DE SONIDO
+        // ════════════════════════════════════════════════════════════
+        
+        // Variables de audio
+        let musicVolume = 0.5;
+        let sfxVolume = 0.75;
+        let isMuted = false;
+        let audioContext = null;
+        let currentMusicOscillator = null;
+        let currentMusicGain = null;
+        
+        // Inicializar AudioContext
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
+        
+        // Cargar configuración de volumen desde localStorage
+        function loadVolumeSettings() {
+            const savedMusicVol = localStorage.getItem('hex_music_volume');
+            const savedSfxVol = localStorage.getItem('hex_sfx_volume');
+            const savedMuted = localStorage.getItem('hex_muted');
+            
+            if (savedMusicVol !== null) {
+                musicVolume = parseFloat(savedMusicVol);
+                document.getElementById('music-volume-slider').value = musicVolume * 100;
+                document.getElementById('music-volume-value').textContent = Math.round(musicVolume * 100) + '%';
+            }
+            
+            if (savedSfxVol !== null) {
+                sfxVolume = parseFloat(savedSfxVol);
+                document.getElementById('sfx-volume-slider').value = sfxVolume * 100;
+                document.getElementById('sfx-volume-value').textContent = Math.round(sfxVolume * 100) + '%';
+            }
+            
+            if (savedMuted === 'true') {
+                isMuted = true;
+                updateMuteButtons();
+            }
+        }
+        
+        // Guardar configuración de volumen en localStorage
+        function saveVolumeSettings() {
+            localStorage.setItem('hex_music_volume', musicVolume);
+            localStorage.setItem('hex_sfx_volume', sfxVolume);
+            localStorage.setItem('hex_muted', isMuted);
+        }
+        
+        // Actualizar volumen de música
+        function updateMusicVolume(value) {
+            initAudio();
+            musicVolume = value / 100;
+            document.getElementById('music-volume-value').textContent = Math.round(musicVolume * 100) + '%';
+            if (currentMusicGain) {
+                currentMusicGain.gain.value = isMuted ? 0 : musicVolume;
+            }
+            saveVolumeSettings();
+        }
+        
+        // Actualizar volumen de efectos de sonido
+        function updateSfxVolume(value) {
+            sfxVolume = value / 100;
+            document.getElementById('sfx-volume-value').textContent = Math.round(sfxVolume * 100) + '%';
+            saveVolumeSettings();
+        }
+        
+        // Alternar mute/unmute de todo el audio
+        function toggleMuteAll() {
+            isMuted = !isMuted;
+            updateMuteButtons();
+            if (currentMusicGain) {
+                currentMusicGain.gain.value = isMuted ? 0 : musicVolume;
+            }
+            saveVolumeSettings();
+        }
+        
+        // Actualizar botones de mute/unmute
+        function updateMuteButtons() {
+            const muteBtn = document.getElementById('mute-all-btn');
+            const unmuteBtn = document.getElementById('unmute-all-btn');
+            
+            if (isMuted) {
+                muteBtn.style.display = 'none';
+                unmuteBtn.style.display = 'flex';
+            } else {
+                muteBtn.style.display = 'flex';
+                unmuteBtn.style.display = 'none';
+            }
+        }
+        
+        // Función para reproducir sonidos (efectos de sonido)
+        function playSound(type) {
+            if (!audioContext) {
+                initAudio();
+            }
+            
+            if (isMuted || sfxVolume === 0) return;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            const now = audioContext.currentTime;
+            
+            switch(type) {
+                case 'click':
+                    oscillator.frequency.setValueAtTime(800, now);
+                    oscillator.frequency.exponentialRampToValueAtTime(400, now + 0.1);
+                    gainNode.gain.setValueAtTime(sfxVolume * 0.3, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.1);
+                    break;
+                    
+                case 'move':
+                    oscillator.frequency.setValueAtTime(400, now);
+                    oscillator.frequency.linearRampToValueAtTime(600, now + 0.08);
+                    gainNode.gain.setValueAtTime(sfxVolume * 0.2, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.08);
+                    break;
+                    
+                case 'attack':
+                    oscillator.type = 'sawtooth';
+                    oscillator.frequency.setValueAtTime(200, now);
+                    oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.2);
+                    gainNode.gain.setValueAtTime(sfxVolume * 0.4, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.2);
+                    break;
+                    
+                case 'dice':
+                    oscillator.type = 'square';
+                    oscillator.frequency.setValueAtTime(600, now);
+                    oscillator.frequency.setValueAtTime(800, now + 0.05);
+                    oscillator.frequency.setValueAtTime(600, now + 0.1);
+                    oscillator.frequency.setValueAtTime(800, now + 0.15);
+                    gainNode.gain.setValueAtTime(sfxVolume * 0.25, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.2);
+                    break;
+                    
+                case 'victory':
+                    // Fanfarria de victoria
+                    const victoryFreqs = [523.25, 659.25, 783.99, 1046.50];
+                    victoryFreqs.forEach((freq, i) => {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.type = 'triangle';
+                        osc.frequency.value = freq;
+                        const startTime = now + i * 0.15;
+                        gain.gain.setValueAtTime(0, startTime);
+                        gain.gain.linearRampToValueAtTime(musicVolume * 0.3, startTime + 0.05);
+                        gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.4);
+                        osc.start(startTime);
+                        osc.stop(startTime + 0.4);
+                    });
+                    return;
+                    
+                case 'defeat':
+                    // Sonido de derrota
+                    oscillator.type = 'sawtooth';
+                    oscillator.frequency.setValueAtTime(400, now);
+                    oscillator.frequency.exponentialRampToValueAtTime(150, now + 0.5);
+                    gainNode.gain.setValueAtTime(musicVolume * 0.3, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.5);
+                    return;
+                    
+                case 'info':
+                    oscillator.frequency.setValueAtTime(1000, now);
+                    oscillator.frequency.exponentialRampToValueAtTime(1500, now + 0.08);
+                    gainNode.gain.setValueAtTime(sfxVolume * 0.15, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.08);
+                    break;
+                    
+                default:
+                    oscillator.frequency.setValueAtTime(440, now);
+                    gainNode.gain.setValueAtTime(sfxVolume * 0.2, now);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    oscillator.start(now);
+                    oscillator.stop(now + 0.1);
+            }
+        }
+        
+        // Función para reproducir música de fondo (loop simple)
+        function playBackgroundMusic(pattern = 'menu') {
+            if (!audioContext) {
+                initAudio();
+            }
+            
+            if (isMuted || musicVolume === 0) return;
+            
+            // Detener música anterior si existe
+            stopBackgroundMusic();
+            
+            currentMusicGain = audioContext.createGain();
+            currentMusicGain.connect(audioContext.destination);
+            currentMusicGain.gain.value = musicVolume;
+            
+            // Patrones musicales simples
+            const patterns = {
+                menu: [261.63, 329.63, 392.00, 523.25], // Do mayor arpegio
+                battle: [196.00, 246.94, 293.66, 392.00], // Sol menor
+                victory: [523.25, 659.25, 783.99, 1046.50], // Do mayor
+                defeat: [392.00, 349.23, 311.13, 261.63] // Descendente
+            };
+            
+            const freqs = patterns[pattern] || patterns.menu;
+            let noteIndex = 0;
+            let noteDuration = 0.4;
+            
+            function playNextNote() {
+                if (!currentMusicGain) return;
+                
+                const oscillator = audioContext.createOscillator();
+                oscillator.connect(currentMusicGain);
+                oscillator.type = 'sine';
+                oscillator.frequency.value = freqs[noteIndex];
+                
+                const now = audioContext.currentTime;
+                oscillator.start(now);
+                oscillator.stop(now + noteDuration);
+                
+                noteIndex = (noteIndex + 1) % freqs.length;
+                
+                // Programar siguiente nota
+                setTimeout(playNextNote, noteDuration * 1000);
+            }
+            
+            playNextNote();
+        }
+        
+        // Detener música de fondo
+        function stopBackgroundMusic() {
+            if (currentMusicGain) {
+                currentMusicGain.disconnect();
+                currentMusicGain = null;
+            }
+        }
+        
+        // Alias para las funciones de música que se llaman en el código existente
+        function playMenuMusic() { playBackgroundMusic('menu'); }
+        function playBattleMusic() { playBackgroundMusic('battle'); }
+        function playVictoryMusic() { 
+            stopBackgroundMusic();
+            playBackgroundMusic('victory');
+            setTimeout(() => stopBackgroundMusic(), 2000);
+        }
+        function playDefeatMusic() {
+            stopBackgroundMusic();
+            playBackgroundMusic('defeat');
+            setTimeout(() => stopBackgroundMusic(), 2000);
+        }
+        function playTutorialMusic() { playBackgroundMusic('menu'); }
+        
+        // Inicializar al cargar la página
         window.addEventListener('DOMContentLoaded', function() {
             loadVolumeSettings();
+            
+            // Inicializar audio con primer click del usuario
+            document.addEventListener('click', function initAudioOnClick() {
+                initAudio();
+                document.removeEventListener('click', initAudioOnClick);
+            }, { once: true });
             
             // ══════════ CHEAT CODE: wwssadadqe ══════════
             // Si el jugador presiona esta combinación, gana automáticamente
