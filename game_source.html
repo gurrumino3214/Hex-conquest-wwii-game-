@@ -1689,15 +1689,6 @@
         function showVictory(w) {
             const isHumanWinner = gameState.humanPlayers.includes(w);
             
-            // Reproducir música de victoria o derrota según corresponda
-            if (typeof playVictoryMusic === 'function' && typeof playDefeatMusic === 'function') {
-                if (isHumanWinner) {
-                    playVictoryMusic();
-                } else {
-                    playDefeatMusic();
-                }
-            }
-            
             if (isHumanWinner) {
                 // El jugador humano ganó
                 document.getElementById('victory-title').textContent = `¡${getThemeData()[w].leader} Triunfa!`;
@@ -2035,12 +2026,6 @@
             map[0][0] = { type: 'base', owner: 'urss', units: 5 }; map[4][4] = { type: 'base', owner: 'nazis', units: 2 }; // Empieza con 5 tropas
             gameState = { map, activePlayers: ['urss','nazis'], humanPlayers: ['urss'], currentPlayer: 0, diceValue: 0, selectedHex: null, phase: 'roll', eliminated: [], turn: 1, scores: {urss:0,nazis:0}, pendingCombat: null, mapSize: 5, stats: {lastTurnConquests:0, totalUnits:{}, defendedBase:[]}, tutorialMode: true, tutorialStep: 0, tutorialCombatDone: false };
             aiDifficulty='easy'; document.getElementById('menu-modal').classList.remove('show'); renderMap();
-            
-            // Cambiar a música de tutorial
-            if (typeof playTutorialMusic === 'function') {
-                playTutorialMusic();
-            }
-            
             showTutorialContext(0);
         }
         
@@ -2105,12 +2090,6 @@
                 gameState.tutorialMode = false; 
                 hideHighlight(); 
                 showTutorialContext(5);
-                
-                // Volver a música de menú al finalizar tutorial
-                if (typeof playMenuMusic === 'function') {
-                    setTimeout(() => playMenuMusic(), 3000);
-                }
-                
                 setTimeout(() => goToMenu(), 3000); 
             }
         }
@@ -2364,12 +2343,6 @@
         function startScenarioGame() {
             const modal = document.getElementById('scenario-context-modal');
             if (modal) modal.remove();
-            
-            // Cambiar a música de batalla al iniciar escenario
-            if (typeof playBattleMusic === 'function') {
-                playBattleMusic();
-            }
-            
             if (window._scenarioCallback) {
                 window._scenarioCallback();
                 window._scenarioCallback = null;
@@ -2564,10 +2537,6 @@
                 alert('Elige país para cada jugador');
                 return;
             }
-            // Cambiar a música de batalla al iniciar partida
-            if (typeof playBattleMusic === 'function') {
-                playBattleMusic();
-            }
             initGame();
         }
         function initGame() {
@@ -2651,14 +2620,7 @@
             if (!human.includes(all[0])) setTimeout(aiTurn, 600);
         }
 
-        function goToMenu() { 
-            ['victory-modal','combat-modal'].forEach(m=>document.getElementById(m).classList.remove('show')); 
-            document.getElementById('menu-modal').classList.add('show'); 
-            // Cambiar a música de menú al volver al menú principal
-            if (typeof playMenuMusic === 'function') {
-                playMenuMusic();
-            }
-        }
+        function goToMenu() { ['victory-modal','combat-modal'].forEach(m=>document.getElementById(m).classList.remove('show')); document.getElementById('menu-modal').classList.add('show'); }
         
         // Función para volver a jugar con la misma configuración
         function replayGame() {
@@ -2729,8 +2691,6 @@
     
     <!-- Audio system script (external file) -->
     <script src="game-audio.js"></script>
-    <!-- Dynamic Music System -->
-    <script src="musicManager.js"></script>
     
     <!-- Load volume settings and initialize sliders -->
     <script>
