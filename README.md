@@ -1,104 +1,185 @@
-# ⚔️ Hex Conquest - Edición Definitiva
+# ⚔️ Hex Conquest - Ultimate Strategy Game
 
-[![Jugar Ahora](https://img.shields.io/badge/Jugar-Ahora-green?style=for-the-badge)](https://gurrumino3214.github.io/Hex-conquest-wwii-game-/)
+[![Jugar Ahora](https://img.shields.io/badge/Play-Now-green?style=for-the-badge)](https://gurrumino3214.github.io/Hex-conquest-wwii-game-)
+[![License](https://img.shields.io/badge/License-Open%20Source-blue?style=for-the-badge)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-2026-orange?style=for-the-badge)](https://github.com/gurrumino3214/Hex-conquest-wwii-game-)
 
-Un emocionante juego de estrategia por turnos basado en hexágonos, inspirado en clásicos juegos de conquista territorial. ¡Domina el mapa, derrota a tus oponentes y convierte tu nación en la potencia mundial!
+> **Un épico juego de estrategia por turnos basado en hexágonos.** Domina el mapa, derrota a tus oponentes y conviértete en la leyenda definitiva.
 
-## 🎮 Características Principales
+---
 
-### Modos de Juego
-- **🌍 Segunda Guerra Mundial** - Lidera potencias históricas como URSS, Nazis, USA, Japón, Italia, UK, Francia, China o Canadá
-- **🏛️ Antigua Grecia** - Comanda Sparta, Athens o Phoenicia
-- **🎮 Guerras de Videojuegos** - Capcom vs Square vs EA
-- **⭐ Star Wars** - Rebels, Empire, Jedi, Sith
-- **🦸 Superhéroes** - Avengers, Thanos, Justice League, X-Men, Spider-Man y más
-- **⚡ Pokémon** - Guts Team vs equipos rivales
-- **📺 Anime** - Konoha, Akatsuki, Marines, Piratas, Saiyans
-- **🧙 Fantasía** - Señor de los Anillos, Harry Potter, Game of Thrones, Narnia, Discworld
-- **📜 Religiones** - Christianity, Islam, Judaism, Hinduism, Buddhism, y más
+## 📋 Tabla de Contenidos
 
-### Sistema de Juego
-- 🎲 **Combate con Dados** - Sistema de batalla justo y estratégico
-- 💰 **Economía de Monedas** - Gana monedas y desbloquea nuevos temas
-- 🛒 **Tienda de Temas** - Adquiere nuevas facciones y mapas
-- 🤖 **IA Inteligente** - Oponentes computerizados con múltiples dificultades
-- 👥 **Multijugador Local** - Hasta 8 jugadores humanos
-- 🗺️ **Mapas Dinámicos** - Diferentes tamaños y tipos de terreno
-- 🎨 **Múltiples Estilos Visuales** - Temas moderno, retro, histórico y más
+- [Características](#-características)
+- [Modos de Juego](#-modos-de-juego)
+- [Cómo Jugar](#-cómo-jugar)
+- [Tecnologías](#-tecnologías)
+- [Instalación](#-instalación)
+- [Audio](#-sistema-de-audio)
+- [Contribuir](#-contribuciones)
+- [Contacto](#-contacto)
 
-### Tipos de Terreno
-| Terreno | Icono | Característica |
-|---------|-------|----------------|
-| 🌾 Llanura | Verde | Terreno básico |
-| 🏔️ Montaña | Marrón | Terreno defensivo |
-| 🏙️ Ciudad | Dorado | Centros de producción |
-| 🏛️ Base | Dorado brillante | Capital del jugador |
-| 🌊 Río | Azul | Barrera natural |
+---
 
-## 🚀 Cómo Jugar
+## ✨ Características
 
-### Controles Básicos
-1. **Seleccionar Unidad** - Haz clic en un hexágono con tus tropas
-2. **Mover** - Los hexágonos verdes muestran movimientos posibles
-3. **Atacar** - Los hexágonos rojos son enemigos atacables
-4. **Lanzar Dados** - Usa el botón de dados para resolver combates
-5. **Finalizar Turno** - Botón de salida para pasar al siguiente jugador
+### 🎮 Sistema de Juego
+| Feature | Descripción |
+|---------|-------------|
+| 🎲 **Combate con Dados** | Sistema de batalla estratégico y equilibrado |
+| 💰 **Economía** | Gana monedas y desbloquea contenido exclusivo |
+| 🛒 **Tienda** | Adquiere nuevos temas, facciones y mapas |
+| 🤖 **IA Avanzada** | Múltiples niveles de dificultad |
+| 👥 **Multijugador** | Hasta 8 jugadores locales |
+| 🗺️ **Mapas** | Generación dinámica con diversos terrenos |
+| 🎨 **Temas** | Estilos visuales modernos, retro e históricos |
 
-### Estrategia
-- 🎯 Captura las bases enemigas para eliminar oponentes
-- 💪 Concentra tus tropas para ataques decisivos
-- 🏰 Protege tu base capital a toda costa
-- 🎲 Usa los dados sabiamente - ¡la suerte favorece a los audaces!
+### 🌍 Modos de Juego
 
-## 🛠️ Tecnologías Utilizadas
+#### Históricos
+- **Segunda Guerra Mundial** - URSS, Nazis, USA, Japón, Italia, UK, Francia, China, Canadá
+- **Antigua Grecia** - Sparta, Athens, Phoenicia
 
-- **HTML5** - Estructura semántica
-- **CSS3** - Estilos avanzados con gradientes, animaciones y diseño responsivo
-- **JavaScript Vanilla** - Lógica del juego sin dependencias externas
-- **Web Audio API** - Sistema de sonido sintetizado
-- **Google Fonts** - Tipografías personalizadas (Fredoka, Nunito, Special Elite, etc.)
+#### Pop Culture
+- **Videojuegos** - Capcom vs Square vs EA
+- **Star Wars** - Rebels, Empire, Jedi, Sith
+- **Superhéroes** - Avengers, Thanos, Justice League, X-Men, Spider-Man
+- **Pokémon** - Guts Team vs rivales
+- **Anime** - Konoha, Akatsuki, Marines, Piratas, Saiyans
 
-## 📁 Estructura del Proyecto
+#### Fantasía y Más
+- **Fantasía Épica** - LOTR, Harry Potter, GoT, Narnia, Discworld
+- **Religiones** - Christianity, Islam, Judaism, Hinduism, Buddhism
 
+### 🗺️ Tipos de Terreno
+
+| Icono | Terreno | Ventaja |
+|-------|---------|---------|
+| 🌾 | Llanura | Movimiento rápido |
+| 🏔️ | Montaña | Bonus defensivo |
+| 🏙️ | Ciudad | Producción extra |
+| 🏛️ | Base | Capital (¡proteger!) |
+| 🌊 | Río | Barrera natural |
+
+---
+
+## 🎯 Cómo Jugar
+
+### Controles
+```
+1. CLIC → Seleccionar unidad (hexágono propio)
+2. VERDE → Movimientos disponibles
+3. ROJO → Enemigos atacables
+4. DADOS → Resolver combate
+5. SALIDA → Finalizar turno
+```
+
+### Consejos de Estrategia 🧠
+- 🎯 Prioriza capturar bases enemigas
+- 💪 Agrupa tropas para ataques contundentes
+- 🏰 Defiende tu capital a toda costa
+- 🎲 Gestiona la suerte con táctica
+
+---
+
+## 🛠️ Tecnologías
+
+<p align="left">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML5"/>
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white" alt="CSS3"/>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript"/>
+</p>
+
+- **Frontend**: HTML5 + CSS3 (Grid, Flexbox, Animaciones)
+- **Lógica**: JavaScript Vanilla (ES6+)
+- **Audio**: Web Audio API
+- **Fuentes**: Google Fonts (Fredoka, Nunito, Special Elite)
+- **Cero Dependencias**: 100% código nativo
+
+---
+
+## 📦 Instalación y Ejecución
+
+### Opción 1: Jugar Online (Recomendado)
+Visita: **[https://gurrumino3214.github.io/Hex-conquest-wwii-game-/](https://gurrumino3214.github.io/Hex-conquest-wwii-game-/)**
+
+### Opción 2: Localmente
+```bash
+# Clonar el repositorio
+git clone https://github.com/gurrumino3214/Hex-conquest-wwii-game-.git
+
+# Navegar al directorio
+cd Hex-conquest-wwii-game-
+
+# Abrir index.html en tu navegador
+# (Recomendado: Chrome, Firefox o Edge)
+```
+
+### Estructura del Proyecto
 ```
 Hex-conquest-wwii-game-/
-├── index.html          # Archivo principal del juego
-├── game-audio.js       # Sistema de audio y música
-├── README.md           # Documentación
-└── .gitignore          # Configuración de Git
+├── index.html          # Juego principal
+├── game_source.html    # Código fuente del juego
+├── README.md           # Esta documentación
+└── .gitignore          # Archivos ignorados por Git
 ```
+
+---
 
 ## 🎵 Sistema de Audio
 
-El juego incluye un sistema de audio completo desarrollado con Web Audio API:
-- 🎶 Música ambiental estilo C418 (Minecraft)
-- 🔊 Efectos de sonido para todas las acciones
-- 🎛️ Control de volumen independiente para música y SFX
-- 🔕 Botón de silenciar música accesible durante el juego
+Desarrollado con **Web Audio API**:
 
-## 🌐 Enlaces
+- 🎶 Banda sonora ambiental (estilo C418/Minecraft)
+- 🔊 Efectos SFX para todas las acciones
+- 🎛️ Controles independientes: Música / SFX
+- 🔕 Mute instantáneo desde el juego
 
-- **🎮 Jugar Online**: [https://gurrumino3214.github.io/Hex-conquest-wwii-game-/](https://gurrumino3214.github.io/Hex-conquest-wwii-game-/)
-- **📄 Repositorio**: [GitHub](https://github.com/gurrumino3214/Hex-conquest-wwii-game-)
-
-## 📝 Licencia
-
-Este proyecto es un juego web de código abierto para fines educativos y de entretenimiento.
+---
 
 ## 🤝 Contribuciones
 
-¡Las contribuciones son bienvenidas! Si tienes ideas para nuevos temas, mejoras de jugabilidad o reportes de bugs, no dudes en abrir un issue o enviar un pull request.
+¡Tu ayuda es bienvenida! 
 
-## 📧 Contacto
+### ¿Cómo contribuir?
+1. Fork el proyecto
+2. Crea una rama (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add AmazingFeature'`)
+4. Push (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
-Para preguntas o sugerencias, visita el repositorio en GitHub o envia un gmail a gurrumino.alex@gmail.com
+### Ideas buscadas:
+- ✨ Nuevos temas y facciones
+- 🐛 Reporte de bugs
+- 💡 Mejoras de jugabilidad
+- 🌐 Traducciones a otros idiomas
+
+---
+
+## 📞 Contacto
+
+| Plataforma | Enlace |
+|------------|--------|
+| 📧 Email | gurrumino.alex@gmail.com |
+| 🐙 GitHub | [@gurrumino3214](https://github.com/gurrumino3214) |
+| 🎮 Demo | [Jugar Ahora](https://gurrumino3214.github.io/Hex-conquest-wwii-game-) |
+
+---
+
+## 📄 Licencia
+
+Este proyecto es **open-source** con fines educativos y de entretenimiento.
 
 ---
 
 <div align="center">
 
-**¡Desarrollado con ❤️ para los amantes de los juegos de estrategia!**
+### ⭐ ¡Gracias por jugar Hex Conquest! ⭐
 
-*Hex Conquest © 2026 - Todos los derechos reservados*
+**Desarrollado con ❤️ y ☕ para estrategas de todo el mundo**
+
+*Hex Conquest © 2026 - All Rights Reserved*
+
+[⬆️ Volver arriba](#-hex-conquest---ultimate-strategy-game)
 
 </div>
