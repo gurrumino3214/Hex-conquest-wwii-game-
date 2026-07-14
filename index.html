@@ -2308,8 +2308,6 @@
             
             // Cambiar a música de batalla al iniciar escenario
             
-                
-            }
             
             if (window._scenarioCallback) {
                 window._scenarioCallback();
@@ -2597,11 +2595,8 @@
             document.getElementById('menu-modal').classList.add('show'); 
             // Cambiar a música de menú al volver al menú principal
             
-                
             }
         }
-        
-        // Función para volver a jugar con la misma configuración
         function replayGame() {
             ['victory-modal','combat-modal'].forEach(m => document.getElementById(m).classList.remove('show'));
             
