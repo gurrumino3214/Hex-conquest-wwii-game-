@@ -665,6 +665,7 @@
                 <button class="menu-tab" data-tab="editor">🗺️ Editor</button>
                 <button class="menu-tab" data-tab="achievements">🏆 Logros</button>
                 <button class="menu-tab" data-tab="missions">📋 Misiones</button>
+                <button class="menu-tab" data-tab="shop">🏪 Tienda</button>
                 <button class="menu-tab" data-tab="settings">⚙️ Ajustes</button>
             </div>
             <div class="tab-panel active" id="tab-play">
@@ -793,8 +794,6 @@
             <div class="tab-panel" id="tab-missions">
                 <div class="section-title">📋 Misiones Normales</div>
                 <div id="missions-list" class="missions-container"></div>
-                <div class="section-title" style="margin-top:15px;">🌟 Misiones Secretas</div>
-                <div id="secret-missions-list" class="missions-container"></div>
                 <div style="margin-top:15px;padding:12px;background:#f9f6f0;border-radius:12px;">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                         <span style="font-size:20px;">🪙</span>
@@ -802,6 +801,15 @@
                         <span id="menu-coins-count" style="font-size:16px;font-weight:900;color:#e6a817;">0</span>
                     </div>
                 </div>
+            </div>
+            <div class="tab-panel" id="tab-shop">
+                <div class="section-title">🏪 Tienda de Ambientaciones</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px;background:#f9f6f0;border-radius:12px;">
+                    <span style="font-size:14px;font-weight:700;color:#6b4226;">🪙 Tus monedas:</span>
+                    <span id="shop-coins-count-tab" style="font-size:18px;font-weight:900;color:#e6a817;">0</span>
+                </div>
+                <div id="shop-grid-tab" class="shop-grid"></div>
+                <button class="modal-btn btn-secondary" onclick="closeShop()" style="margin-top:15px;">❌ Cerrar</button>
             </div>
             <div class="tab-panel" id="tab-settings">
                 <div class="section-title">🔊 Volumen</div>
@@ -1031,13 +1039,7 @@
             { id:'city_builder', name:'Constructor de Ciudades', desc:'Controla 5 ciudades simultáneamente.', check: gs => (gs.stats.cityCount[gs.winner] || 0) >= 5 },
             { id:'base_defender', name:'Defensor de la Base', desc:'Defiende tu base exitosamente 3 veces.', check: gs => gs.stats.defendedBase?.length >= 3 },
             { id:'comeback_kid', name:'Niño del Regreso', desc:'Gana después de tener solo 1 territorio.', check: gs => gs.winner !== undefined && gs.stats.minTerritories === 1 },
-            { id:'perfect_start', name:'Inicio Perfecto', desc:'Gana tus primeras 3 batallas consecutivas.', check: gs => gs.stats.consecutiveWins >= 3 && gs.winner !== undefined },
-            // Logros Secretos (Easter Eggs)
-            { id:'secret_japan', name:'🎉 ¡Lo Lograste!', desc:'Gana con Japón en modo difícil (Easter Egg).', secret: true, check: gs => gs.winner==='japon' && gameTheme==='ww2' && aiDifficulty==='hard' },
-            { id:'secret_perfect', name:'👑 Perfección Total', desc:'Gana sin perder ninguna batalla.', secret: true, check: gs => gs.winner !== undefined && gs.stats.consecutiveWins === gs.turn },
-            { id:'secret_speedrun', name:'⚡ Velocidad Luz', desc:'Gana en menos de 5 turnos.', secret: true, check: gs => gs.turn < 5 && gs.winner !== undefined },
-            { id:'secret_underdog', name:'🐺 El Último Guerrero', desc:'Gana comenzando con solo 1 territorio.', secret: true, check: gs => gs.winner !== undefined && gs.stats.startTerritories === 1 },
-            { id:'secret_diplomat', name:'🕊️ Maestro Diplomático', desc:'Gana sin eliminar ningún jugador.', secret: true, check: gs => gs.winner !== undefined && gameState.eliminated.length === 0 }
+            { id:'perfect_start', name:'Inicio Perfecto', desc:'Gana tus primeras 3 batallas consecutivas.', check: gs => gs.stats.consecutiveWins >= 3 && gs.winner !== undefined }
         ];
         let unlockedAchievements = JSON.parse(localStorage.getItem('ww2_achievements') || '[]');
 
@@ -1048,15 +1050,36 @@
             tutorial: 100,
             victoria: 50,
             derrota: 10,
-            misionNormal: 100,
-            misionSecreta: 200
+            misionNormal: 100
         };
+
+        // Precios de ambientaciones (fácil de modificar)
+        const themePrices = {
+            ww2: 0,
+            ancient: 500,
+            gaming: 750,
+            movies: 1000,
+            anime: 1250,
+            comics: 1500,
+            literature: 1750,
+            religion: 2000
+        };
+
+        // Información de ambientaciones para la tienda
+        const shopThemes = [
+            { id: 'ww2', name: 'WWII', icon: '⚔️', desc: 'Segunda Guerra Mundial' },
+            { id: 'ancient', name: 'Antiguas', icon: '🏛️', desc: 'Civilizaciones Antiguas' },
+            { id: 'gaming', name: 'Videojuegos', icon: '🎮', desc: 'Empresas de Videojuegos' },
+            { id: 'movies', name: 'Películas', icon: '🎬', desc: 'Películas y Series' },
+            { id: 'anime', name: 'Anime', icon: '🍥', desc: 'Series de Anime' },
+            { id: 'comics', name: 'Cómics', icon: '🦸', desc: 'Superhéroes y Villanos' },
+            { id: 'literature', name: 'Literatura', icon: '📚', desc: 'Obras Literarias' },
+            { id: 'religion', name: 'Religión', icon: '☸️', desc: 'Religiones del Mundo' }
+        ];
 
         // Estado de monedas y progreso
         let playerCoins = parseInt(localStorage.getItem('hex_coins') || coinRewards.monedasIniciales);
         let completedMissions = JSON.parse(localStorage.getItem('hex_missions') || '[]');
-        let discoveredSecretMissions = JSON.parse(localStorage.getItem('hex_secret_missions_discovered') || '[]');
-        let completedSecretMissions = JSON.parse(localStorage.getItem('hex_secret_missions_completed') || '[]');
         let purchasedThemes = JSON.parse(localStorage.getItem('hex_purchased_themes') || '["ww2"]');
         let selectedTheme = localStorage.getItem('hex_selected_theme') || 'ww2';
         let gamesWon = parseInt(localStorage.getItem('hex_games_won') || 0);
@@ -1087,13 +1110,13 @@
             if (menuCoins) menuCoins.textContent = playerCoins;
             const shopCoins = document.getElementById('shop-coins-count');
             if (shopCoins) shopCoins.textContent = playerCoins;
+            const shopCoinsTab = document.getElementById('shop-coins-count-tab');
+            if (shopCoinsTab) shopCoinsTab.textContent = playerCoins;
         }
 
         function saveProgress() {
             localStorage.setItem('hex_coins', playerCoins.toString());
             localStorage.setItem('hex_missions', JSON.stringify(completedMissions));
-            localStorage.setItem('hex_secret_missions_discovered', JSON.stringify(discoveredSecretMissions));
-            localStorage.setItem('hex_secret_missions_completed', JSON.stringify(completedSecretMissions));
             localStorage.setItem('hex_purchased_themes', JSON.stringify(purchasedThemes));
             localStorage.setItem('hex_selected_theme', selectedTheme);
             localStorage.setItem('hex_games_won', gamesWon.toString());
@@ -1105,8 +1128,6 @@
         function loadProgress() {
             playerCoins = parseInt(localStorage.getItem('hex_coins') || coinRewards.monedasIniciales);
             completedMissions = JSON.parse(localStorage.getItem('hex_missions') || '[]');
-            discoveredSecretMissions = JSON.parse(localStorage.getItem('hex_secret_missions_discovered') || '[]');
-            completedSecretMissions = JSON.parse(localStorage.getItem('hex_secret_missions_completed') || '[]');
             purchasedThemes = JSON.parse(localStorage.getItem('hex_purchased_themes') || '["ww2"]');
             selectedTheme = localStorage.getItem('hex_selected_theme') || 'ww2';
             gamesWon = parseInt(localStorage.getItem('hex_games_won') || 0);
@@ -1963,11 +1984,9 @@
         }
         function showAchievements() {
             const container = document.getElementById('achievements-list');
-            const normalAchievements = ACHIEVEMENTS.filter(ach => !ach.secret);
-            const secretAchievements = ACHIEVEMENTS.filter(ach => ach.secret);
             
-            let html = '<div class=\"section-title\" style=\"margin-top:0;\">🏆 Logros Normales</div>';
-            html += normalAchievements.map(ach => {
+            let html = '<div class=\"section-title\" style=\"margin-top:0;\">🏆 Logros</div>';
+            html += ACHIEVEMENTS.map(ach => {
                 const unlocked = unlockedAchievements.includes(ach.id);
                 return `<div style="padding:6px; margin:4px 0; border-radius:8px; background:${unlocked?'#eafaf1':'#f8f8f8'}; border:1px solid ${unlocked?'#27ae60':'#ddd'}; display:flex; align-items:center; gap:8px;">
                     <span style="font-size:20px;">${unlocked?'✅':'🔒'}</span>
@@ -1975,22 +1994,108 @@
                 </div>`;
             }).join('');
             
-            // Sección de logros secretos (solo se muestra si hay al menos uno desbloqueado)
-            const hasSecretUnlocked = secretAchievements.some(ach => unlockedAchievements.includes(ach.id));
-            if (hasSecretUnlocked) {
-                html += '<div class="section-title" style="margin-top:15px;">🌟 Logros Secretos</div>';
-                html += secretAchievements.map(ach => {
-                    const unlocked = unlockedAchievements.includes(ach.id);
-                    return `<div style="padding:6px; margin:4px 0; border-radius:8px; background:${unlocked?'#f3e5f5':'#f8f8f8'}; border:1px solid ${unlocked?'#9c27b0':'#ddd'}; display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:20px;">${unlocked?'🌟':'❓'}</span>
-                        <div><b>${ach.name}</b><br><span style="font-size:10px;color:#666;">${ach.desc}</span></div>
-                    </div>`;
-                }).join('');
-            } else {
-                html += '<div style="padding:10px; margin:15px 0; border-radius:8px; background:#f8f8f8; border:1px dashed #ccc; text-align:center; color:#999; font-size:11px;">❓ ¿Hay logros secretos? ¡Sigue jugando para descubrirlos!</div>';
+            container.innerHTML = html;
+        }
+
+        // ══════════ TIENDA DE AMBIENTACIONES ══════════
+        function openShop() {
+            updateShopUI();
+            switchMenuTab('shop');
+        }
+
+        function closeShop() {
+            switchMenuTab('play');
+        }
+
+        function updateShopUI() {
+            const grid = document.getElementById('shop-grid-tab');
+            if (!grid) return;
+            
+            const coins = playerCoins;
+            let html = '';
+            
+            shopThemes.forEach(theme => {
+                const price = themePrices[theme.id] || 0;
+                const isPurchased = purchasedThemes.includes(theme.id);
+                const isSelected = selectedTheme === theme.id;
+                const canAfford = coins >= price;
+                
+                let statusHtml = '';
+                let buttonHtml = '';
+                
+                if (isSelected) {
+                    statusHtml = '<span class="theme-status status-selected">Seleccionada</span>';
+                    buttonHtml = `<button class="select-btn" disabled>✓ En uso</button>`;
+                } else if (isPurchased) {
+                    statusHtml = '<span class="theme-status status-purchased">Desbloqueada</span>';
+                    buttonHtml = `<button class="select-btn" onclick="selectTheme('${theme.id}')">Usar</button>`;
+                } else {
+                    statusHtml = '<span class="theme-status status-locked">Bloqueada</span>';
+                    buttonHtml = `<button class="buy-btn" ${!canAfford ? 'disabled' : ''} onclick="buyTheme('${theme.id}')">${price === 0 ? 'Gratis' : '🪙 ' + price}</button>`;
+                }
+                
+                html += `
+                <div class="theme-card ${isPurchased ? 'purchased' : ''} ${isSelected ? 'selected' : ''} ${!isPurchased && !isSelected ? 'locked' : ''}" onclick="${!isSelected ? `selectTheme('${theme.id}')` : ''}">
+                    <div class="theme-icon">${theme.icon}</div>
+                    <div class="theme-name">${theme.name}</div>
+                    <div style="font-size:9px;color:#888;margin-bottom:4px;">${theme.desc}</div>
+                    <div class="theme-price">${price === 0 ? 'Gratis' : '🪙 ' + price}</div>
+                    ${statusHtml}
+                    ${buttonHtml}
+                </div>`;
+            });
+            
+            grid.innerHTML = html;
+        }
+
+        function buyTheme(themeId) {
+            const price = themePrices[themeId] || 0;
+            
+            if (purchasedThemes.includes(themeId)) {
+                showNotification('Ya tienes esta ambientación', 2000);
+                return;
             }
             
-            container.innerHTML = html;
+            if (playerCoins < price) {
+                showNotification('No tienes suficientes monedas', 2000);
+                return;
+            }
+            
+            removeCoins(price);
+            purchasedThemes.push(themeId);
+            saveProgress();
+            updateShopUI();
+            showNotification('Ambientación desbloqueada', 2000);
+        }
+
+        function selectTheme(themeId) {
+            if (!purchasedThemes.includes(themeId)) {
+                showNotification('Debes comprar esta ambientación primero', 2000);
+                return;
+            }
+            
+            selectedTheme = themeId;
+            setGameTheme(themeId);
+            saveProgress();
+            updateShopUI();
+            showNotification('Ambientación seleccionada: ' + shopThemes.find(t => t.id === themeId)?.name, 2000);
+        }
+
+        function unlockAllThemes() {
+            const allThemeIds = shopThemes.map(t => t.id);
+            purchasedThemes = [...new Set([...purchasedThemes, ...allThemeIds])];
+            saveProgress();
+            updateShopUI();
+            showNotification('Todas las ambientaciones han sido desbloqueadas', 3000);
+        }
+
+        // Sistema de códigos (para activar unlockall)
+        function checkCheatCode(code) {
+            if (code.toLowerCase() === 'unlockall') {
+                unlockAllThemes();
+                return true;
+            }
+            return false;
         }
 
         // ══════════ ESCENARIOS ══════════
