@@ -99,6 +99,6 @@ Para preguntas o sugerencias, visita el repositorio en GitHub.
 
 **¡Desarrollado con ❤️ para los amantes de los juegos de estrategia!**
 
-*Hex Conquest © 2024 - Todos los derechos reservados*
+*Hex Conquest © 2026 - Todos los derechos reservados*
 
 </div>
