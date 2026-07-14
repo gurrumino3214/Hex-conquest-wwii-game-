@@ -1050,8 +1050,27 @@
             tutorial: 100,
             victoria: 50,
             derrota: 10,
-            misionNormal: 100
+            misionNormal: 100,
+            misionDiaria: 75,
+            misionSemanal: 300,
+            logro: 150
         };
+
+        // Definición de misiones diarias posibles
+        const dailyMissionTemplates = [
+            { id: 'daily_win', name: 'Victoria Diaria', desc: 'Gana 1 partida hoy', target: 1, type: 'wins' },
+            { id: 'daily_capture_5', name: 'Conquistador Diario', desc: 'Captura 5 territorios hoy', target: 5, type: 'captures' },
+            { id: 'daily_play_3', name: 'Jugador Activo', desc: 'Juega 3 partidas hoy', target: 3, type: 'games' },
+            { id: 'daily_defend', name: 'Defensor Diario', desc: 'Mantén 10 territorios por turno', target: 10, type: 'defend' }
+        ];
+
+        // Definición de misiones semanales posibles
+        const weeklyMissionTemplates = [
+            { id: 'weekly_wins_5', name: 'Racha Semanal', desc: 'Gana 5 partidas esta semana', target: 5, type: 'wins' },
+            { id: 'weekly_captures_25', name: 'Conquistador Semanal', desc: 'Captura 25 territorios esta semana', target: 25, type: 'captures' },
+            { id: 'weekly_games_10', name: 'Jugador Semanal', desc: 'Juega 10 partidas esta semana', target: 10, type: 'games' },
+            { id: 'weekly_special', name: 'Maestro Estratégico', desc: 'Completa 3 misiones diarias', target: 3, type: 'daily_complete' }
+        ];
 
         // Precios de ambientaciones (fácil de modificar)
         const themePrices = {
@@ -1086,6 +1105,14 @@
         let gamesPlayed = parseInt(localStorage.getItem('hex_games_played') || 0);
         let territoriesCaptured = parseInt(localStorage.getItem('hex_territories_captured') || 0);
         let tutorialCompleted = localStorage.getItem('hex_tutorial_completed') === 'true';
+        
+        // Misiones diarias y semanales
+        let dailyMissions = JSON.parse(localStorage.getItem('hex_daily_missions') || '[]');
+        let weeklyMissions = JSON.parse(localStorage.getItem('hex_weekly_missions') || '[]');
+        let lastDailyReset = localStorage.getItem('hex_last_daily_reset');
+        let lastWeeklyReset = localStorage.getItem('hex_last_weekly_reset');
+        let dailyProgress = JSON.parse(localStorage.getItem('hex_daily_progress') || '{}');
+        let weeklyProgress = JSON.parse(localStorage.getItem('hex_weekly_progress') || '{}');
 
         // Funciones del sistema de monedas
         function addCoins(amount) {
@@ -1114,6 +1141,135 @@
             if (shopCoinsTab) shopCoinsTab.textContent = playerCoins;
         }
 
+        // ══════════ SISTEMA DE MISIONES DIARIAS Y SEMANALES ══════════
+        function getDayKey() {
+            const now = new Date();
+            return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+        }
+
+        function getWeekKey() {
+            const now = new Date();
+            const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+            return `${startOfWeek.getFullYear()}-W${Math.floor((startOfWeek.getTime() - new Date(startOfWeek.getFullYear(), 0, 0).getTime()) / 604800000)}`;
+        }
+
+        function checkMissionResets() {
+            const currentDayKey = getDayKey();
+            const currentWeekKey = getWeekKey();
+            let needsSave = false;
+
+            // Reset diario
+            if (lastDailyReset !== currentDayKey) {
+                dailyMissions = generateDailyMissions();
+                dailyProgress = {};
+                lastDailyReset = currentDayKey;
+                needsSave = true;
+                showNotification('¡Nuevas misiones diarias disponibles!', 2500);
+            }
+
+            // Reset semanal
+            if (lastWeeklyReset !== currentWeekKey) {
+                weeklyMissions = generateWeeklyMissions();
+                weeklyProgress = {};
+                lastWeeklyReset = currentWeekKey;
+                needsSave = true;
+                showNotification('¡Nuevas misiones semanales disponibles!', 2500);
+            }
+
+            if (needsSave) {
+                saveProgress();
+            }
+        }
+
+        function generateDailyMissions() {
+            const missions = [];
+            const shuffled = [...dailyMissionTemplates].sort(() => Math.random() - 0.5);
+            for (let i = 0; i < 3 && i < shuffled.length; i++) {
+                missions.push({
+                    ...shuffled[i],
+                    completed: false,
+                    progress: 0
+                });
+            }
+            return missions;
+        }
+
+        function generateWeeklyMissions() {
+            const missions = [];
+            const shuffled = [...weeklyMissionTemplates].sort(() => Math.random() - 0.5);
+            for (let i = 0; i < 2 && i < shuffled.length; i++) {
+                missions.push({
+                    ...shuffled[i],
+                    completed: false,
+                    progress: 0
+                });
+            }
+            return missions;
+        }
+
+        function updateDailyProgress(type, amount) {
+            const today = getDayKey();
+            if (lastDailyReset !== today) {
+                checkMissionResets();
+            }
+
+            dailyMissions.forEach(mission => {
+                if (mission.completed) return;
+                if (mission.type === type) {
+                    mission.progress += amount;
+                    if (mission.progress >= mission.target && !mission.completed) {
+                        mission.completed = true;
+                        addCoins(coinRewards.misionDiaria);
+                        showNotification(`¡Misión diaria completada: ${mission.name}! +75 🪙`, 2500);
+                        
+                        // Progreso para misión semanal de completar diarias
+                        updateWeeklyProgress('daily_complete', 1);
+                    }
+                }
+            });
+            saveProgress();
+        }
+
+        function updateWeeklyProgress(type, amount) {
+            const currentWeek = getWeekKey();
+            if (lastWeeklyReset !== currentWeek) {
+                checkMissionResets();
+            }
+
+            weeklyMissions.forEach(mission => {
+                if (mission.completed) return;
+                if (mission.type === type) {
+                    mission.progress += amount;
+                    if (mission.progress >= mission.target && !mission.completed) {
+                        mission.completed = true;
+                        addCoins(coinRewards.misionSemanal);
+                        showNotification(`¡Misión semanal completada: ${mission.name}! +300 🪙`, 3000);
+                    }
+                }
+            });
+            saveProgress();
+        }
+
+        function claimDailyMission(index) {
+            if (dailyMissions[index] && dailyMissions[index].completed && !dailyMissions[index].claimed) {
+                dailyMissions[index].claimed = true;
+                addCoins(coinRewards.misionDiaria);
+                saveProgress();
+                showMissions();
+                showNotification(`+${coinRewards.misionDiaria} monedas`, 2000);
+            }
+        }
+
+        function claimWeeklyMission(index) {
+            if (weeklyMissions[index] && weeklyMissions[index].completed && !weeklyMissions[index].claimed) {
+                weeklyMissions[index].claimed = true;
+                addCoins(coinRewards.misionSemanal);
+                saveProgress();
+                showMissions();
+                showNotification(`+${coinRewards.misionSemanal} monedas`, 2000);
+            }
+        }
+
         function saveProgress() {
             localStorage.setItem('hex_coins', playerCoins.toString());
             localStorage.setItem('hex_missions', JSON.stringify(completedMissions));
@@ -1123,6 +1279,12 @@
             localStorage.setItem('hex_games_played', gamesPlayed.toString());
             localStorage.setItem('hex_territories_captured', territoriesCaptured.toString());
             localStorage.setItem('hex_tutorial_completed', tutorialCompleted.toString());
+            localStorage.setItem('hex_daily_missions', JSON.stringify(dailyMissions));
+            localStorage.setItem('hex_weekly_missions', JSON.stringify(weeklyMissions));
+            localStorage.setItem('hex_last_daily_reset', lastDailyReset);
+            localStorage.setItem('hex_last_weekly_reset', lastWeeklyReset);
+            localStorage.setItem('hex_daily_progress', JSON.stringify(dailyProgress));
+            localStorage.setItem('hex_weekly_progress', JSON.stringify(weeklyProgress));
         }
 
         function loadProgress() {
@@ -1134,6 +1296,13 @@
             gamesPlayed = parseInt(localStorage.getItem('hex_games_played') || 0);
             territoriesCaptured = parseInt(localStorage.getItem('hex_territories_captured') || 0);
             tutorialCompleted = localStorage.getItem('hex_tutorial_completed') === 'true';
+            dailyMissions = JSON.parse(localStorage.getItem('hex_daily_missions') || '[]');
+            weeklyMissions = JSON.parse(localStorage.getItem('hex_weekly_missions') || '[]');
+            lastDailyReset = localStorage.getItem('hex_last_daily_reset');
+            lastWeeklyReset = localStorage.getItem('hex_last_weekly_reset');
+            dailyProgress = JSON.parse(localStorage.getItem('hex_daily_progress') || '{}');
+            weeklyProgress = JSON.parse(localStorage.getItem('hex_weekly_progress') || '{}');
+            checkMissionResets();
             updateCoinsUI();
         }
 
