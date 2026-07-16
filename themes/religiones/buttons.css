@@ -1,0 +1,280 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOTONES - TEMA RELIGIONES (Arquitectura Religiosa)
+   Inspiración: mármol blanco, oro, vitrales, decoración elegante
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.theme-religion {
+    --btn-bg-primary: linear-gradient(135deg, #800020 0%, #5a0015 100%);
+    --btn-bg-secondary: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    --btn-bg-gold: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    --btn-text-primary: #f5f5f5;
+    --btn-text-secondary: #ffd700;
+    --btn-text-gold: #2c1810;
+    --btn-border-color: #c9a961;
+    --btn-border-width: 2px;
+    --btn-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --btn-shadow-hover: 0 6px 25px rgba(255, 215, 0, 0.4);
+    --btn-radius: 10px;
+}
+
+/* Botones principales (.modal-btn, .btn-primary) */
+body.theme-religion .modal-btn,
+body.theme-religion .btn-primary {
+    background: var(--btn-bg-primary);
+    border: var(--btn-border-width) solid #a00028;
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-primary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'MedievalSharp', cursive;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+body.theme-religion .modal-btn::before,
+body.theme-religion .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+body.theme-religion .modal-btn:hover,
+body.theme-religion .btn-primary:hover {
+    background: linear-gradient(135deg, #900030 0%, #6a0020 100%);
+    border-color: #c00030;
+    box-shadow: var(--btn-shadow-hover);
+    transform: translateY(-2px);
+}
+
+body.theme-religion .modal-btn:hover::before,
+body.theme-religion .btn-primary:hover::before {
+    opacity: 1;
+    animation: religionGlow 1.5s ease-in-out;
+}
+
+@keyframes religionGlow {
+    0% { transform: scale(0.8); opacity: 0.3; }
+    50% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(0.8); opacity: 0; }
+}
+
+body.theme-religion .modal-btn:active,
+body.theme-religion .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-religion .modal-btn:disabled,
+body.theme-religion .btn-primary:disabled {
+    background: linear-gradient(135deg, #4a4a4a 0%, #3a3a3a 100%);
+    border-color: #5a5a5a;
+    color: #7a7a7a;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Botón secundario */
+body.theme-religion .btn-secondary {
+    background: var(--btn-bg-secondary);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-secondary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'MedievalSharp', cursive;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .btn-secondary:hover {
+    background: linear-gradient(135deg, #5a3a38 0%, #4a2c2a 100%);
+    border-color: #ffd700;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    transform: translateY(-2px);
+    color: #ffec8b;
+}
+
+body.theme-religion .btn-secondary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botón dorado */
+body.theme-religion .btn-gold {
+    background: var(--btn-bg-gold);
+    border: 2px solid #ffd700;
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-gold);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    font-family: 'MedievalSharp', cursive;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .btn-gold:hover {
+    background: linear-gradient(135deg, #ffe033 0%, #eac135 100%);
+    border-color: #ffec8b;
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6), 0 0 35px rgba(255, 215, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+body.theme-religion .btn-gold:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botones de dados y salida */
+body.theme-religion .dice-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+    border: 2px solid #ffd700;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.5);
+    color: #f5f5f5;
+    font-family: 'MedievalSharp', cursive;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .dice-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #a00000 0%, #6a0000 100%);
+    border-color: #ffec8b;
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+body.theme-religion .dice-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+body.theme-religion .dice-btn:disabled {
+    background: linear-gradient(135deg, #4a4a4a 0%, #3a3a3a 100%);
+    border-color: #5a5a5a;
+    color: #7a7a7a;
+    cursor: not-allowed;
+}
+
+body.theme-religion .exit-btn {
+    background: linear-gradient(135deg, #3a2018 0%, #2c1810 100%);
+    border: 2px solid #c9a961;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    color: #c9a961;
+    font-family: 'MedievalSharp', cursive;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .exit-btn:hover {
+    background: linear-gradient(135deg, #4a3028 0%, #3a2018 100%);
+    border-color: #ffd700;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+    color: #ffd700;
+}
+
+body.theme-religion .exit-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botones de menú (tabs) */
+body.theme-religion .menu-tab {
+    background: #3a2018;
+    color: #8b7355;
+    border: none;
+    border-right: 2px solid #4a2c2a;
+    font-family: 'MedievalSharp', cursive;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .menu-tab:hover {
+    background: #4a2c2a;
+    color: #c9a961;
+}
+
+body.theme-religion .menu-tab.active {
+    background: #4a2c2a;
+    color: #ffd700;
+    box-shadow: inset 0 -3px 0 #ffd700;
+}
+
+/* Botones contador */
+body.theme-religion .counter-btn {
+    background: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    border: 2px solid var(--btn-border-color);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    color: #ffd700;
+    font-family: 'MedievalSharp', cursive;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .counter-btn:hover {
+    background: linear-gradient(135deg, #5a3a38 0%, #4a2c2a 100%);
+    border-color: #ffd700;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    transform: scale(1.1);
+    color: #ffec8b;
+}
+
+body.theme-religion .counter-btn:active {
+    transform: scale(0.95);
+}
+
+/* Botones de selección (diff, map, size, mode) */
+body.theme-religion .diff-btn,
+body.theme-religion .maptype-btn,
+body.theme-religion .size-btn,
+body.theme-religion .mode-option {
+    background: #3a2018;
+    border: 2px solid #4a2c2a;
+    border-radius: var(--btn-radius);
+    color: #8b7355;
+    font-family: 'MedievalSharp', cursive;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .diff-btn:hover,
+body.theme-religion .maptype-btn:hover,
+body.theme-religion .size-btn:hover,
+body.theme-religion .mode-option:hover {
+    background: #4a2c2a;
+    border-color: #c9a961;
+    color: #c9a961;
+    transform: translateY(-1px);
+}
+
+body.theme-religion .diff-btn.selected,
+body.theme-religion .maptype-btn.selected,
+body.theme-religion .size-btn.selected,
+body.theme-religion .mode-option.selected {
+    background: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    border-color: #ffd700;
+    color: #ffd700;
+    box-shadow: 0 2px 12px rgba(255, 215, 0, 0.3);
+}
+
+/* Tarjetas de país */
+body.theme-religion .country-card {
+    background: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    border: 2px solid #4a2c2a;
+    border-radius: var(--btn-radius);
+    color: #c9a961;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-religion .country-card:hover {
+    background: linear-gradient(135deg, #5a3a38 0%, #4a2c2a 100%);
+    border-color: #c9a961;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(201, 169, 97, 0.2);
+}
+
+body.theme-religion .country-card.selected {
+    background: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}

@@ -1,0 +1,298 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOTONES - TEMA VIDEOJUEGOS (Retro Arcade/Neón)
+   Inspiración: RGB, neón, sintetizadores, interfaz gamer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.theme-gaming {
+    --btn-bg-primary: linear-gradient(135deg, #1a0a2e 0%, #0a0a1a 100%);
+    --btn-bg-secondary: linear-gradient(135deg, #0f0f2a 0%, #1a0a2e 100%);
+    --btn-bg-gold: linear-gradient(135deg, #ffff00 0%, #cccc00 100%);
+    --btn-text-primary: #00ff88;
+    --btn-text-secondary: #00ffff;
+    --btn-text-gold: #0a0a1a;
+    --btn-border-color: #00ff88;
+    --btn-border-width: 3px;
+    --btn-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+    --btn-shadow-hover: 0 0 30px rgba(0, 255, 136, 0.8);
+    --btn-radius: 4px;
+}
+
+/* Botones principales (.modal-btn, .btn-primary) */
+body.theme-gaming .modal-btn,
+body.theme-gaming .btn-primary {
+    background: var(--btn-bg-primary);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-primary);
+    box-shadow: var(--btn-shadow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Press Start 2P', cursive;
+    transition: all 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+body.theme-gaming .modal-btn::before,
+body.theme-gaming .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+body.theme-gaming .modal-btn:hover,
+body.theme-gaming .btn-primary:hover {
+    background: #00ff88;
+    color: #0a0a1a;
+    border-color: #00ff88;
+    box-shadow: var(--btn-shadow-hover), 0 0 40px rgba(0, 255, 136, 0.6);
+    transform: translateY(-2px);
+    text-shadow: none;
+}
+
+body.theme-gaming .modal-btn:hover::before,
+body.theme-gaming .btn-primary:hover::before {
+    transform: translateX(100%);
+}
+
+body.theme-gaming .modal-btn:active,
+body.theme-gaming .btn-primary:active {
+    transform: translateY(0) scale(0.95);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+body.theme-gaming .modal-btn:disabled,
+body.theme-gaming .btn-primary:disabled {
+    background: #1a1a1a;
+    border-color: #3a3a3a;
+    color: #4a4a4a;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-shadow: none;
+}
+
+/* Botón secundario */
+body.theme-gaming .btn-secondary {
+    background: var(--btn-bg-secondary);
+    border: var(--btn-border-width) solid #00ffff;
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-secondary);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Press Start 2P', cursive;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .btn-secondary:hover {
+    background: #00ffff;
+    color: #0a0a1a;
+    border-color: #00ffff;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+body.theme-gaming .btn-secondary:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* Botón dorado */
+body.theme-gaming .btn-gold {
+    background: var(--btn-bg-gold);
+    border: var(--btn-border-width) solid #ffff00;
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-gold);
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .btn-gold:hover {
+    background: #ffff33;
+    border-color: #ffff00;
+    box-shadow: 0 0 35px rgba(255, 255, 0, 0.8), 0 0 50px rgba(255, 255, 0, 0.4);
+    transform: translateY(-2px);
+    animation: gamingPulse 0.3s ease-in-out;
+}
+
+@keyframes gamingPulse {
+    0%, 100% { box-shadow: 0 0 35px rgba(255, 255, 0, 0.8); }
+    50% { box-shadow: 0 0 50px rgba(255, 255, 0, 1); }
+}
+
+body.theme-gaming .btn-gold:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* Botones de dados y salida */
+body.theme-gaming .dice-btn {
+    background: linear-gradient(135deg, #ff0066 0%, #cc0052 100%);
+    border: var(--btn-border-width) solid #ff0066;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 0 20px rgba(255, 0, 102, 0.6);
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .dice-btn:hover:not(:disabled) {
+    background: #ff0066;
+    border-color: #ff3388;
+    box-shadow: 0 0 35px rgba(255, 0, 102, 0.9), 0 0 50px rgba(255, 0, 102, 0.5);
+    transform: translateY(-2px);
+}
+
+body.theme-gaming .dice-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.95);
+}
+
+body.theme-gaming .dice-btn:disabled {
+    background: #2a2a2a;
+    border-color: #4a4a4a;
+    color: #5a5a5a;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+body.theme-gaming .exit-btn {
+    background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+    border: var(--btn-border-width) solid #0066ff;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 0 15px rgba(0, 102, 255, 0.5);
+    color: #ffffff;
+    text-transform: uppercase;
+    font-family: 'Press Start 2P', cursive;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .exit-btn:hover {
+    background: #0066ff;
+    border-color: #3388ff;
+    box-shadow: 0 0 30px rgba(0, 102, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+body.theme-gaming .exit-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* Botones de menú (tabs) */
+body.theme-gaming .menu-tab {
+    background: #1a0a2e;
+    color: #5a5a8a;
+    border: none;
+    border-right: 2px solid #0a0a1a;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .menu-tab:hover {
+    background: #2a1a4e;
+    color: #00ffff;
+}
+
+body.theme-gaming .menu-tab.active {
+    background: #0a0a1a;
+    color: #00ff88;
+    box-shadow: inset 0 -3px 0 #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* Botones contador */
+body.theme-gaming .counter-btn {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0a0a1a 100%);
+    border: var(--btn-border-width) solid #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+    color: #00ff88;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 700;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .counter-btn:hover {
+    background: #00ff88;
+    color: #0a0a1a;
+    border-color: #00ff88;
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+    transform: scale(1.1);
+}
+
+body.theme-gaming .counter-btn:active {
+    transform: scale(0.9);
+}
+
+/* Botones de selección (diff, map, size, mode) */
+body.theme-gaming .diff-btn,
+body.theme-gaming .maptype-btn,
+body.theme-gaming .size-btn,
+body.theme-gaming .mode-option {
+    background: #1a0a2e;
+    border: var(--btn-border-width) solid #00ffff;
+    border-radius: var(--btn-radius);
+    color: #00ffff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    text-transform: uppercase;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .diff-btn:hover,
+body.theme-gaming .maptype-btn:hover,
+body.theme-gaming .size-btn:hover,
+body.theme-gaming .mode-option:hover {
+    background: #00ffff;
+    color: #0a0a1a;
+    border-color: #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    transform: translateY(-1px);
+}
+
+body.theme-gaming .diff-btn.selected,
+body.theme-gaming .maptype-btn.selected,
+body.theme-gaming .size-btn.selected,
+body.theme-gaming .mode-option.selected {
+    background: #00ff88;
+    border-color: #00ff88;
+    color: #0a0a1a;
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.7);
+}
+
+/* Tarjetas de país */
+body.theme-gaming .country-card {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0a0a1a 100%);
+    border: var(--btn-border-width) solid #00ff88;
+    border-radius: var(--btn-radius);
+    color: #00ff88;
+    transition: all 0.2s ease-out;
+}
+
+body.theme-gaming .country-card:hover {
+    background: #0a0a1a;
+    border-color: #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    transform: translateY(-2px);
+}
+
+body.theme-gaming .country-card.selected {
+    background: #00ff88;
+    border-color: #00ff88;
+    color: #0a0a1a;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+}

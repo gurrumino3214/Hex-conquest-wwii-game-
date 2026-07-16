@@ -1,0 +1,263 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOTONES - TEMA CÓMICS (Estilo Viñetas)
+   Inspiración: viñetas, colores fuertes, estilo dibujado
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.theme-comics {
+    --btn-bg-primary: linear-gradient(135deg, #3742fa 0%, #5765f5 100%);
+    --btn-bg-secondary: linear-gradient(135deg, #ffa502 0%, #ffbf00 100%);
+    --btn-bg-gold: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+    --btn-text-primary: #ffffff;
+    --btn-text-secondary: #2f3542;
+    --btn-text-gold: #ffffff;
+    --btn-border-color: #2f3542;
+    --btn-border-width: 3px;
+    --btn-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+    --btn-shadow-hover: 6px 6px 0px rgba(0, 0, 0, 0.4);
+    --btn-radius: 8px;
+}
+
+/* Botones principales (.modal-btn, .btn-primary) */
+body.theme-comics .modal-btn,
+body.theme-comics .btn-primary {
+    background: var(--btn-bg-primary);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-primary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s ease-out;
+    position: relative;
+}
+
+body.theme-comics .modal-btn:hover,
+body.theme-comics .btn-primary:hover {
+    background: linear-gradient(135deg, #4752ff 0%, #6775f5 100%);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .modal-btn:active,
+body.theme-comics .btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-comics .modal-btn:disabled,
+body.theme-comics .btn-primary:disabled {
+    background: linear-gradient(135deg, #7a7a7a 0%, #5a5a5a 100%);
+    border-color: #4a4a4a;
+    color: #9a9a9a;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Botón secundario */
+body.theme-comics .btn-secondary {
+    background: var(--btn-bg-secondary);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-secondary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .btn-secondary:hover {
+    background: linear-gradient(135deg, #ffb532 0%, #ffcf30 100%);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .btn-secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Botón dorado */
+body.theme-comics .btn-gold {
+    background: var(--btn-bg-gold);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-gold);
+    box-shadow: var(--btn-shadow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .btn-gold:hover {
+    background: linear-gradient(135deg, #ff5767 0%, #ff7b7b 100%);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .btn-gold:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Botones de dados y salida */
+body.theme-comics .dice-btn {
+    background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    box-shadow: var(--btn-shadow);
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .dice-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff5767 0%, #ff7b7b 100%);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .dice-btn:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-comics .dice-btn:disabled {
+    background: linear-gradient(135deg, #5a5a5a 0%, #4a4a4a 100%);
+    border-color: #3a3a3a;
+    color: #8a8a8a;
+    cursor: not-allowed;
+}
+
+body.theme-comics .exit-btn {
+    background: linear-gradient(135deg, #5765f5 0%, #3742fa 100%);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    box-shadow: var(--btn-shadow);
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .exit-btn:hover {
+    background: linear-gradient(135deg, #6775f5 0%, #4752ff 100%);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .exit-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Botones de menú (tabs) */
+body.theme-comics .menu-tab {
+    background: #fff9e6;
+    color: #5765f5;
+    border: none;
+    border-right: var(--btn-border-width) solid var(--btn-border-color);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .menu-tab:hover {
+    background: #fff;
+    color: #ff4757;
+    transform: translate(-1px, -1px);
+}
+
+body.theme-comics .menu-tab.active {
+    background: #fff;
+    color: #ff4757;
+    box-shadow: inset 0 -4px 0 #ff4757;
+}
+
+/* Botones contador */
+body.theme-comics .counter-btn {
+    background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: 50%;
+    box-shadow: var(--btn-shadow);
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .counter-btn:hover {
+    background: linear-gradient(135deg, #ff5767 0%, #ff7b7b 100%);
+    transform: translate(-2px, -2px) scale(1.1);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .counter-btn:active {
+    transform: translate(2px, 2px) scale(0.95);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Botones de selección (diff, map, size, mode) */
+body.theme-comics .diff-btn,
+body.theme-comics .maptype-btn,
+body.theme-comics .size-btn,
+body.theme-comics .mode-option {
+    background: #fff;
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: #2f3542;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .diff-btn:hover,
+body.theme-comics .maptype-btn:hover,
+body.theme-comics .size-btn:hover,
+body.theme-comics .mode-option:hover {
+    background: #f0f0f0;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .diff-btn.selected,
+body.theme-comics .maptype-btn.selected,
+body.theme-comics .size-btn.selected,
+body.theme-comics .mode-option.selected {
+    background: linear-gradient(135deg, #3742fa 0%, #5765f5 100%);
+    color: #ffffff;
+    border-color: var(--btn-border-color);
+    box-shadow: var(--btn-shadow);
+}
+
+/* Tarjetas de país */
+body.theme-comics .country-card {
+    background: #fff;
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: #2f3542;
+    box-shadow: var(--btn-shadow);
+    transition: all 0.15s ease-out;
+}
+
+body.theme-comics .country-card:hover {
+    background: #f9f9f9;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--btn-shadow-hover);
+}
+
+body.theme-comics .country-card.selected {
+    background: linear-gradient(135deg, #3742fa 0%, #5765f5 100%);
+    color: #ffffff;
+    border-color: var(--btn-border-color);
+    box-shadow: var(--btn-shadow);
+}
