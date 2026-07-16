@@ -609,8 +609,6 @@
                 <button class="menu-tab" data-tab="tutorial">📖 Tutorial</button>
                 <button class="menu-tab" data-tab="editor">🗺️ Editor</button>
                 <button class="menu-tab" data-tab="achievements">🏆 Logros</button>
-                <button class="menu-tab" data-tab="missions">📋 Misiones</button>
-                <button class="menu-tab" data-tab="shop">🏪 Tienda</button>
                 <button class="menu-tab" data-tab="settings">⚙️ Ajustes</button>
             </div>
             <div class="tab-panel active" id="tab-play">
@@ -736,26 +734,6 @@
                 <div class="section-title">🏆 Logros</div>
                 <div id="achievements-list" style="font-size:12px;text-align:left; max-height:50vh; overflow-y:auto;"></div>
             </div>
-            <div class="tab-panel" id="tab-missions">
-                <div class="section-title">📋 Misiones Normales</div>
-                <div id="missions-list" class="missions-container"></div>
-                <div style="margin-top:15px;padding:12px;background:#f9f6f0;border-radius:12px;">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-                        <span style="font-size:20px;">🪙</span>
-                        <span style="font-size:14px;font-weight:700;color:#6b4226;">Monedas disponibles:</span>
-                        <span id="menu-coins-count" style="font-size:16px;font-weight:900;color:#e6a817;">0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-panel" id="tab-shop">
-                <div class="section-title">🏪 Tienda de Ambientaciones</div>
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px;background:#f9f6f0;border-radius:12px;">
-                    <span style="font-size:14px;font-weight:700;color:#6b4226;">🪙 Tus monedas:</span>
-                    <span id="shop-coins-count-tab" style="font-size:18px;font-weight:900;color:#e6a817;">0</span>
-                </div>
-                <div id="shop-grid-tab" class="shop-grid"></div>
-                <button class="modal-btn btn-secondary" onclick="closeShop()" style="margin-top:15px;">❌ Cerrar</button>
-            </div>
             <div class="tab-panel" id="tab-settings">
                 <div class="section-title">🎨 Tema visual</div>
                 <div id="theme-buttons" style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -788,19 +766,6 @@
     <div class="modal" id="faction-info-modal"><div class="modal-box"><div class="modal-title" id="faction-info-title"></div><div class="info-modal-content" id="faction-info-content"></div><button class="modal-btn btn-primary" onclick="document.getElementById('faction-info-modal').classList.remove('show')">Cerrar</button></div></div>
     <div class="modal" id="combat-modal"><div class="modal-box"><div class="modal-title">⚔️ Combate</div><div id="combat-result"></div><button class="modal-btn btn-primary" onclick="closeCombat()">Continuar</button></div></div>
     <div class="modal" id="victory-modal"><div class="modal-box"><div class="modal-title" id="victory-title"></div><p id="victory-text"></p><div id="victory-buttons" style="display:flex;gap:10px;justify-content:center;margin-top:15px;"><button class="modal-btn btn-primary" onclick="goToMenu()">📋 Menú</button><button class="modal-btn btn-gold" id="replay-btn" onclick="replayGame()">🔄 Volver a Jugar</button></div></div></div>
-
-    <!-- Modal de Tienda -->
-    <div class="modal" id="shop-modal">
-        <div class="modal-box" style="max-width:700px;">
-            <div class="modal-title">🏪 Tienda de Ambientaciones</div>
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:10px;background:#f9f6f0;border-radius:12px;">
-                <span style="font-size:14px;font-weight:700;color:#6b4226;">🪙 Tus monedas:</span>
-                <span id="shop-coins-count" style="font-size:18px;font-weight:900;color:#e6a817;">0</span>
-            </div>
-            <div id="shop-grid" class="shop-grid"></div>
-            <button class="modal-btn btn-secondary" onclick="closeShop()" style="margin-top:15px;">❌ Cerrar</button>
-        </div>
-    </div>
 
     <script>
         // ═══════════════ DATOS DE TEMAS Y FACCIONES ═══════════════
@@ -975,19 +940,7 @@
         ];
         let unlockedAchievements = JSON.parse(localStorage.getItem('ww2_achievements') || '[]');
 
-        // ═══════════════ SISTEMA DE MONEDAS ═══════════════
-        // Configuración de recompensas (fácil de modificar)
-        const coinRewards = {
-            monedasIniciales: 0,
-            tutorial: 100,
-            victoria: 50,
-            derrota: 10,
-            misionNormal: 100,
-            misionDiaria: 75,
-            misionSemanal: 300,
-            logro: 150
-        };
-
+        // ═══════════════ SISTEMA DE MISIONES DIARIAS Y SEMANALES ═══════════
         // Definición de misiones diarias posibles
         const dailyMissionTemplates = [
             { id: 'daily_win', name: 'Victoria Diaria', desc: 'Gana 1 partida hoy', target: 1, type: 'wins' },
@@ -1004,18 +957,6 @@
             { id: 'weekly_special', name: 'Maestro Estratégico', desc: 'Completa 3 misiones diarias', target: 3, type: 'daily_complete' }
         ];
 
-        // Precios de ambientaciones (fácil de modificar)
-        const themePrices = {
-            ww2: 0,
-            ancient: 500,
-            gaming: 750,
-            movies: 1000,
-            anime: 1250,
-            comics: 1500,
-            literature: 1750,
-            religion: 2000
-        };
-
         // Información de ambientaciones para la tienda
         const shopThemes = [
             { id: 'ww2', name: 'WWII', icon: '⚔️', desc: 'Segunda Guerra Mundial' },
@@ -1028,8 +969,7 @@
             { id: 'religion', name: 'Religión', icon: '☸️', desc: 'Religiones del Mundo' }
         ];
 
-        // Estado de monedas y progreso
-        let playerCoins = parseInt(localStorage.getItem('hex_coins') || coinRewards.monedasIniciales);
+        // Estado del progreso del jugador
         let completedMissions = JSON.parse(localStorage.getItem('hex_missions') || '[]');
         let purchasedThemes = JSON.parse(localStorage.getItem('hex_purchased_themes') || '["ww2"]');
         let selectedTheme = localStorage.getItem('hex_selected_theme') || 'ww2';
@@ -1045,33 +985,6 @@
         let lastWeeklyReset = localStorage.getItem('hex_last_weekly_reset');
         let dailyProgress = JSON.parse(localStorage.getItem('hex_daily_progress') || '{}');
         let weeklyProgress = JSON.parse(localStorage.getItem('hex_weekly_progress') || '{}');
-
-        // Funciones del sistema de monedas
-        function addCoins(amount) {
-            playerCoins += amount;
-            localStorage.setItem('hex_coins', playerCoins.toString());
-            updateCoinsUI();
-        }
-
-        function removeCoins(amount) {
-            if (playerCoins >= amount) {
-                playerCoins -= amount;
-                localStorage.setItem('hex_coins', playerCoins.toString());
-                updateCoinsUI();
-                return true;
-            }
-            return false;
-        }
-
-        function updateCoinsUI() {
-            document.getElementById('coins-count').textContent = playerCoins;
-            const menuCoins = document.getElementById('menu-coins-count');
-            if (menuCoins) menuCoins.textContent = playerCoins;
-            const shopCoins = document.getElementById('shop-coins-count');
-            if (shopCoins) shopCoins.textContent = playerCoins;
-            const shopCoinsTab = document.getElementById('shop-coins-count-tab');
-            if (shopCoinsTab) shopCoinsTab.textContent = playerCoins;
-        }
 
         // ══════════ SISTEMA DE MISIONES DIARIAS Y SEMANALES ══════════
         function getDayKey() {
@@ -1151,8 +1064,7 @@
                     mission.progress += amount;
                     if (mission.progress >= mission.target && !mission.completed) {
                         mission.completed = true;
-                        addCoins(coinRewards.misionDiaria);
-                        showNotification(`¡Misión diaria completada: ${mission.name}! +75 🪙`, 2500);
+                        showNotification(`¡Misión diaria completada: ${mission.name}!`, 2500);
                         
                         // Progreso para misión semanal de completar diarias
                         updateWeeklyProgress('daily_complete', 1);
@@ -1174,8 +1086,7 @@
                     mission.progress += amount;
                     if (mission.progress >= mission.target && !mission.completed) {
                         mission.completed = true;
-                        addCoins(coinRewards.misionSemanal);
-                        showNotification(`¡Misión semanal completada: ${mission.name}! +300 🪙`, 3000);
+                        showNotification(`¡Misión semanal completada: ${mission.name}!`, 3000);
                     }
                 }
             });
@@ -1185,25 +1096,22 @@
         function claimDailyMission(index) {
             if (dailyMissions[index] && dailyMissions[index].completed && !dailyMissions[index].claimed) {
                 dailyMissions[index].claimed = true;
-                addCoins(coinRewards.misionDiaria);
                 saveProgress();
                 showMissions();
-                showNotification(`+${coinRewards.misionDiaria} monedas`, 2000);
+                showNotification(`Misión diaria completada`, 2000);
             }
         }
 
         function claimWeeklyMission(index) {
             if (weeklyMissions[index] && weeklyMissions[index].completed && !weeklyMissions[index].claimed) {
                 weeklyMissions[index].claimed = true;
-                addCoins(coinRewards.misionSemanal);
                 saveProgress();
                 showMissions();
-                showNotification(`+${coinRewards.misionSemanal} monedas`, 2000);
+                showNotification(`Misión semanal completada`, 2000);
             }
         }
 
         function saveProgress() {
-            localStorage.setItem('hex_coins', playerCoins.toString());
             localStorage.setItem('hex_missions', JSON.stringify(completedMissions));
             localStorage.setItem('hex_purchased_themes', JSON.stringify(purchasedThemes));
             localStorage.setItem('hex_selected_theme', selectedTheme);
@@ -1220,7 +1128,6 @@
         }
 
         function loadProgress() {
-            playerCoins = parseInt(localStorage.getItem('hex_coins') || coinRewards.monedasIniciales);
             completedMissions = JSON.parse(localStorage.getItem('hex_missions') || '[]');
             purchasedThemes = JSON.parse(localStorage.getItem('hex_purchased_themes') || '["ww2"]');
             selectedTheme = localStorage.getItem('hex_selected_theme') || 'ww2';
@@ -1235,7 +1142,6 @@
             dailyProgress = JSON.parse(localStorage.getItem('hex_daily_progress') || '{}');
             weeklyProgress = JSON.parse(localStorage.getItem('hex_weekly_progress') || '{}');
             checkMissionResets();
-            updateCoinsUI();
         }
 
         // Variables globales
@@ -1299,8 +1205,6 @@
             if (pn) pn.classList.add('active');
             if (tab==='editor') buildEditorGrid();
             if (tab==='achievements') showAchievements();
-            if (tab==='missions') renderMissionsUI();
-            if (tab==='shop') updateShopUI();
         }
 
         function selectMode(m) {
@@ -2108,106 +2012,6 @@
             container.innerHTML = html;
         }
 
-        // ══════════ TIENDA DE AMBIENTACIONES ══════════
-        function openShop() {
-            updateShopUI();
-            switchMenuTab('shop');
-        }
-
-        function closeShop() {
-            switchMenuTab('play');
-        }
-
-        function updateShopUI() {
-            const grid = document.getElementById('shop-grid-tab');
-            if (!grid) return;
-            
-            const coins = playerCoins;
-            let html = '';
-            
-            shopThemes.forEach(theme => {
-                const price = themePrices[theme.id] || 0;
-                const isPurchased = purchasedThemes.includes(theme.id);
-                const isSelected = selectedTheme === theme.id;
-                const canAfford = coins >= price;
-                
-                let statusHtml = '';
-                let buttonHtml = '';
-                
-                if (isSelected) {
-                    statusHtml = '<span class="theme-status status-selected">Seleccionada</span>';
-                    buttonHtml = `<button class="select-btn" disabled>✓ En uso</button>`;
-                } else if (isPurchased) {
-                    statusHtml = '<span class="theme-status status-purchased">Desbloqueada</span>';
-                    buttonHtml = `<button class="select-btn" onclick="selectTheme('${theme.id}')">Usar</button>`;
-                } else {
-                    statusHtml = '<span class="theme-status status-locked">Bloqueada</span>';
-                    buttonHtml = `<button class="buy-btn" ${!canAfford ? 'disabled' : ''} onclick="buyTheme('${theme.id}')">${price === 0 ? 'Gratis' : '🪙 ' + price}</button>`;
-                }
-                
-                html += `
-                <div class="theme-card ${isPurchased ? 'purchased' : ''} ${isSelected ? 'selected' : ''} ${!isPurchased && !isSelected ? 'locked' : ''}" onclick="${!isSelected ? `selectTheme('${theme.id}')` : ''}">
-                    <div class="theme-icon">${theme.icon}</div>
-                    <div class="theme-name">${theme.name}</div>
-                    <div style="font-size:9px;color:#888;margin-bottom:4px;">${theme.desc}</div>
-                    <div class="theme-price">${price === 0 ? 'Gratis' : '🪙 ' + price}</div>
-                    ${statusHtml}
-                    ${buttonHtml}
-                </div>`;
-            });
-            
-            grid.innerHTML = html;
-        }
-
-        function buyTheme(themeId) {
-            const price = themePrices[themeId] || 0;
-            
-            if (purchasedThemes.includes(themeId)) {
-                showNotification('Ya tienes esta ambientación', 2000);
-                return;
-            }
-            
-            if (playerCoins < price) {
-                showNotification('No tienes suficientes monedas', 2000);
-                return;
-            }
-            
-            removeCoins(price);
-            purchasedThemes.push(themeId);
-            saveProgress();
-            updateShopUI();
-            showNotification('Ambientación desbloqueada', 2000);
-        }
-
-        function selectTheme(themeId) {
-            if (!purchasedThemes.includes(themeId)) {
-                showNotification('Debes comprar esta ambientación primero', 2000);
-                return;
-            }
-            
-            selectedTheme = themeId;
-            setGameTheme(themeId);
-            saveProgress();
-            updateShopUI();
-            showNotification('Ambientación seleccionada: ' + shopThemes.find(t => t.id === themeId)?.name, 2000);
-        }
-
-        function unlockAllThemes() {
-            const allThemeIds = shopThemes.map(t => t.id);
-            purchasedThemes = [...new Set([...purchasedThemes, ...allThemeIds])];
-            saveProgress();
-            updateShopUI();
-            showNotification('Todas las ambientaciones han sido desbloqueadas', 3000);
-        }
-
-        // Sistema de códigos (para activar unlockall)
-        function checkCheatCode(code) {
-            if (code.toLowerCase() === 'unlockall') {
-                unlockAllThemes();
-                return true;
-            }
-            return false;
-        }
 
         // ══════════ ESCENARIOS ══════════
         function startScenario(scenario) {
