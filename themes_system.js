@@ -137,8 +137,12 @@ function applyTheme(themeId) {
         window.updateNationsForTheme(themeId);
     }
     
-    updateThemeUI();
+    // Actualizar música si existe la función
     if (typeof changeMusic === 'function') changeMusic(themeId);
+    
+    // Actualizar toda la UI después de cambiar las naciones
+    updateThemeUI();
+    
     return true;
 }
 
