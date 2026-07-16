@@ -300,14 +300,75 @@ function renderSettingsThemes() {
 function updateThemeUI() { renderSettingsThemes(); renderThemesMenu(); }
 
 function handleCheatCode(code) {
-    if (code === 'iikkjljluo') {
+    const normalizedCode = code.toLowerCase();
+    
+    // Código para desbloquear todas las ambientaciones
+    if (normalizedCode === 'unlockall') {
+        const alreadyUnlocked = getAllThemes().every(theme => themesState.unlockedThemes.includes(theme.id));
+        
+        if (alreadyUnlocked) {
+            showNotification('✨ Todas las ambientaciones ya están desbloqueadas.', 3000);
+            return true;
+        }
+        
+        // Desbloquear todas las ambientaciones
+        getAllThemes().forEach(theme => { 
+            if (!themesState.unlockedThemes.includes(theme.id)) {
+                themesState.unlockedThemes.push(theme.id);
+            }
+        });
+        saveThemesState();
+        
+        // Mostrar mensaje de celebración
+        showUnlockAllCelebration();
+        
+        // Actualizar UI
+        updateThemeUI();
+        
+        return true;
+    }
+    
+    // Código legacy (iikkjljluo)
+    if (normalizedCode === 'iikkjljluo') {
         getAllThemes().forEach(theme => { if (!themesState.unlockedThemes.includes(theme.id)) themesState.unlockedThemes.push(theme.id); });
         saveThemesState();
         showNotification('🎮 ¡Cheat Activado! Todas las ambientaciones desbloqueadas', 3000);
         updateThemeUI();
         return true;
     }
+    
     return false;
+}
+
+function showUnlockAllCelebration() {
+    // Reproducir sonido de desbloqueo (si existe)
+    if (typeof playSound === 'function') {
+        playSound('unlock');
+    }
+    
+    // Crear modal de celebración
+    const modal = document.createElement('div');
+    modal.className = 'modal show unlock-all-modal';
+    modal.innerHTML = `
+        <div class="modal-box" style="max-width:500px; animation: celebratePulse 0.6s ease-out;">
+            <div style="font-size:80px;margin-bottom:10px; animation: bounce 1s ease infinite;">🎉</div>
+            <div class="modal-title" style="color: #e6a817; font-size:26px;">¡Todas las ambientaciones han sido desbloqueadas!</div>
+            <p style="color:#666;font-size:14px;margin:15px 0;">Ahora puedes disfrutar de todas las experiencias disponibles en Configuración.</p>
+            <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;">
+                <span style="font-size:30px;">🎮</span>
+                <span style="font-size:30px;">🎬</span>
+                <span style="font-size:30px;">🎌</span>
+                <span style="font-size:30px;">💥</span>
+                <span style="font-size:30px;">📚</span>
+                <span style="font-size:30px;">⛪</span>
+            </div>
+            <button class="modal-btn btn-primary" onclick="this.closest('.modal').remove()" style="margin-top:20px;">¡Genial!</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Auto-cerrar después de 5 segundos
+    setTimeout(() => { if (modal.parentNode) modal.remove(); }, 5000);
 }
 
 function setMusicVolume(volume) { themesState.musicVolume = Math.max(0, Math.min(100, volume)); themesState.musicMuted = themesState.musicVolume === 0; saveThemesState(); if (typeof updateAudio === 'function') updateAudio(); }
@@ -338,6 +399,7 @@ window.renderThemesMenu = renderThemesMenu;
 window.renderSettingsThemes = renderSettingsThemes;
 window.updateThemeUI = updateThemeUI;
 window.handleCheatCode = handleCheatCode;
+window.showUnlockAllCelebration = showUnlockAllCelebration;
 window.setMusicVolume = setMusicVolume;
 window.setSfxVolume = setSfxVolume;
 window.toggleMusicMute = toggleMusicMute;
