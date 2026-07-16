@@ -2666,6 +2666,21 @@ body.theme-religion .progress-fill-aaa {
             buildPlayerSlots();
             buildPlayerBar();
         }
+        
+        // Función para actualizar las naciones cuando cambia la ambientación desde themes_system.js
+        window.updateNationsForTheme = function(themeId) {
+            gameTheme = themeId;
+            localStorage.setItem('ww2_gameTheme', themeId);
+            selectedIACountry = getAllFactions()[0];
+            updateIACountrySelect();
+            buildPlayerSlots();
+            buildPlayerBar();
+            
+            // Actualizar botones de selección en settings
+            document.querySelectorAll('#settings button[id^="theme-"]').forEach(b => b.classList.remove('selected'));
+            const btn = document.getElementById(`theme-${themeId}`);
+            if (btn) btn.classList.add('selected');
+        };
 
         window.onload = () => {
             buildPlayerBar();

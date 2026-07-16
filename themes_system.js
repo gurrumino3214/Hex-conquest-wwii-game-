@@ -130,6 +130,13 @@ function applyTheme(themeId) {
     document.documentElement.style.setProperty('--theme-text', theme.colors.text);
     themesState.selectedTheme = themeId;
     saveThemesState();
+    
+    // Actualizar las naciones del juego según la ambientación
+    // La función updateNationsForTheme se define en index.html
+    if (typeof window.updateNationsForTheme === 'function') {
+        window.updateNationsForTheme(themeId);
+    }
+    
     updateThemeUI();
     if (typeof changeMusic === 'function') changeMusic(themeId);
     return true;
