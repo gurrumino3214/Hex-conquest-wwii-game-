@@ -610,6 +610,8 @@
 @keyframes unlockPulse { 0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); } 50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.9), 0 0 60px rgba(255, 215, 0, 0.6); } }
 @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
 @keyframes particlesFloat { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; } 50% { transform: translateY(-10px) rotate(180deg); opacity: 1; } }
+@keyframes celebratePulse { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
 .theme-card-aaa {
     position: relative;
@@ -2661,28 +2663,35 @@
         
         // Inicializar al cargar la página
         window.addEventListener('DOMContentLoaded', function() {
-            // ══════════ CHEAT CODE: wwssadadqe ══════════
-            // Si el jugador presiona esta combinación, gana automáticamente
+            // ══════════ CHEAT CODE: unlockall (para ambientaciones) ══════════
+            // Permite desbloquear todas las ambientaciones escribiendo "unlockall"
             let cheatSequence = '';
-            const cheatCode = 'wwssadadqe';
+            const unlockAllCode = 'unlockall';
+            
+            // También soporta el código legacy de victoria instantánea
+            const victoryCode = 'wwssadadqe';
             
             document.addEventListener('keydown', function(e) {
-                // Solo activar durante la partida (no en menús)
-                if (document.getElementById('menu-modal') && 
-                    document.getElementById('menu-modal').classList.contains('show')) {
-                    return;
-                }
-                
                 // Agregar la tecla presionada a la secuencia
                 cheatSequence += e.key.toLowerCase();
                 
-                // Mantener solo los últimos caracteres necesarios
-                if (cheatSequence.length > cheatCode.length) {
-                    cheatSequence = cheatSequence.slice(-cheatCode.length);
+                // Mantener solo los últimos caracteres necesarios (usamos el más largo)
+                const maxLen = Math.max(unlockAllCode.length, victoryCode.length);
+                if (cheatSequence.length > maxLen) {
+                    cheatSequence = cheatSequence.slice(-maxLen);
                 }
                 
-                // Verificar si se completó el cheat code
-                if (cheatSequence === cheatCode && gameState && gameState.activePlayers.length > 0) {
+                // Verificar código unlockall (funciona en cualquier momento)
+                if (cheatSequence === unlockAllCode) {
+                    if (typeof handleCheatCode === 'function') {
+                        handleCheatCode('unlockall');
+                    }
+                    cheatSequence = '';
+                    return;
+                }
+                
+                // Verificar código de victoria instantánea (solo durante partida)
+                if (cheatSequence === victoryCode && gameState && gameState.activePlayers.length > 0) {
                     // Mostrar notificación
                     showNotification('🎮 ¡Cheat Activado! Victoria Instantánea');
                     
