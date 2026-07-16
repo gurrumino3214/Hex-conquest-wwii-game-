@@ -13,7 +13,7 @@
             --shadow:0 4px 12px rgba(0,0,0,0.1); --shadow-lg:0 8px 24px rgba(0,0,0,0.15); --btn-radius:25px;
             --hex-size: 54px;
         }
-        body { background:var(--theme-bg, linear-gradient(135deg,#fdf6e8,#f0e4cc)); color:var(--theme-text, #4a3728); font-family:var(--theme-font, 'Nunito'),sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; transition:all 0.3s ease; }
+        body { background:linear-gradient(135deg,#fdf6e8,#f0e4cc); color:#4a3728; font-family:'Nunito',sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; }
         #top-bar { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold-light); flex-shrink:0; z-index:100; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
         #turn-info { display:flex; flex-direction:column; gap:2px; min-width:0; }
         #turn-label { font-size:9px; color:#b8936e; text-transform:uppercase; letter-spacing:1.5px; font-family:'Fredoka',sans-serif; }
@@ -607,9 +607,8 @@
                 <button class="menu-tab active" data-tab="play">⚔ Jugar</button>
                 <button class="menu-tab" data-tab="scenarios">🏛️ Escenarios</button>
                 <button class="menu-tab" data-tab="tutorial">📖 Tutorial</button>
-                <button class="menu-tab" data-tab="themes">🎨 Ambientaciones</button>
-                
                 <button class="menu-tab" data-tab="editor">🗺️ Editor</button>
+                <button class="menu-tab" data-tab="achievements">🏆 Logros</button>
                 <button class="menu-tab" data-tab="settings">⚙️ Ajustes</button>
             </div>
             <div class="tab-panel active" id="tab-play">
@@ -1535,7 +1534,6 @@
             if (isHumanWinner) {
                 // El jugador humano ganó
                 document.getElementById('victory-title').textContent = `¡${getThemeData()[w].leader} Triunfa!`;
-                if (typeof registerWin === 'function') { registerWin(); }
                 let victoryMessage = `${getThemeData()[w].flag || getThemeData()[w].miniEmoji} ${getThemeData()[w].name} domina el mundo`;
                 
                 // Easter Egg: Ganar con Japón en modo difícil
@@ -2484,18 +2482,6 @@
                 }
             });
         });
-
-        // ════════════════════════════════════════════════════════════
-        // INTEGRACIÓN CON SISTEMA DE AMBIENTACIONES
-        // ════════════════════════════════════════════════════════════
-        
-        // Inicializar sistema de temas al cargar
-        if (typeof initThemesSystem === 'function') {
-            initThemesSystem();
-        }
     </script>
-    
-    <!-- Sistema de Ambientaciones -->
-    <script src="themes_system.js"></script>
 </body>
 </html>
