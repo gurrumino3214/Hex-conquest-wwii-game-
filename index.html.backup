@@ -13,7 +13,7 @@
             --shadow:0 4px 12px rgba(0,0,0,0.1); --shadow-lg:0 8px 24px rgba(0,0,0,0.15); --btn-radius:25px;
             --hex-size: 54px;
         }
-        body { background:var(--theme-bg, linear-gradient(135deg,#fdf6e8,#f0e4cc)); color:var(--theme-text, #4a3728); font-family:var(--theme-font, 'Nunito'),sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; transition:all 0.3s ease; }
+        body { background:linear-gradient(135deg,#fdf6e8,#f0e4cc); color:#4a3728; font-family:'Nunito',sans-serif; overflow:hidden; touch-action:manipulation; height:100vh; width:100vw; position:fixed; }
         #top-bar { background:linear-gradient(180deg,#fff8ed,#fdebd0); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--gold-light); flex-shrink:0; z-index:100; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
         #turn-info { display:flex; flex-direction:column; gap:2px; min-width:0; }
         #turn-label { font-size:9px; color:#b8936e; text-transform:uppercase; letter-spacing:1.5px; font-family:'Fredoka',sans-serif; }
@@ -607,8 +607,8 @@
                 <button class="menu-tab active" data-tab="play">⚔ Jugar</button>
                 <button class="menu-tab" data-tab="scenarios">🏛️ Escenarios</button>
                 <button class="menu-tab" data-tab="tutorial">📖 Tutorial</button>
-                <button class="menu-tab" data-tab="themes-menu">🎨 Ambientaciones</button>
                 <button class="menu-tab" data-tab="editor">🗺️ Editor</button>
+                <button class="menu-tab" data-tab="achievements">🏆 Logros</button>
                 <button class="menu-tab" data-tab="settings">⚙️ Ajustes</button>
             </div>
             <div class="tab-panel active" id="tab-play">
@@ -723,10 +723,6 @@
                     <p class="tutorial-subtitle">Aprende jugando contra una IA que te guiará paso a paso</p>
                 </div>
             </div>
-            <div class="tab-panel" id="tab-themes-menu">
-                <div class="section-title">🎨 Ambientaciones por Desbloquear</div>
-                <div id="themes-menu-content" style="max-height:60vh; overflow-y:auto;"></div>
-            </div>
             <div class="tab-panel" id="tab-editor">
                 <div class="section-title">🗺️ Editor de Mapas</div>
                 <div class="editor-grid" id="editor-grid"></div>
@@ -739,10 +735,24 @@
                 <div id="achievements-list" style="font-size:12px;text-align:left; max-height:50vh; overflow-y:auto;"></div>
             </div>
             <div class="tab-panel" id="tab-settings">
+                <div class="section-title">🎨 Tema visual</div>
+                <div id="theme-buttons" style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="modal-btn btn-secondary theme-btn active" data-theme="light" onclick="applyTheme('light')">🌞 Claro</button>
+                    <button class="modal-btn btn-secondary theme-btn" data-theme="dark" onclick="applyTheme('dark')">🌙 Oscuro</button>
+                    <button class="modal-btn btn-secondary theme-btn" data-theme="historic" onclick="applyTheme('historic')">🏛️ Histórico</button>
+                    <button class="modal-btn btn-secondary theme-btn" data-theme="retro" onclick="applyTheme('retro')">🕹️ Retro</button>
+                </div>
                 <div class="section-title">🏺 Ambientación</div>
-                <div id="settings-themes-content" style="margin-bottom:15px;"></div>
-                <div class="section-title">🔊 Audio</div>
-                <div id="audio-settings-content"></div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                    <button class="modal-btn btn-secondary" id="theme-ww2" onclick="setGameTheme('ww2')">⚔️ WWII</button>
+                    <button class="modal-btn btn-secondary" id="theme-ancient" onclick="setGameTheme('ancient')">🏛️ Antigua</button>
+                    <button class="modal-btn btn-secondary" id="theme-gaming" onclick="setGameTheme('gaming')">🎮 Videojuegos</button>
+                    <button class="modal-btn btn-secondary" id="theme-movies" onclick="setGameTheme('movies')">🎬 Películas</button>
+                    <button class="modal-btn btn-secondary" id="theme-anime" onclick="setGameTheme('anime')">🎌 Anime</button>
+                    <button class="modal-btn btn-secondary" id="theme-comics" onclick="setGameTheme('comics')">💥 Cómics</button>
+                    <button class="modal-btn btn-secondary" id="theme-literature" onclick="setGameTheme('literature')">📚 Literatura</button>
+                    <button class="modal-btn btn-secondary" id="theme-religion" onclick="setGameTheme('religion')">⛪ Religión</button>
+                </div>
                 <div class="section-title">💾 Partida</div>
                 <button class="modal-btn btn-secondary" onclick="saveGame()">💾 Guardar</button>
                 <button class="modal-btn btn-secondary" onclick="loadGame()">📂 Cargar</button>
@@ -1166,7 +1176,7 @@
             selectMode('ai');
             updateIACountrySelect();
             buildPlayerSlots();
-            initThemesSystem();
+            applyTheme(localStorage.getItem('ww2_theme')||'light');
             unlockedAchievements = JSON.parse(localStorage.getItem('ww2_achievements') || '[]');
             setGameTheme(gameTheme);
             if (!localStorage.getItem('hex_conquest_visited')) {
@@ -1195,7 +1205,6 @@
             if (pn) pn.classList.add('active');
             if (tab==='editor') buildEditorGrid();
             if (tab==='achievements') showAchievements();
-            if (tab==='themes-menu' || tab==='settings') { renderThemesMenu(); renderSettingsThemes(); renderAudioSettings(); }
         }
 
         function selectMode(m) {
@@ -1525,7 +1534,6 @@
             if (isHumanWinner) {
                 // El jugador humano ganó
                 document.getElementById('victory-title').textContent = `¡${getThemeData()[w].leader} Triunfa!`;
-                if (typeof registerWin === 'function') { registerWin(); }
                 let victoryMessage = `${getThemeData()[w].flag || getThemeData()[w].miniEmoji} ${getThemeData()[w].name} domina el mundo`;
                 
                 // Easter Egg: Ganar con Japón en modo difícil
@@ -2474,18 +2482,6 @@
                 }
             });
         });
-
-        // ════════════════════════════════════════════════════════════
-        // INTEGRACIÓN CON SISTEMA DE AMBIENTACIONES
-        // ════════════════════════════════════════════════════════════
-        
-        // Inicializar sistema de temas al cargar
-        if (typeof initThemesSystem === 'function') {
-            initThemesSystem();
-        }
     </script>
-    
-    <!-- Sistema de Ambientaciones -->
-    <script src="themes_system.js"></script>
 </body>
 </html>
