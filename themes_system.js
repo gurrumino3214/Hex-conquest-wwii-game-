@@ -180,8 +180,13 @@ function renderThemesMenu() {
     const container = document.getElementById('themes-menu-content');
     if (!container) return;
     
-    const lockedThemes = getLockedThemes();
-    const unlockedThemes = getUnlockedThemes();
+    const allThemes = getAllThemes();
+    
+    // Ordenar todas las ambientaciones por victorias requeridas (menor a mayor)
+    const sortedThemes = allThemes.sort((a, b) => a.winsRequired - b.winsRequired);
+    
+    const unlockedThemes = sortedThemes.filter(theme => themesState.unlockedThemes.includes(theme.id));
+    const lockedThemes = sortedThemes.filter(theme => !themesState.unlockedThemes.includes(theme.id));
     
     // Si no hay ambientaciones bloqueadas
     if (lockedThemes.length === 0 && unlockedThemes.length === 0) {
@@ -191,17 +196,17 @@ function renderThemesMenu() {
     
     let html = '<div class="themes-showcase">';
     
-    // Primero mostrar las desbloqueadas
-    unlockedThemes.forEach((theme, index) => {
+    // Mostrar todas las ambientaciones en orden (desbloqueadas primero, luego bloqueadas)
+    let index = 0;
+    unlockedThemes.forEach((theme) => {
         const progress = getThemeProgress(theme.id);
-        html += createAAAThemeCard(theme, progress, true, index);
+        html += createAAAThemeCard(theme, progress, true, index++);
     });
     
-    // Luego mostrar las bloqueadas ordenadas por progreso
-    const sortedLocked = lockedThemes.sort((a, b) => b.winsRequired - a.winsRequired);
-    sortedLocked.forEach((theme, index) => {
+    // Luego mostrar las bloqueadas ya ordenadas por winsRequired
+    lockedThemes.forEach((theme) => {
         const progress = getThemeProgress(theme.id);
-        html += createAAAThemeCard(theme, progress, false, index + unlockedThemes.length);
+        html += createAAAThemeCard(theme, progress, false, index++);
     });
     
     html += '</div>';

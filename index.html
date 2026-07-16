@@ -816,6 +816,1286 @@
     .theme-card-name { font-size: 16px; }
     .theme-card-subtitle { font-size: 10px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ESTILOS ESPECÍFICOS POR AMBIENTACIÓN - IDENTIDAD VISUAL COMPLETA
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────────────────────────────────────────────────────────────────
+   WWII - Estilo Militar Bélico
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-ww2 {
+    --theme-font: 'Special Elite', cursive;
+    --theme-bg: linear-gradient(135deg, #3d4a2f 0%, #2a3520 50%, #1f2917 100%);
+    --theme-text: #c9d4b8;
+    --theme-panel: #2f3a25;
+    --theme-gold: #8b7355;
+    --theme-accent: #6b8e23;
+    --theme-border: #4a5d3a;
+    --theme-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    --btn-radius: 4px;
+}
+
+body.theme-ww2 #top-bar {
+    background: linear-gradient(180deg, #4a5d3a 0%, #2f3a25 100%);
+    border-bottom: 4px solid #6b7c5a;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    font-family: 'Special Elite', cursive;
+}
+
+body.theme-ww2 .modal-box {
+    background: linear-gradient(135deg, #2f3a25 0%, #1f2917 100%);
+    border: 3px solid #6b7c5a;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.7), inset 0 0 50px rgba(0,0,0,0.3);
+    font-family: 'Special Elite', cursive;
+}
+
+body.theme-ww2 .modal-btn {
+    background: linear-gradient(135deg, #5a6b4a 0%, #3d4a2f 100%);
+    border: 2px solid #6b7c5a;
+    color: #c9d4b8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+body.theme-ww2 .modal-btn:hover {
+    background: linear-gradient(135deg, #6b8e23 0%, #4a5d3a 100%);
+    box-shadow: 0 6px 15px rgba(107,142,35,0.4);
+}
+
+body.theme-ww2 .btn-primary {
+    background: linear-gradient(135deg, #8b4513 0%, #5a2d0c 100%);
+    border-color: #a0522d;
+}
+
+body.theme-ww2 .btn-gold {
+    background: linear-gradient(135deg, #b8860b 0%, #8b6914 100%);
+    border-color: #daa520;
+    color: #2f3a25;
+}
+
+body.theme-ww2 .dice-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+    border: 2px solid #a52a2a;
+    box-shadow: 0 4px 12px rgba(139,0,0,0.5);
+}
+
+body.theme-ww2 .exit-btn {
+    background: linear-gradient(135deg, #556b2f 0%, #3d4a2f 100%);
+    border: 2px solid #6b8e23;
+}
+
+body.theme-ww2 #hex-grid {
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
+}
+
+body.theme-ww2 .hex.plains .hex-inner {
+    background: linear-gradient(145deg, #6b8e23 0%, #4a5d3a 100%);
+    border: 2px solid #3d4a2f;
+}
+
+body.theme-ww2 .hex.mountain .hex-inner {
+    background: linear-gradient(145deg, #8b7355 0%, #5a4a3a 100%);
+}
+
+body.theme-ww2 .hex.river .hex-inner {
+    background: linear-gradient(145deg, #5a7c8e 0%, #3d4a5a 100%);
+}
+
+body.theme-ww2 .hex.city .hex-inner {
+    background: linear-gradient(145deg, #a0825a 0%, #6b5a3a 100%);
+}
+
+body.theme-ww2 .hex.base .hex-inner {
+    background: linear-gradient(145deg, #b8860b 0%, #8b6914 100%);
+    animation: ww2BaseGlow 2s infinite alternate;
+}
+
+@keyframes ww2BaseGlow {
+    from { box-shadow: inset 0 0 15px rgba(184,134,11,0.4), 0 0 10px rgba(184,134,11,0.3); }
+    to { box-shadow: inset 0 0 25px rgba(184,134,11,0.7), 0 0 20px rgba(184,134,11,0.5); }
+}
+
+body.theme-ww2 .hex.selected .hex-inner {
+    border: 3px solid #ffd700 !important;
+    box-shadow: 0 0 20px rgba(255,215,0,0.6);
+}
+
+body.theme-ww2 .hex.movable .hex-inner {
+    border: 3px solid #6b8e23 !important;
+    box-shadow: 0 0 15px rgba(107,142,35,0.5);
+}
+
+body.theme-ww2 .hex.attackable .hex-inner {
+    border: 3px solid #dc143c !important;
+    box-shadow: 0 0 15px rgba(220,20,60,0.6);
+}
+
+body.theme-ww2 #bottom-panel {
+    background: linear-gradient(180deg, #3d4a2f 0%, #2f3a25 100%);
+    border-top: 4px solid #6b7c5a;
+}
+
+body.theme-ww2 .menu-tab {
+    background: #2f3a25;
+    color: #8a9a7a;
+    border-right: 2px solid #4a5d3a;
+    font-family: 'Special Elite', cursive;
+    text-transform: uppercase;
+}
+
+body.theme-ww2 .menu-tab.active {
+    background: #3d4a2f;
+    color: #c9d4b8;
+    box-shadow: inset 0 -3px 0 #6b8e23;
+}
+
+body.theme-ww2 .counter-btn {
+    background: linear-gradient(135deg, #6b7c5a 0%, #4a5d3a 100%);
+    border: 2px solid #8b9a7a;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+body.theme-ww2 .player-badge {
+    background: linear-gradient(135deg, #3d4a2f 0%, #2f3a25 100%);
+    border: 2px solid #6b7c5a;
+    font-family: 'Special Elite', cursive;
+}
+
+body.theme-ww2 .progress-bar-aaa {
+    background: linear-gradient(90deg, #2f3a25 0%, #4a5d3a 100%);
+    border: 2px solid #6b7c5a;
+}
+
+body.theme-ww2 .progress-fill-aaa {
+    background: linear-gradient(90deg, #6b8e23 0%, #8b9a3a 100%);
+    box-shadow: 0 0 15px rgba(107,142,35,0.5);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ANTIGUA - Estilo Greco-Romano
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-ancient {
+    --theme-font: 'Nunito', sans-serif;
+    --theme-bg: linear-gradient(135deg, #f5ebe0 0%, #e8dcc8 50%, #d4c4a8 100%);
+    --theme-text: #5c4033;
+    --theme-panel: #f8f1e5;
+    --theme-gold: #c9a961;
+    --theme-accent: #ffd700;
+    --theme-border: #d4c4a8;
+    --theme-shadow: 0 4px 15px rgba(92,64,51,0.2);
+    --btn-radius: 8px;
+}
+
+body.theme-ancient #top-bar {
+    background: linear-gradient(180deg, #f8f1e5 0%, #e8dcc8 100%);
+    border-bottom: 4px solid #c9a961;
+    box-shadow: 0 4px 15px rgba(92,64,51,0.15);
+    font-family: 'Nunito', sans-serif;
+}
+
+body.theme-ancient .modal-box {
+    background: linear-gradient(135deg, #fef9f0 0%, #f8f1e5 100%);
+    border: 3px solid #c9a961;
+    box-shadow: 0 8px 30px rgba(92,64,51,0.2);
+    border-radius: 12px;
+}
+
+body.theme-ancient .modal-btn {
+    background: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    border: 2px solid #d4c4a8;
+    color: #5c4033;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(92,64,51,0.15);
+}
+
+body.theme-ancient .modal-btn:hover {
+    background: linear-gradient(135deg, #fff9f0 0%, #f8f1e5 100%);
+    border-color: #c9a961;
+    box-shadow: 0 6px 15px rgba(201,169,97,0.3);
+}
+
+body.theme-ancient .btn-primary {
+    background: linear-gradient(135deg, #c9a961 0%, #a0825a 100%);
+    border-color: #d4b471;
+}
+
+body.theme-ancient .btn-gold {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    border-color: #ffd700;
+    color: #5c4033;
+}
+
+body.theme-ancient .dice-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+    border: 2px solid #a52a2a;
+    box-shadow: 0 4px 12px rgba(139,0,0,0.4);
+}
+
+body.theme-ancient #hex-grid {
+    filter: drop-shadow(0 6px 15px rgba(92,64,51,0.2));
+}
+
+body.theme-ancient .hex.plains .hex-inner {
+    background: linear-gradient(145deg, #a8c99a 0%, #7ab86a 100%);
+    border: 2px solid #8b9a7a;
+}
+
+body.theme-ancient .hex.mountain .hex-inner {
+    background: linear-gradient(145deg, #d4c4a8 0%, #a89478 100%);
+}
+
+body.theme-ancient .hex.river .hex-inner {
+    background: linear-gradient(145deg, #7ec8e3 0%, #4a9cb8 100%);
+}
+
+body.theme-ancient .hex.city .hex-inner {
+    background: linear-gradient(145deg, #f5c27b 0%, #d4952a 100%);
+}
+
+body.theme-ancient .hex.base .hex-inner {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    animation: ancientBaseGlow 2s infinite alternate;
+}
+
+@keyframes ancientBaseGlow {
+    from { box-shadow: inset 0 0 15px rgba(255,215,0,0.5), 0 0 10px rgba(255,215,0,0.3); }
+    to { box-shadow: inset 0 0 25px rgba(255,215,0,0.8), 0 0 20px rgba(255,215,0,0.5); }
+}
+
+body.theme-ancient .hex.selected .hex-inner {
+    border: 3px solid #ffd700 !important;
+    box-shadow: 0 0 20px rgba(255,215,0,0.7);
+}
+
+body.theme-ancient .hex.movable .hex-inner {
+    border: 3px solid #27ae60 !important;
+    box-shadow: 0 0 15px rgba(39,174,96,0.5);
+}
+
+body.theme-ancient .hex.attackable .hex-inner {
+    border: 3px solid #e74c3c !important;
+    box-shadow: 0 0 15px rgba(231,76,60,0.6);
+}
+
+body.theme-ancient #bottom-panel {
+    background: linear-gradient(180deg, #f8f1e5 0%, #e8dcc8 100%);
+    border-top: 4px solid #c9a961;
+}
+
+body.theme-ancient .menu-tab {
+    background: #f8f1e5;
+    color: #8b7355;
+    border-right: 2px solid #d4c4a8;
+}
+
+body.theme-ancient .menu-tab.active {
+    background: #fff9f0;
+    color: #5c4033;
+    box-shadow: inset 0 -3px 0 #c9a961;
+}
+
+body.theme-ancient .counter-btn {
+    background: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    border: 2px solid #d4c4a8;
+    box-shadow: 0 4px 10px rgba(92,64,51,0.15);
+}
+
+body.theme-ancient .player-badge {
+    background: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    border: 2px solid #d4c4a8;
+}
+
+body.theme-ancient .progress-bar-aaa {
+    background: linear-gradient(90deg, #e8dcc8 0%, #d4c4a8 100%);
+    border: 2px solid #c9a961;
+}
+
+body.theme-ancient .progress-fill-aaa {
+    background: linear-gradient(90deg, #c9a961 0%, #ffd700 100%);
+    box-shadow: 0 0 15px rgba(201,169,97,0.5);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   VIDEOJUEGOS - Estilo Retro Arcade/Neón
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-gaming {
+    --theme-font: 'Press Start 2P', cursive;
+    --theme-bg: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0f0f2a 100%);
+    --theme-text: #00ff88;
+    --theme-panel: #1a0a2e;
+    --theme-gold: #00ff88;
+    --theme-accent: #ff00ff;
+    --theme-border: #00ffff;
+    --theme-shadow: 0 0 20px rgba(0,255,136,0.4);
+    --btn-radius: 4px;
+}
+
+body.theme-gaming #top-bar {
+    background: linear-gradient(180deg, #1a0a2e 0%, #0a0a1a 100%);
+    border: 3px solid #00ff88;
+    border-bottom-width: 3px;
+    box-shadow: 0 0 25px rgba(0,255,136,0.5);
+    font-family: 'Press Start 2P', cursive;
+}
+
+body.theme-gaming .modal-box {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%);
+    border: 3px solid #00ff88;
+    box-shadow: 0 0 30px rgba(0,255,136,0.4), inset 0 0 50px rgba(0,255,136,0.1);
+    font-family: 'Press Start 2P', cursive;
+}
+
+body.theme-gaming .modal-btn {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0a0a1a 100%);
+    border: 3px solid #00ff88;
+    color: #00ff88;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(0,255,136,0.3);
+}
+
+body.theme-gaming .modal-btn:hover {
+    background: #00ff88;
+    color: #0a0a1a;
+    box-shadow: 0 0 25px rgba(0,255,136,0.8);
+}
+
+body.theme-gaming .btn-primary {
+    background: linear-gradient(135deg, #ff00ff 0%, #cc00cc 100%);
+    border-color: #ff00ff;
+    box-shadow: 0 0 15px rgba(255,0,255,0.5);
+}
+
+body.theme-gaming .btn-gold {
+    background: linear-gradient(135deg, #ffff00 0%, #cccc00 100%);
+    border-color: #ffff00;
+    color: #0a0a1a;
+    box-shadow: 0 0 15px rgba(255,255,0,0.5);
+}
+
+body.theme-gaming .dice-btn {
+    background: linear-gradient(135deg, #ff0066 0%, #cc0052 100%);
+    border: 3px solid #ff0066;
+    box-shadow: 0 0 20px rgba(255,0,102,0.6);
+}
+
+body.theme-gaming .exit-btn {
+    background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+    border: 3px solid #0066ff;
+    box-shadow: 0 0 15px rgba(0,102,255,0.5);
+}
+
+body.theme-gaming #hex-grid {
+    filter: drop-shadow(0 0 15px rgba(0,255,136,0.5));
+}
+
+body.theme-gaming .hex.plains .hex-inner {
+    background: #00aa55;
+    border: 2px solid #00ff88;
+}
+
+body.theme-gaming .hex.mountain .hex-inner {
+    background: #aa6600;
+    border: 2px solid #ffaa00;
+}
+
+body.theme-gaming .hex.river .hex-inner {
+    background: #0066aa;
+    border: 2px solid #00aaff;
+}
+
+body.theme-gaming .hex.city .hex-inner {
+    background: #ffaa00;
+    border: 2px solid #ffcc00;
+}
+
+body.theme-gaming .hex.base .hex-inner {
+    background: #ffff00;
+    border: 2px solid #ffffff;
+    animation: gamingBaseGlow 1s infinite alternate;
+}
+
+@keyframes gamingBaseGlow {
+    from { box-shadow: 0 0 15px rgba(255,255,0,0.8), inset 0 0 10px rgba(255,255,0,0.5); }
+    to { box-shadow: 0 0 30px rgba(255,255,0,1), inset 0 0 20px rgba(255,255,0,0.8); }
+}
+
+body.theme-gaming .hex.selected .hex-inner {
+    border: 3px solid #00ffff !important;
+    box-shadow: 0 0 25px rgba(0,255,255,0.8);
+    animation: gamingPulse 0.5s ease-in-out infinite;
+}
+
+@keyframes gamingPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+body.theme-gaming .hex.movable .hex-inner {
+    border: 3px solid #00ff88 !important;
+    box-shadow: 0 0 20px rgba(0,255,136,0.7);
+}
+
+body.theme-gaming .hex.attackable .hex-inner {
+    border: 3px solid #ff0066 !important;
+    box-shadow: 0 0 20px rgba(255,0,102,0.7);
+}
+
+body.theme-gaming #bottom-panel {
+    background: linear-gradient(180deg, #1a0a2e 0%, #0a0a1a 100%);
+    border-top: 3px solid #00ff88;
+}
+
+body.theme-gaming .menu-tab {
+    background: #0a0a1a;
+    color: #00ff88;
+    border-right: 3px solid #00ff88;
+    font-family: 'Press Start 2P', cursive;
+}
+
+body.theme-gaming .menu-tab.active {
+    background: #00ff88;
+    color: #0a0a1a;
+    box-shadow: 0 0 15px rgba(0,255,136,0.6);
+}
+
+body.theme-gaming .counter-btn {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0a0a1a 100%);
+    border: 3px solid #00ff88;
+    box-shadow: 0 0 15px rgba(0,255,136,0.4);
+    color: #00ff88;
+}
+
+body.theme-gaming .player-badge {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0a0a1a 100%);
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    font-family: 'Press Start 2P', cursive;
+}
+
+body.theme-gaming .progress-bar-aaa {
+    background: linear-gradient(90deg, #0a0a1a 0%, #1a0a2e 100%);
+    border: 2px solid #00ff88;
+}
+
+body.theme-gaming .progress-fill-aaa {
+    background: linear-gradient(90deg, #00ff88, #ff00ff, #00ffff);
+    background-size: 200% 100%;
+    animation: gamingShimmer 2s linear infinite;
+    box-shadow: 0 0 20px rgba(0,255,136,0.6);
+}
+
+@keyframes gamingShimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+body.theme-gaming #dice-result {
+    background: #0a0a1a;
+    color: #ffff00;
+    border: 2px solid #00ff88;
+    box-shadow: 0 0 15px rgba(0,255,136,0.5);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   PELÍCULAS - Estilo Cinematográfico Hollywood
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-movies {
+    --theme-font: 'Nunito', sans-serif;
+    --theme-bg: linear-gradient(135deg, #1a1a2e 0%, #2d1b2e 50%, #1a1a2e 100%);
+    --theme-text: #f5f5f5;
+    --theme-panel: #2d1b2e;
+    --theme-gold: #ffd700;
+    --theme-accent: #c0c0c0;
+    --theme-border: #ffd700;
+    --theme-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    --btn-radius: 6px;
+}
+
+body.theme-movies #top-bar {
+    background: linear-gradient(180deg, #2d1b2e 0%, #1a1a2e 100%);
+    border-bottom: 3px solid #ffd700;
+    box-shadow: 0 4px 20px rgba(255,215,0,0.2);
+}
+
+body.theme-movies .modal-box {
+    background: linear-gradient(135deg, #2d1b2e 0%, #1a1a2e 100%);
+    border: 2px solid #ffd700;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(255,215,0,0.1);
+    border-radius: 8px;
+}
+
+body.theme-movies .modal-btn {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b2e 100%);
+    border: 2px solid #ffd700;
+    color: #f5f5f5;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+body.theme-movies .modal-btn:hover {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    color: #1a1a2e;
+    box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+}
+
+body.theme-movies .btn-primary {
+    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+    border-color: #a52a2a;
+}
+
+body.theme-movies .btn-gold {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    border-color: #ffd700;
+    color: #1a1a2e;
+    box-shadow: 0 0 15px rgba(255,215,0,0.4);
+}
+
+body.theme-movies .dice-btn {
+    background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+    border: 2px solid #ffd700;
+    box-shadow: 0 4px 15px rgba(196,30,58,0.5);
+}
+
+body.theme-movies #hex-grid {
+    filter: drop-shadow(0 8px 25px rgba(0,0,0,0.6));
+}
+
+body.theme-movies .hex.plains .hex-inner {
+    background: linear-gradient(145deg, #4a5d4a 0%, #2d3a2d 100%);
+    border: 2px solid #5a6d5a;
+}
+
+body.theme-movies .hex.mountain .hex-inner {
+    background: linear-gradient(145deg, #5a4a3a 0%, #3a2d1f 100%);
+}
+
+body.theme-movies .hex.river .hex-inner {
+    background: linear-gradient(145deg, #3a4a5a 0%, #1f2d3a 100%);
+}
+
+body.theme-movies .hex.city .hex-inner {
+    background: linear-gradient(145deg, #8b6914 0%, #5a4a0a 100%);
+}
+
+body.theme-movies .hex.base .hex-inner {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    animation: moviesBaseGlow 2s infinite alternate;
+}
+
+@keyframes moviesBaseGlow {
+    from { box-shadow: inset 0 0 20px rgba(255,215,0,0.5), 0 0 15px rgba(255,215,0,0.3); }
+    to { box-shadow: inset 0 0 35px rgba(255,215,0,0.8), 0 0 30px rgba(255,215,0,0.5); }
+}
+
+body.theme-movies .hex.selected .hex-inner {
+    border: 3px solid #ffd700 !important;
+    box-shadow: 0 0 25px rgba(255,215,0,0.8);
+}
+
+body.theme-movies .hex.movable .hex-inner {
+    border: 3px solid #27ae60 !important;
+    box-shadow: 0 0 20px rgba(39,174,96,0.6);
+}
+
+body.theme-movies .hex.attackable .hex-inner {
+    border: 3px solid #e74c3c !important;
+    box-shadow: 0 0 20px rgba(231,76,60,0.7);
+    animation: moviesAttackPulse 0.6s ease-in-out infinite;
+}
+
+@keyframes moviesAttackPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+body.theme-movies #bottom-panel {
+    background: linear-gradient(180deg, #2d1b2e 0%, #1a1a2e 100%);
+    border-top: 3px solid #ffd700;
+}
+
+body.theme-movies .menu-tab {
+    background: #1a1a2e;
+    color: #888;
+    border-right: 2px solid #3a2a3a;
+}
+
+body.theme-movies .menu-tab.active {
+    background: #2d1b2e;
+    color: #ffd700;
+    box-shadow: inset 0 -3px 0 #ffd700;
+}
+
+body.theme-movies .counter-btn {
+    background: linear-gradient(135deg, #2d1b2e 0%, #1a1a2e 100%);
+    border: 2px solid #ffd700;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    color: #f5f5f5;
+}
+
+body.theme-movies .player-badge {
+    background: linear-gradient(135deg, #2d1b2e 0%, #1a1a2e 100%);
+    border: 2px solid #ffd700;
+    color: #f5f5f5;
+}
+
+body.theme-movies .progress-bar-aaa {
+    background: linear-gradient(90deg, #1a1a2e 0%, #2d1b2e 100%);
+    border: 2px solid #ffd700;
+}
+
+body.theme-movies .progress-fill-aaa {
+    background: linear-gradient(90deg, #ffd700 0%, #ffec8b 100%);
+    box-shadow: 0 0 20px rgba(255,215,0,0.6);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ANIME - Estilo Japonés Vibrante
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-anime {
+    --theme-font: 'Nunito', sans-serif;
+    --theme-bg: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ffecd2 100%);
+    --theme-text: #ff6b6b;
+    --theme-panel: #fff5eb;
+    --theme-gold: #ff6b9d;
+    --theme-accent: #4ecdc4;
+    --theme-border: #ffeaa7;
+    --theme-shadow: 0 6px 20px rgba(255,107,107,0.3);
+    --btn-radius: 20px;
+}
+
+body.theme-anime #top-bar {
+    background: linear-gradient(180deg, #fff5eb 0%, #ffecd2 100%);
+    border-bottom: 3px solid #ff6b9d;
+    box-shadow: 0 4px 15px rgba(255,107,157,0.3);
+}
+
+body.theme-anime .modal-box {
+    background: linear-gradient(135deg, #fff9f5 0%, #fff5eb 100%);
+    border: 3px solid #ff6b9d;
+    box-shadow: 0 8px 30px rgba(255,107,157,0.3);
+    border-radius: 20px;
+}
+
+body.theme-anime .modal-btn {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border: 2px solid #ff6b9d;
+    color: #ff6b6b;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(255,107,157,0.3);
+}
+
+body.theme-anime .modal-btn:hover {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    color: white;
+    box-shadow: 0 6px 20px rgba(255,107,157,0.5);
+    transform: translateY(-3px);
+}
+
+body.theme-anime .btn-primary {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    border-color: #ffb6c1;
+}
+
+body.theme-anime .btn-gold {
+    background: linear-gradient(135deg, #ffeaa7 0%, #ffd700 100%);
+    border-color: #ffeaa7;
+    color: #ff6b6b;
+}
+
+body.theme-anime .dice-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+    border: 2px solid #ff8f8f;
+    box-shadow: 0 4px 15px rgba(255,107,107,0.5);
+}
+
+body.theme-anime #hex-grid {
+    filter: drop-shadow(0 6px 20px rgba(255,107,107,0.3));
+}
+
+body.theme-anime .hex.plains .hex-inner {
+    background: linear-gradient(145deg, #98d9a8 0%, #6bc98a 100%);
+    border: 2px solid #8be99a;
+}
+
+body.theme-anime .hex.mountain .hex-inner {
+    background: linear-gradient(145deg, #e9c9a8 0%, #d9b488 100%);
+}
+
+body.theme-anime .hex.river .hex-inner {
+    background: linear-gradient(145deg, #9ed9e9 0%, #7ec9d9 100%);
+}
+
+body.theme-anime .hex.city .hex-inner {
+    background: linear-gradient(145deg, #ffeaa7 0%, #ffd700 100%);
+}
+
+body.theme-anime .hex.base .hex-inner {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    animation: animeBaseGlow 1.5s infinite alternate;
+}
+
+@keyframes animeBaseGlow {
+    from { box-shadow: inset 0 0 15px rgba(255,107,157,0.5), 0 0 10px rgba(255,107,157,0.3); }
+    to { box-shadow: inset 0 0 25px rgba(255,107,157,0.8), 0 0 20px rgba(255,107,157,0.5); }
+}
+
+body.theme-anime .hex.selected .hex-inner {
+    border: 3px solid #ff6b9d !important;
+    box-shadow: 0 0 25px rgba(255,107,157,0.8);
+    animation: animePulse 0.5s ease-in-out infinite;
+}
+
+@keyframes animePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+body.theme-anime .hex.movable .hex-inner {
+    border: 3px solid #4ecdc4 !important;
+    box-shadow: 0 0 20px rgba(78,205,196,0.6);
+}
+
+body.theme-anime .hex.attackable .hex-inner {
+    border: 3px solid #ff6b6b !important;
+    box-shadow: 0 0 20px rgba(255,107,107,0.7);
+}
+
+body.theme-anime #bottom-panel {
+    background: linear-gradient(180deg, #fff5eb 0%, #ffecd2 100%);
+    border-top: 3px solid #ff6b9d;
+}
+
+body.theme-anime .menu-tab {
+    background: #fff5eb;
+    color: #ff8f8f;
+    border-right: 2px solid #ffd5e0;
+}
+
+body.theme-anime .menu-tab.active {
+    background: #fff9f5;
+    color: #ff6b9d;
+    box-shadow: inset 0 -3px 0 #ff6b9d;
+}
+
+body.theme-anime .counter-btn {
+    background: linear-gradient(135deg, #fff5eb 0%, #ffecd2 100%);
+    border: 2px solid #ff6b9d;
+    box-shadow: 0 4px 12px rgba(255,107,157,0.3);
+    color: #ff6b6b;
+}
+
+body.theme-anime .player-badge {
+    background: linear-gradient(135deg, #fff5eb 0%, #ffecd2 100%);
+    border: 2px solid #ff6b9d;
+    color: #ff6b6b;
+}
+
+body.theme-anime .progress-bar-aaa {
+    background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+    border: 2px solid #ff6b9d;
+}
+
+body.theme-anime .progress-fill-aaa {
+    background: linear-gradient(90deg, #ff6b9d 0%, #4ecdc4 100%);
+    box-shadow: 0 0 15px rgba(255,107,157,0.5);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   CÓMICS - Estilo Viñeta Superheroica
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-comics {
+    --theme-font: 'Nunito', sans-serif;
+    --theme-bg: linear-gradient(135deg, #fff200 0%, #ff6b6b 50%, #fff200 100%);
+    --theme-text: #2f3542;
+    --theme-panel: #fff9e6;
+    --theme-gold: #ff4757;
+    --theme-accent: #3742fa;
+    --theme-border: #2f3542;
+    --theme-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+    --btn-radius: 8px;
+}
+
+body.theme-comics #top-bar {
+    background: linear-gradient(180deg, #fff9e6 0%, #fff200 100%);
+    border: 3px solid #2f3542;
+    border-bottom-width: 3px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+}
+
+body.theme-comics .modal-box {
+    background: linear-gradient(135deg, #fff9e6 0%, #fff200 100%);
+    border: 4px solid #2f3542;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.3);
+    border-radius: 8px;
+}
+
+body.theme-comics .modal-btn {
+    background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+    border: 3px solid #2f3542;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+body.theme-comics .modal-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics .modal-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics .btn-primary {
+    background: linear-gradient(135deg, #3742fa 0%, #5765f5 100%);
+    border-color: #2f3542;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics .btn-gold {
+    background: linear-gradient(135deg, #ffa502 0%, #ffbf00 100%);
+    border-color: #2f3542;
+    color: #2f3542;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics .dice-btn {
+    background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+    border: 3px solid #2f3542;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics .exit-btn {
+    background: linear-gradient(135deg, #5765f5 0%, #3742fa 100%);
+    border: 3px solid #2f3542;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics #hex-grid {
+    filter: drop-shadow(6px 6px 0px rgba(0,0,0,0.2));
+}
+
+body.theme-comics .hex.plains .hex-inner {
+    background: #7bed9f;
+    border: 3px solid #2f3542;
+}
+
+body.theme-comics .hex.mountain .hex-inner {
+    background: #ffa502;
+    border: 3px solid #2f3542;
+}
+
+body.theme-comics .hex.river .hex-inner {
+    background: #70a1ff;
+    border: 3px solid #2f3542;
+}
+
+body.theme-comics .hex.city .hex-inner {
+    background: #ffd700;
+    border: 3px solid #2f3542;
+}
+
+body.theme-comics .hex.base .hex-inner {
+    background: #ff4757;
+    border: 3px solid #2f3542;
+    animation: comicsBasePop 1s infinite alternate;
+}
+
+@keyframes comicsBasePop {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+body.theme-comics .hex.selected .hex-inner {
+    border: 4px solid #2f3542 !important;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
+    animation: comicsSelectPulse 0.4s ease-in-out infinite;
+}
+
+@keyframes comicsSelectPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+body.theme-comics .hex.movable .hex-inner {
+    border: 4px solid #2ed573 !important;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics .hex.attackable .hex-inner {
+    border: 4px solid #ff4757 !important;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+body.theme-comics #bottom-panel {
+    background: linear-gradient(180deg, #fff9e6 0%, #fff200 100%);
+    border-top: 3px solid #2f3542;
+}
+
+body.theme-comics .menu-tab {
+    background: #fff9e6;
+    color: #5765f5;
+    border-right: 3px solid #2f3542;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+body.theme-comics .menu-tab.active {
+    background: #fff;
+    color: #ff4757;
+    box-shadow: inset 0 -4px 0 #ff4757;
+}
+
+body.theme-comics .counter-btn {
+    background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+    border: 3px solid #2f3542;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+    color: white;
+    font-weight: 900;
+}
+
+body.theme-comics .player-badge {
+    background: #fff;
+    border: 3px solid #2f3542;
+    color: #2f3542;
+    font-weight: 900;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+}
+
+body.theme-comics .progress-bar-aaa {
+    background: #fff;
+    border: 3px solid #2f3542;
+    box-shadow: inset 3px 3px 0px rgba(0,0,0,0.1);
+}
+
+body.theme-comics .progress-fill-aaa {
+    background: linear-gradient(90deg, #ff4757 0%, #3742fa 100%);
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+}
+
+body.theme-comics #dice-result {
+    background: #fff;
+    color: #ff4757;
+    border: 3px solid #2f3542;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    font-weight: 900;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   LITERATURA - Estilo Pergamino Antiguo
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-literature {
+    --theme-font: 'Patrick Hand', cursive;
+    --theme-bg: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 50%, #d4c4a8 100%);
+    --theme-text: #4a3728;
+    --theme-panel: #f8f1e5;
+    --theme-gold: #8b7355;
+    --theme-accent: #6b5344;
+    --theme-border: #a89478;
+    --theme-shadow: 0 4px 15px rgba(74,55,40,0.15);
+    --btn-radius: 6px;
+}
+
+body.theme-literature #top-bar {
+    background: linear-gradient(180deg, #f8f1e5 0%, #e8dcc8 100%);
+    border-bottom: 3px solid #8b7355;
+    box-shadow: 0 4px 15px rgba(74,55,40,0.1);
+    font-family: 'Patrick Hand', cursive;
+}
+
+body.theme-literature .modal-box {
+    background: linear-gradient(135deg, #fef9f0 0%, #f8f1e5 100%);
+    border: 2px solid #a89478;
+    box-shadow: 0 8px 25px rgba(74,55,40,0.15);
+    border-radius: 6px;
+}
+
+body.theme-literature .modal-btn {
+    background: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    border: 2px solid #a89478;
+    color: #4a3728;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(74,55,40,0.15);
+    font-family: 'Patrick Hand', cursive;
+}
+
+body.theme-literature .modal-btn:hover {
+    background: linear-gradient(135deg, #e8dcc8 0%, #d4c4a8 100%);
+    border-color: #8b7355;
+    box-shadow: 0 6px 15px rgba(139,115,85,0.3);
+}
+
+body.theme-literature .btn-primary {
+    background: linear-gradient(135deg, #8b7355 0%, #6b5344 100%);
+    border-color: #8b7355;
+}
+
+body.theme-literature .btn-gold {
+    background: linear-gradient(135deg, #d4a574 0%, #a88454 100%);
+    border-color: #d4a574;
+    color: #4a3728;
+}
+
+body.theme-literature .dice-btn {
+    background: linear-gradient(135deg, #a52a2a 0%, #8b0000 100%);
+    border: 2px solid #a52a2a;
+    box-shadow: 0 4px 12px rgba(165,42,42,0.4);
+}
+
+body.theme-literature #hex-grid {
+    filter: drop-shadow(0 6px 15px rgba(74,55,40,0.2));
+}
+
+body.theme-literature .hex.plains .hex-inner {
+    background: linear-gradient(145deg, #a8c99a 0%, #8ab87a 100%);
+    border: 2px solid #9ab88a;
+}
+
+body.theme-literature .hex.mountain .hex-inner {
+    background: linear-gradient(145deg, #c4b498 0%, #a49478 100%);
+}
+
+body.theme-literature .hex.river .hex-inner {
+    background: linear-gradient(145deg, #8ec8d8 0%, #6ea8b8 100%);
+}
+
+body.theme-literature .hex.city .hex-inner {
+    background: linear-gradient(145deg, #e5c28b 0%, #c4a26b 100%);
+}
+
+body.theme-literature .hex.base .hex-inner {
+    background: linear-gradient(135deg, #d4a574 0%, #a88454 100%);
+    animation: literatureBaseGlow 2s infinite alternate;
+}
+
+@keyframes literatureBaseGlow {
+    from { box-shadow: inset 0 0 15px rgba(212,165,116,0.5), 0 0 10px rgba(212,165,116,0.3); }
+    to { box-shadow: inset 0 0 25px rgba(212,165,116,0.8), 0 0 20px rgba(212,165,116,0.5); }
+}
+
+body.theme-literature .hex.selected .hex-inner {
+    border: 3px solid #d4a574 !important;
+    box-shadow: 0 0 20px rgba(212,165,116,0.7);
+}
+
+body.theme-literature .hex.movable .hex-inner {
+    border: 3px solid #5a8f5a !important;
+    box-shadow: 0 0 15px rgba(90,143,90,0.5);
+}
+
+body.theme-literature .hex.attackable .hex-inner {
+    border: 3px solid #a52a2a !important;
+    box-shadow: 0 0 15px rgba(165,42,42,0.6);
+}
+
+body.theme-literature #bottom-panel {
+    background: linear-gradient(180deg, #f8f1e5 0%, #e8dcc8 100%);
+    border-top: 3px solid #8b7355;
+}
+
+body.theme-literature .menu-tab {
+    background: #f8f1e5;
+    color: #8b7355;
+    border-right: 2px solid #d4c4a8;
+    font-family: 'Patrick Hand', cursive;
+}
+
+body.theme-literature .menu-tab.active {
+    background: #fef9f0;
+    color: #4a3728;
+    box-shadow: inset 0 -3px 0 #8b7355;
+}
+
+body.theme-literature .counter-btn {
+    background: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    border: 2px solid #a89478;
+    box-shadow: 0 4px 10px rgba(74,55,40,0.15);
+    color: #4a3728;
+    font-family: 'Patrick Hand', cursive;
+}
+
+body.theme-literature .player-badge {
+    background: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    border: 2px solid #a89478;
+    color: #4a3728;
+    font-family: 'Patrick Hand', cursive;
+}
+
+body.theme-literature .progress-bar-aaa {
+    background: linear-gradient(90deg, #e8dcc8 0%, #d4c4a8 100%);
+    border: 2px solid #a89478;
+}
+
+body.theme-literature .progress-fill-aaa {
+    background: linear-gradient(90deg, #8b7355 0%, #d4a574 100%);
+    box-shadow: 0 0 15px rgba(139,115,85,0.4);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   RELIGIONES - Estilo Solemne Espiritual
+   ─────────────────────────────────────────────────────────────────────────── */
+body.theme-religion {
+    --theme-font: 'MedievalSharp', cursive;
+    --theme-bg: linear-gradient(135deg, #2c1810 0%, #4a2c2a 50%, #1f0f0a 100%);
+    --theme-text: #ffd700;
+    --theme-panel: #3a2018;
+    --theme-gold: #ffd700;
+    --theme-accent: #ffffff;
+    --theme-border: #c9a961;
+    --theme-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    --btn-radius: 10px;
+}
+
+body.theme-religion #top-bar {
+    background: linear-gradient(180deg, #3a2018 0%, #2c1810 100%);
+    border-bottom: 3px solid #ffd700;
+    box-shadow: 0 4px 20px rgba(255,215,0,0.2);
+    font-family: 'MedievalSharp', cursive;
+}
+
+body.theme-religion .modal-box {
+    background: linear-gradient(135deg, #3a2018 0%, #2c1810 100%);
+    border: 3px solid #ffd700;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 40px rgba(255,215,0,0.1);
+    border-radius: 10px;
+}
+
+body.theme-religion .modal-btn {
+    background: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    border: 2px solid #c9a961;
+    color: #ffd700;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    font-family: 'MedievalSharp', cursive;
+}
+
+body.theme-religion .modal-btn:hover {
+    background: linear-gradient(135deg, #c9a961 0%, #ffd700 100%);
+    color: #2c1810;
+    box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+}
+
+body.theme-religion .btn-primary {
+    background: linear-gradient(135deg, #800020 0%, #5a0015 100%);
+    border-color: #a00028;
+}
+
+body.theme-religion .btn-gold {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    border-color: #ffd700;
+    color: #2c1810;
+    box-shadow: 0 0 15px rgba(255,215,0,0.4);
+}
+
+body.theme-religion .dice-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+    border: 2px solid #ffd700;
+    box-shadow: 0 4px 15px rgba(139,0,0,0.5);
+}
+
+body.theme-religion #hex-grid {
+    filter: drop-shadow(0 8px 25px rgba(0,0,0,0.6));
+}
+
+body.theme-religion .hex.plains .hex-inner {
+    background: linear-gradient(145deg, #5a6b4a 0%, #3a4a2a 100%);
+    border: 2px solid #6b7c5a;
+}
+
+body.theme-religion .hex.mountain .hex-inner {
+    background: linear-gradient(145deg, #8b7355 0%, #5a4a3a 100%);
+}
+
+body.theme-religion .hex.river .hex-inner {
+    background: linear-gradient(145deg, #4a5a6b 0%, #2a3a4a 100%);
+}
+
+body.theme-religion .hex.city .hex-inner {
+    background: linear-gradient(145deg, #a88454 0%, #786444 100%);
+}
+
+body.theme-religion .hex.base .hex-inner {
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    animation: religionBaseGlow 2s infinite alternate;
+}
+
+@keyframes religionBaseGlow {
+    from { box-shadow: inset 0 0 20px rgba(255,215,0,0.6), 0 0 15px rgba(255,215,0,0.4); }
+    to { box-shadow: inset 0 0 35px rgba(255,215,0,0.9), 0 0 30px rgba(255,215,0,0.6); }
+}
+
+body.theme-religion .hex.selected .hex-inner {
+    border: 3px solid #ffd700 !important;
+    box-shadow: 0 0 30px rgba(255,215,0,0.9);
+}
+
+body.theme-religion .hex.movable .hex-inner {
+    border: 3px solid #27ae60 !important;
+    box-shadow: 0 0 20px rgba(39,174,96,0.6);
+}
+
+body.theme-religion .hex.attackable .hex-inner {
+    border: 3px solid #dc143c !important;
+    box-shadow: 0 0 20px rgba(220,20,60,0.7);
+    animation: religionAttackPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes religionAttackPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 20px rgba(220,20,60,0.7); }
+    50% { opacity: 0.6; box-shadow: 0 0 30px rgba(220,20,60,0.9); }
+}
+
+body.theme-religion #bottom-panel {
+    background: linear-gradient(180deg, #3a2018 0%, #2c1810 100%);
+    border-top: 3px solid #ffd700;
+}
+
+body.theme-religion .menu-tab {
+    background: #3a2018;
+    color: #8b7355;
+    border-right: 2px solid #4a2c2a;
+    font-family: 'MedievalSharp', cursive;
+}
+
+body.theme-religion .menu-tab.active {
+    background: #4a2c2a;
+    color: #ffd700;
+    box-shadow: inset 0 -3px 0 #ffd700;
+}
+
+body.theme-religion .counter-btn {
+    background: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    border: 2px solid #c9a961;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    color: #ffd700;
+    font-family: 'MedievalSharp', cursive;
+}
+
+body.theme-religion .player-badge {
+    background: linear-gradient(135deg, #4a2c2a 0%, #3a2018 100%);
+    border: 2px solid #c9a961;
+    color: #ffd700;
+    font-family: 'MedievalSharp', cursive;
+}
+
+body.theme-religion .progress-bar-aaa {
+    background: linear-gradient(90deg, #2c1810 0%, #3a2018 100%);
+    border: 2px solid #c9a961;
+}
+
+body.theme-religion .progress-fill-aaa {
+    background: linear-gradient(90deg, #ffd700 0%, #ffffff 100%);
+    box-shadow: 0 0 20px rgba(255,215,0,0.6);
+}
+
     </style>
 </head>
 <body class="light">
@@ -2713,13 +3993,17 @@
         // INTEGRACIÓN CON SISTEMA DE AMBIENTACIONES
         // ════════════════════════════════════════════════════════════
         
-        // Inicializar sistema de temas al cargar
+        // Inicializar sistema de audio y temas al cargar
+        if (typeof initAudioManager === 'function') {
+            initAudioManager();
+        }
         if (typeof initThemesSystem === 'function') {
             initThemesSystem();
         }
     </script>
     
     <!-- Sistema de Ambientaciones -->
+    <script src="audio_system.js"></script>
     <script src="themes_system.js"></script>
 </body>
 </html>
