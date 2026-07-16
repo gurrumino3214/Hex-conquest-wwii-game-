@@ -71,12 +71,12 @@ const THEMES_CONFIG = {
         name: 'Anime', 
         displayName: '🎌 Anime', 
         winsRequired: 15, 
-        description: 'Estilo anime japonés. Colores vivos y energía.', 
-        icon: '🎌', 
-        includes: ['Interfaz anime', 'Colores vivos', 'Efectos brillantes', 'Música japonesa', 'Botones kawaii'], 
+        description: 'Fantasía oscura épica. Campos de batalla, guerras y aventuras.', 
+        icon: '⚔️', 
+        includes: ['Interfaz oscura', 'Colores épicos', 'Efectos dramáticos', 'Música orquestal', 'Botones metálicos'], 
         cssClass: 'theme-anime',
-        musicType: 'jpop',
-        colors: { primary: '#ff6b9d', secondary: '#4ecdc4', bg: 'linear-gradient(135deg,#ffecd2,#fcb69f)', text: '#ff6b6b' }
+        musicType: 'orchestral',
+        colors: { primary: '#8b6914', secondary: '#8b1818', bg: 'linear-gradient(135deg,#0a0505,#1a0f0a)', text: '#c9a961' }
     },
     comics: { 
         id: 'comics', 

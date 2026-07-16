@@ -783,7 +783,7 @@
 .theme-card-aaa[data-theme="ancient"] { --theme-primary: #c9a961; --theme-accent: #ffd700; --theme-bg-start: #d4c4a8; --theme-bg-end: #8b7355; }
 .theme-card-aaa[data-theme="gaming"] { --theme-primary: #00ff88; --theme-accent: #00ffff; --theme-bg-start: #0a0a1a; --theme-bg-end: #1a0a2e; }
 .theme-card-aaa[data-theme="movies"] { --theme-primary: #ffd700; --theme-accent: #c0c0c0; --theme-bg-start: #1a1a2e; --theme-bg-end: #2d1b2e; }
-.theme-card-aaa[data-theme="anime"] { --theme-primary: #ff6b9d; --theme-accent: #ffeaa7; --theme-bg-start: #ffecd2; --theme-bg-end: #fcb69f; }
+.theme-card-aaa[data-theme="anime"] { --theme-primary: #8b6914; --theme-accent: #8b1818; --theme-bg-start: #0a0505; --theme-bg-end: #1a0f0a; }
 .theme-card-aaa[data-theme="comics"] { --theme-primary: #ff4757; --theme-accent: #ffa502; --theme-bg-start: #fff200; --theme-bg-end: #ff6b6b; }
 .theme-card-aaa[data-theme="literature"] { --theme-primary: #8b7355; --theme-accent: #d4a574; --theme-bg-start: #f8f1e5; --theme-bg-end: #e8dcc8; }
 .theme-card-aaa[data-theme="religion"] { --theme-primary: #ffd700; --theme-accent: #ffffff; --theme-bg-start: #2c1810; --theme-bg-end: #4a2c2a; }
@@ -1457,152 +1457,156 @@ body.theme-movies .progress-fill-aaa {
    ANIME - Estilo Japonés Vibrante
    ─────────────────────────────────────────────────────────────────────────── */
 body.theme-anime {
-    --theme-font: 'Nunito', sans-serif;
-    --theme-bg: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ffecd2 100%);
-    --theme-text: #ff6b6b;
-    --theme-panel: #fff5eb;
-    --theme-gold: #ff6b9d;
-    --theme-accent: #4ecdc4;
-    --theme-border: #ffeaa7;
-    --theme-shadow: 0 6px 20px rgba(255,107,107,0.3);
-    --btn-radius: 20px;
+    --theme-font: 'Special Elite', cursive;
+    --theme-bg: linear-gradient(135deg, #0a0505 0%, #1a0f0a 50%, #0d0808 100%);
+    --theme-text: #c9a961;
+    --theme-panel: #1a0f0a;
+    --theme-gold: #8b6914;
+    --theme-accent: #8b1818;
+    --theme-border: #4a3728;
+    --theme-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    --btn-radius: 8px;
 }
 
 body.theme-anime #top-bar {
-    background: linear-gradient(180deg, #fff5eb 0%, #ffecd2 100%);
-    border-bottom: 3px solid #ff6b9d;
-    box-shadow: 0 4px 15px rgba(255,107,157,0.3);
+    background: linear-gradient(180deg, #1a0f0a 0%, #0d0808 100%);
+    border-bottom: 3px solid #8b6914;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 body.theme-anime .modal-box {
-    background: linear-gradient(135deg, #fff9f5 0%, #fff5eb 100%);
-    border: 3px solid #ff6b9d;
-    box-shadow: 0 8px 30px rgba(255,107,157,0.3);
-    border-radius: 20px;
+    background: linear-gradient(135deg, #1a0f0a 0%, #0d0808 100%);
+    border: 3px solid #4a3728;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), inset 0 0 50px rgba(139, 105, 20, 0.1);
+    border-radius: 12px;
 }
 
 body.theme-anime .modal-btn {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-    border: 2px solid #ff6b9d;
-    color: #ff6b6b;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(255,107,157,0.3);
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border: 2px solid #4a3728;
+    color: #d4af37;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 body.theme-anime .modal-btn:hover {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    color: white;
-    box-shadow: 0 6px 20px rgba(255,107,157,0.5);
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #3d2317 0%, #2a1810 100%);
+    color: #f5d56c;
+    box-shadow: 0 6px 20px rgba(139, 105, 20, 0.4);
+    transform: translateY(-2px);
 }
 
 body.theme-anime .btn-primary {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    border-color: #ffb6c1;
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border-color: #8b6914;
 }
 
 body.theme-anime .btn-gold {
-    background: linear-gradient(135deg, #ffeaa7 0%, #ffd700 100%);
-    border-color: #ffeaa7;
-    color: #ff6b6b;
+    background: linear-gradient(135deg, #8b6914 0%, #5c4a0f 100%);
+    border-color: #c9a961;
+    color: #f5d56c;
 }
 
 body.theme-anime .dice-btn {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
-    border: 2px solid #ff8f8f;
-    box-shadow: 0 4px 15px rgba(255,107,107,0.5);
+    background: linear-gradient(135deg, #8b1818 0%, #5c0f0f 100%);
+    border: 2px solid #a03030;
+    box-shadow: 0 4px 15px rgba(139, 24, 24, 0.5);
 }
 
 body.theme-anime #hex-grid {
-    filter: drop-shadow(0 6px 20px rgba(255,107,107,0.3));
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.7));
 }
 
 body.theme-anime .hex.plains .hex-inner {
-    background: linear-gradient(145deg, #98d9a8 0%, #6bc98a 100%);
-    border: 2px solid #8be99a;
+    background: linear-gradient(145deg, #2d3a1e 0%, #1a2312 100%);
+    border: 2px solid #3d4a2e;
 }
 
 body.theme-anime .hex.mountain .hex-inner {
-    background: linear-gradient(145deg, #e9c9a8 0%, #d9b488 100%);
+    background: linear-gradient(145deg, #3d3428 0%, #2a2318 100%);
+    border: 2px solid #4a3f32;
 }
 
 body.theme-anime .hex.river .hex-inner {
-    background: linear-gradient(145deg, #9ed9e9 0%, #7ec9d9 100%);
+    background: linear-gradient(145deg, #1e2d3a 0%, #121f2a 100%);
+    border: 2px solid #2d3a4a;
 }
 
 body.theme-anime .hex.city .hex-inner {
-    background: linear-gradient(145deg, #ffeaa7 0%, #ffd700 100%);
+    background: linear-gradient(145deg, #3d3418 0%, #2a230f 100%);
+    border: 2px solid #4a3f1e;
 }
 
 body.theme-anime .hex.base .hex-inner {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    animation: animeBaseGlow 1.5s infinite alternate;
+    background: linear-gradient(135deg, #8b6914 0%, #5c4a0f 100%);
+    animation: animeBaseGlow 2s infinite alternate;
+    border: 2px solid #c9a961;
 }
 
 @keyframes animeBaseGlow {
-    from { box-shadow: inset 0 0 15px rgba(255,107,157,0.5), 0 0 10px rgba(255,107,157,0.3); }
-    to { box-shadow: inset 0 0 25px rgba(255,107,157,0.8), 0 0 20px rgba(255,107,157,0.5); }
+    from { box-shadow: inset 0 0 15px rgba(139, 105, 20, 0.5), 0 0 10px rgba(139, 105, 20, 0.3); }
+    to { box-shadow: inset 0 0 25px rgba(212, 175, 55, 0.8), 0 0 20px rgba(139, 105, 20, 0.5); }
 }
 
 body.theme-anime .hex.selected .hex-inner {
-    border: 3px solid #ff6b9d !important;
-    box-shadow: 0 0 25px rgba(255,107,157,0.8);
-    animation: animePulse 0.5s ease-in-out infinite;
+    border: 3px solid #c9a961 !important;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+    animation: animePulse 0.8s ease-in-out infinite;
 }
 
 @keyframes animePulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.05); }
 }
 
 body.theme-anime .hex.movable .hex-inner {
-    border: 3px solid #4ecdc4 !important;
-    box-shadow: 0 0 20px rgba(78,205,196,0.6);
+    border: 3px solid #4a7a4a !important;
+    box-shadow: 0 0 20px rgba(74, 122, 74, 0.5);
 }
 
 body.theme-anime .hex.attackable .hex-inner {
-    border: 3px solid #ff6b6b !important;
-    box-shadow: 0 0 20px rgba(255,107,107,0.7);
+    border: 3px solid #8b1818 !important;
+    box-shadow: 0 0 20px rgba(139, 24, 24, 0.6);
 }
 
 body.theme-anime #bottom-panel {
-    background: linear-gradient(180deg, #fff5eb 0%, #ffecd2 100%);
-    border-top: 3px solid #ff6b9d;
+    background: linear-gradient(180deg, #1a0f0a 0%, #0d0808 100%);
+    border-top: 3px solid #4a3728;
 }
 
 body.theme-anime .menu-tab {
-    background: #fff5eb;
-    color: #ff8f8f;
-    border-right: 2px solid #ffd5e0;
+    background: #0d0808;
+    color: #8b6914;
+    border-right: 2px solid #2a1810;
 }
 
 body.theme-anime .menu-tab.active {
-    background: #fff9f5;
-    color: #ff6b9d;
-    box-shadow: inset 0 -3px 0 #ff6b9d;
+    background: #1a0f0a;
+    color: #d4af37;
+    box-shadow: inset 0 -3px 0 #8b6914;
 }
 
 body.theme-anime .counter-btn {
-    background: linear-gradient(135deg, #fff5eb 0%, #ffecd2 100%);
-    border: 2px solid #ff6b9d;
-    box-shadow: 0 4px 12px rgba(255,107,157,0.3);
-    color: #ff6b6b;
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border: 2px solid #8b6914;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    color: #d4af37;
 }
 
 body.theme-anime .player-badge {
-    background: linear-gradient(135deg, #fff5eb 0%, #ffecd2 100%);
-    border: 2px solid #ff6b9d;
-    color: #ff6b6b;
+    background: linear-gradient(135deg, #1a0f0a 0%, #0d0808 100%);
+    border: 2px solid #4a3728;
+    color: #c9a961;
 }
 
 body.theme-anime .progress-bar-aaa {
-    background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
-    border: 2px solid #ff6b9d;
+    background: linear-gradient(90deg, #1a0f0a 0%, #2c1810 100%);
+    border: 2px solid #4a3728;
 }
 
 body.theme-anime .progress-fill-aaa {
-    background: linear-gradient(90deg, #ff6b9d 0%, #4ecdc4 100%);
-    box-shadow: 0 0 15px rgba(255,107,157,0.5);
+    background: linear-gradient(90deg, #8b6914 0%, #c9a961 100%);
+    box-shadow: 0 0 15px rgba(139, 105, 20, 0.5);
 }
 
 /* ───────────────────────────────────────────────────────────────────────────

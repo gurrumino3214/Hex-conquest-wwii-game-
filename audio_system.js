@@ -21,7 +21,7 @@ class AudioManager {
             antigua: ['audio/antigua/lyre_1.mp3', 'audio/antigua/flute_1.mp3', 'audio/antigua/drum_1.mp3'],
             videojuegos: ['audio/videojuegos/chiptune_1.mp3', 'audio/videojuegos/arcade_1.mp3', 'audio/videojuegos/synth_1.mp3'],
             peliculas: ['audio/peliculas/orchestra_1.mp3', 'audio/peliculas/action_1.mp3', 'audio/peliculas/epic_1.mp3'],
-            anime: ['audio/anime/jpop_1.mp3', 'audio/anime/rpg_1.mp3', 'audio/anime/adventure_1.mp3'],
+            anime: ['audio/anime/epic_1.mp3', 'audio/anime/battle_1.mp3', 'audio/anime/adventure_1.mp3'],
             comics: ['audio/comics/hero_1.mp3', 'audio/comics/action_1.mp3', 'audio/comics/energy_1.mp3'],
             literatura: ['audio/literatura/piano_1.mp3', 'audio/literatura/violin_1.mp3', 'audio/literatura/library_1.mp3'],
             religiones: ['audio/religiones/choir_1.mp3', 'audio/religiones/organ_1.mp3', 'audio/religiones/spiritual_1.mp3']
