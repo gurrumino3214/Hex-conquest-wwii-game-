@@ -1,0 +1,287 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOTONES - TEMA ANTIGUA (Grecia y Roma)
+   Inspiración: piedra, mármol, oro, pergamino
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.theme-ancient {
+    --btn-bg-primary: linear-gradient(135deg, #c9a961 0%, #a0825a 100%);
+    --btn-bg-secondary: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    --btn-bg-gold: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    --btn-text-primary: #ffffff;
+    --btn-text-secondary: #5c4033;
+    --btn-text-gold: #5c4033;
+    --btn-border-color: #d4c4a8;
+    --btn-border-width: 2px;
+    --btn-shadow: 0 4px 15px rgba(92, 64, 51, 0.2);
+    --btn-shadow-hover: 0 6px 20px rgba(201, 169, 97, 0.4);
+    --btn-radius: 8px;
+    --btn-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* Botones principales (.modal-btn, .btn-primary) */
+body.theme-ancient .modal-btn,
+body.theme-ancient .btn-primary {
+    background: var(--btn-bg-primary);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-primary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-ancient .modal-btn::after,
+body.theme-ancient .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body.theme-ancient .modal-btn:hover,
+body.theme-ancient .btn-primary:hover {
+    background: linear-gradient(135deg, #d4b471 0%, #b0926a 100%);
+    border-color: #ffd700;
+    box-shadow: var(--btn-shadow-hover), 0 0 20px rgba(255, 215, 0, 0.3);
+    transform: translateY(-3px);
+}
+
+body.theme-ancient .modal-btn:hover::after,
+body.theme-ancient .btn-primary:hover::after {
+    opacity: 1;
+    animation: ancientGlow 1.5s ease-in-out;
+}
+
+@keyframes ancientGlow {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0; }
+}
+
+body.theme-ancient .modal-btn:active,
+body.theme-ancient .btn-primary:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 2px 8px rgba(92, 64, 51, 0.15);
+}
+
+body.theme-ancient .modal-btn:disabled,
+body.theme-ancient .btn-primary:disabled {
+    background: linear-gradient(135deg, #8a8a8a 0%, #6a6a6a 100%);
+    border-color: #9a9a9a;
+    color: #aaaaaa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Botón secundario */
+body.theme-ancient .btn-secondary {
+    background: var(--btn-bg-secondary);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-secondary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-ancient .btn-secondary:hover {
+    background: linear-gradient(135deg, #fff9f0 0%, #f0e8d8 100%);
+    border-color: #c9a961;
+    box-shadow: 0 6px 15px rgba(201, 169, 97, 0.3);
+    transform: translateY(-2px);
+}
+
+body.theme-ancient .btn-secondary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botón dorado */
+body.theme-ancient .btn-gold {
+    background: var(--btn-bg-gold);
+    border: 2px solid #ffd700;
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-gold);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+body.theme-ancient .btn-gold:hover {
+    background: linear-gradient(135deg, #ffe033 0%, #eac135 100%);
+    border-color: #ffec8b;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
+    transform: translateY(-3px);
+    animation: ancientVibration 0.3s ease-in-out;
+}
+
+@keyframes ancientVibration {
+    0%, 100% { transform: translateY(-3px) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(-1deg); }
+    75% { transform: translateY(-3px) rotate(1deg); }
+}
+
+body.theme-ancient .btn-gold:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botones de dados y salida */
+body.theme-ancient .dice-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #5a0000 100%);
+    border: 2px solid #a52a2a;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-ancient .dice-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #a00000 0%, #6a0000 100%);
+    border-color: #c0392b;
+    box-shadow: 0 6px 16px rgba(139, 0, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+body.theme-ancient .dice-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+body.theme-ancient .dice-btn:disabled {
+    background: linear-gradient(135deg, #6a6a6a 0%, #5a5a5a 100%);
+    border-color: #7a7a7a;
+    color: #9a9a9a;
+    cursor: not-allowed;
+}
+
+body.theme-ancient .exit-btn {
+    background: linear-gradient(135deg, #5a4a3a 0%, #3a2a1a 100%);
+    border: 2px solid #8b7355;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 3px 10px rgba(90, 74, 58, 0.4);
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-ancient .exit-btn:hover {
+    background: linear-gradient(135deg, #6a5a4a 0%, #4a3a2a 100%);
+    border-color: #a0825a;
+    box-shadow: 0 5px 14px rgba(90, 74, 58, 0.5);
+    transform: translateY(-2px);
+}
+
+body.theme-ancient .exit-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botones de menú (tabs) */
+body.theme-ancient .menu-tab {
+    background: #f8f1e5;
+    color: #8b7355;
+    border: none;
+    border-right: 2px solid #d4c4a8;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-ancient .menu-tab:hover {
+    background: #fff9f0;
+    color: #6b5344;
+}
+
+body.theme-ancient .menu-tab.active {
+    background: #fff9f0;
+    color: #5c4033;
+    box-shadow: inset 0 -3px 0 #c9a961;
+}
+
+/* Botones contador */
+body.theme-ancient .counter-btn {
+    background: linear-gradient(135deg, #f8f1e5 0%, #e8dcc8 100%);
+    border: 2px solid #d4c4a8;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(92, 64, 51, 0.15);
+    color: #5c4033;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-ancient .counter-btn:hover {
+    background: linear-gradient(135deg, #fff9f0 0%, #f0e8d8 100%);
+    border-color: #c9a961;
+    box-shadow: 0 6px 14px rgba(201, 169, 97, 0.3);
+    transform: scale(1.1);
+}
+
+body.theme-ancient .counter-btn:active {
+    transform: scale(0.95);
+}
+
+/* Botones de selección (diff, map, size, mode) */
+body.theme-ancient .diff-btn,
+body.theme-ancient .maptype-btn,
+body.theme-ancient .size-btn,
+body.theme-ancient .mode-option {
+    background: #f8f1e5;
+    border: 2px solid #d4c4a8;
+    border-radius: var(--btn-radius);
+    color: #5c4033;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-ancient .diff-btn:hover,
+body.theme-ancient .maptype-btn:hover,
+body.theme-ancient .size-btn:hover,
+body.theme-ancient .mode-option:hover {
+    background: #fff9f0;
+    border-color: #c9a961;
+    color: #5c4033;
+    transform: translateY(-1px);
+}
+
+body.theme-ancient .diff-btn.selected,
+body.theme-ancient .maptype-btn.selected,
+body.theme-ancient .size-btn.selected,
+body.theme-ancient .mode-option.selected {
+    background: linear-gradient(135deg, #fff9f0 0%, #f8f1e5 100%);
+    border-color: #c9a961;
+    color: #5c4033;
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3);
+}
+
+/* Tarjetas de país */
+body.theme-ancient .country-card {
+    background: #fef9f0;
+    border: 2px solid #d4c4a8;
+    border-radius: var(--btn-radius);
+    color: #5c4033;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-ancient .country-card:hover {
+    background: #fff9f0;
+    border-color: #c9a961;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2);
+}
+
+body.theme-ancient .country-card.selected {
+    background: linear-gradient(135deg, #fff9f0 0%, #f8f1e5 100%);
+    border-color: #c9a961;
+    box-shadow: 0 0 15px rgba(201, 169, 97, 0.4);
+}

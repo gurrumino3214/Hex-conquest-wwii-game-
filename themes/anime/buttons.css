@@ -1,0 +1,274 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   BOTONES - TEMA ANIME (Estilo Japonés Vibrante)
+   Inspiración: colores vivos, degradados, brillo
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body.theme-anime {
+    --btn-bg-primary: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    --btn-bg-secondary: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    --btn-bg-gold: linear-gradient(135deg, #ffeaa7 0%, #ffd700 100%);
+    --btn-text-primary: #ffffff;
+    --btn-text-secondary: #ff6b6b;
+    --btn-text-gold: #ff6b6b;
+    --btn-border-color: #ffb6c1;
+    --btn-border-width: 2px;
+    --btn-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+    --btn-shadow-hover: 0 6px 25px rgba(255, 107, 157, 0.5);
+    --btn-radius: 20px;
+}
+
+/* Botones principales (.modal-btn, .btn-primary) */
+body.theme-anime .modal-btn,
+body.theme-anime .btn-primary {
+    background: var(--btn-bg-primary);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-primary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+body.theme-anime .modal-btn::before,
+body.theme-anime .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.3s ease;
+}
+
+body.theme-anime .modal-btn:hover,
+body.theme-anime .btn-primary:hover {
+    background: linear-gradient(135deg, #ff8fb3 0%, #ffb6c1 100%);
+    border-color: #ffc0cb;
+    box-shadow: var(--btn-shadow-hover), 0 0 20px rgba(255, 107, 157, 0.4);
+    transform: translateY(-3px);
+}
+
+body.theme-anime .modal-btn:hover::before,
+body.theme-anime .btn-primary:hover::before {
+    left: 100%;
+}
+
+body.theme-anime .modal-btn:active,
+body.theme-anime .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 8px rgba(255, 107, 157, 0.2);
+}
+
+body.theme-anime .modal-btn:disabled,
+body.theme-anime .btn-primary:disabled {
+    background: linear-gradient(135deg, #cccccc 0%, #aaaaaa 100%);
+    border-color: #dddddd;
+    color: #eeeeee;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Botón secundario */
+body.theme-anime .btn-secondary {
+    background: var(--btn-bg-secondary);
+    border: var(--btn-border-width) solid #ff6b9d;
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-secondary);
+    box-shadow: var(--btn-shadow);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .btn-secondary:hover {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    border-color: #ffb6c1;
+    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+    transform: translateY(-3px);
+    color: #ffffff;
+}
+
+body.theme-anime .btn-secondary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botón dorado */
+body.theme-anime .btn-gold {
+    background: var(--btn-bg-gold);
+    border: 2px solid #ffeaa7;
+    border-radius: var(--btn-radius);
+    color: var(--btn-text-gold);
+    box-shadow: 0 4px 15px rgba(255, 234, 167, 0.5);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .btn-gold:hover {
+    background: linear-gradient(135deg, #fff0b3 0%, #ffe033 100%);
+    border-color: #fff5cc;
+    box-shadow: 0 6px 25px rgba(255, 234, 167, 0.7), 0 0 30px rgba(255, 215, 0, 0.3);
+    transform: translateY(-3px);
+}
+
+body.theme-anime .btn-gold:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botones de dados y salida */
+body.theme-anime .dice-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+    border: 2px solid #ff8f8f;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .dice-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff8f8f 0%, #ff6b6b 100%);
+    border-color: #ffb3b3;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    transform: translateY(-2px);
+}
+
+body.theme-anime .dice-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+body.theme-anime .dice-btn:disabled {
+    background: linear-gradient(135deg, #cccccc 0%, #aaaaaa 100%);
+    border-color: #dddddd;
+    color: #eeeeee;
+    cursor: not-allowed;
+}
+
+body.theme-anime .exit-btn {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a3bb 100%);
+    border: 2px solid #7edddd;
+    border-radius: var(--btn-radius);
+    box-shadow: 0 3px 12px rgba(78, 205, 196, 0.4);
+    color: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .exit-btn:hover {
+    background: linear-gradient(135deg, #5ddcd4 0%, #4ecdc4 100%);
+    border-color: #a3ebeb;
+    box-shadow: 0 5px 18px rgba(78, 205, 196, 0.5);
+    transform: translateY(-2px);
+}
+
+body.theme-anime .exit-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botones de menú (tabs) */
+body.theme-anime .menu-tab {
+    background: #fff5eb;
+    color: #ff8fb3;
+    border: none;
+    border-right: 2px solid #ffeaa7;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .menu-tab:hover {
+    background: #fff9f5;
+    color: #ff6b9d;
+}
+
+body.theme-anime .menu-tab.active {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    color: #ffffff;
+    box-shadow: inset 0 -3px 0 #ff4785;
+}
+
+/* Botones contador */
+body.theme-anime .counter-btn {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border: 2px solid #ff6b9d;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+    color: #ff6b6b;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .counter-btn:hover {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    border-color: #ffb6c1;
+    box-shadow: 0 6px 18px rgba(255, 107, 157, 0.5);
+    transform: scale(1.1);
+    color: #ffffff;
+}
+
+body.theme-anime .counter-btn:active {
+    transform: scale(0.95);
+}
+
+/* Botones de selección (diff, map, size, mode) */
+body.theme-anime .diff-btn,
+body.theme-anime .maptype-btn,
+body.theme-anime .size-btn,
+body.theme-anime .mode-option {
+    background: #fff5eb;
+    border: 2px solid #ff6b9d;
+    border-radius: var(--btn-radius);
+    color: #ff6b6b;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .diff-btn:hover,
+body.theme-anime .maptype-btn:hover,
+body.theme-anime .size-btn:hover,
+body.theme-anime .mode-option:hover {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    border-color: #ffb6c1;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+body.theme-anime .diff-btn.selected,
+body.theme-anime .maptype-btn.selected,
+body.theme-anime .size-btn.selected,
+body.theme-anime .mode-option.selected {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    border-color: #ffb6c1;
+    color: #ffffff;
+    box-shadow: 0 2px 12px rgba(255, 107, 157, 0.4);
+}
+
+/* Tarjetas de país */
+body.theme-anime .country-card {
+    background: #fff9f5;
+    border: 2px solid #ff6b9d;
+    border-radius: var(--btn-radius);
+    color: #ff6b6b;
+    transition: all 0.3s ease-out;
+}
+
+body.theme-anime .country-card:hover {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border-color: #ff8fb3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+}
+
+body.theme-anime .country-card.selected {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
+    border-color: #ffb6c1;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+}

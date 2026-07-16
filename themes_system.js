@@ -2,6 +2,21 @@
 // SISTEMA DE AMBIENTACIONES - HEX CONQUEST
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Mapeo de temas a sus archivos CSS de botones
+const THEME_BUTTONS_CSS = {
+    ww2: 'themes/wwii/buttons.css',
+    ancient: 'themes/antigua/buttons.css',
+    gaming: 'themes/videojuegos/buttons.css',
+    movies: 'themes/peliculas/buttons.css',
+    anime: 'themes/anime/buttons.css',
+    comics: 'themes/comics/buttons.css',
+    literature: 'themes/literatura/buttons.css',
+    religion: 'themes/religiones/buttons.css'
+};
+
+// Elemento de estilo dinámico para botones
+let currentButtonsStyleElement = null;
+
 const THEMES_CONFIG = {
     ww2: { 
         id: 'ww2', 
@@ -128,6 +143,10 @@ function applyTheme(themeId) {
     document.documentElement.style.setProperty('--theme-secondary', theme.colors.secondary);
     document.documentElement.style.setProperty('--theme-bg', theme.colors.bg);
     document.documentElement.style.setProperty('--theme-text', theme.colors.text);
+    
+    // Cargar estilos de botones específicos para el tema
+    loadButtonsStyleForTheme(themeId);
+    
     themesState.selectedTheme = themeId;
     saveThemesState();
     
@@ -144,6 +163,33 @@ function applyTheme(themeId) {
     updateThemeUI();
     
     return true;
+}
+
+// Función para cargar dinámicamente los estilos de botones para cada tema
+function loadButtonsStyleForTheme(themeId) {
+    // Eliminar estilo anterior si existe
+    if (currentButtonsStyleElement) {
+        currentButtonsStyleElement.remove();
+        currentButtonsStyleElement = null;
+    }
+    
+    const cssPath = THEME_BUTTONS_CSS[themeId];
+    if (!cssPath) return;
+    
+    // Crear nuevo elemento link para cargar el CSS
+    const linkElement = document.createElement('link');
+    linkElement.rel = 'stylesheet';
+    linkElement.type = 'text/css';
+    linkElement.href = cssPath;
+    linkElement.id = 'theme-buttons-style';
+    
+    // Manejar errores de carga
+    linkElement.onerror = function() {
+        console.warn('No se pudo cargar el archivo de botones para el tema:', themeId, cssPath);
+    };
+    
+    document.head.appendChild(linkElement);
+    currentButtonsStyleElement = linkElement;
 }
 
 function selectTheme(themeId) {
@@ -427,3 +473,4 @@ window.THEMES_CONFIG = THEMES_CONFIG;
 window.themesState = themesState;
 window.createAAAThemeCard = createAAAThemeCard;
 window.handleThemeCardClick = handleThemeCardClick;
+window.loadButtonsStyleForTheme = loadButtonsStyleForTheme;
