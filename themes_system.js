@@ -179,17 +179,109 @@ function getThemeProgress(themeId) {
 function renderThemesMenu() {
     const container = document.getElementById('themes-menu-content');
     if (!container) return;
+    
     const lockedThemes = getLockedThemes();
-    if (lockedThemes.length === 0) {
+    const unlockedThemes = getUnlockedThemes();
+    
+    // Si no hay ambientaciones bloqueadas
+    if (lockedThemes.length === 0 && unlockedThemes.length === 0) {
         container.innerHTML = '<div style="text-align:center;padding:40px 20px;"><div style="font-size:60px;margin-bottom:20px;">🎉</div><div style="font-size:18px;font-weight:700;color:#27ae60;">¡Has desbloqueado todas las ambientaciones!</div><p style="color:#666;margin-top:10px;">Disfruta de todas las experiencias disponibles en Configuración.</p></div>';
         return;
     }
-    let html = '';
-    lockedThemes.forEach(theme => {
+    
+    let html = '<div class="themes-showcase">';
+    
+    // Primero mostrar las desbloqueadas
+    unlockedThemes.forEach((theme, index) => {
         const progress = getThemeProgress(theme.id);
-        html += '<div class="theme-card locked" data-theme="'+theme.id+'"><div class="theme-header"><span class="theme-icon">'+theme.icon+'</span><span class="theme-name">'+theme.name+'</span><span class="theme-status">🔒 Bloqueada</span></div><div class="theme-info"><div class="theme-section"><div class="theme-section-title">Cómo conseguirla</div><div class="theme-section-content">Ganar '+theme.winsRequired+' partidas.</div></div><div class="theme-section"><div class="theme-section-title">Progreso</div><div class="progress-bar"><div class="progress-fill" style="width:'+progress.percentage+'%"></div></div><div class="progress-text">'+progress.current+' / '+theme.winsRequired+'</div></div><div class="theme-section"><div class="theme-section-title">Incluye</div><ul class="theme-includes">'+theme.includes.map(item => '<li>'+item+'</li>').join('')+'</ul></div></div></div>';
+        html += createAAAThemeCard(theme, progress, true, index);
     });
+    
+    // Luego mostrar las bloqueadas ordenadas por progreso
+    const sortedLocked = lockedThemes.sort((a, b) => b.winsRequired - a.winsRequired);
+    sortedLocked.forEach((theme, index) => {
+        const progress = getThemeProgress(theme.id);
+        html += createAAAThemeCard(theme, progress, false, index + unlockedThemes.length);
+    });
+    
+    html += '</div>';
     container.innerHTML = html;
+}
+
+function createAAAThemeCard(theme, progress, isUnlocked, index) {
+    const delay = index * 0.1;
+    const statusClass = isUnlocked ? 'unlocked' : 'locked';
+    const statusText = isUnlocked ? '✓ Desbloqueada' : '🔒 Bloqueada';
+    const statusOverlayClass = isUnlocked ? 'unlocked' : 'locked';
+    
+    // Generar lista de includes
+    const includesList = theme.includes.map(item => `<li>${item}</li>`).join('');
+    
+    // Partículas decorativas
+    const particles = `
+        <div class="theme-particles">
+            <div class="theme-particle"></div>
+            <div class="theme-particle"></div>
+            <div class="theme-particle"></div>
+            <div class="theme-particle"></div>
+            <div class="theme-particle"></div>
+        </div>
+    `;
+    
+    return `
+        <div class="theme-card-aaa ${statusClass}" data-theme="${theme.id}" style="animation-delay: ${delay}s" onclick="handleThemeCardClick('${theme.id}')">
+            ${particles}
+            <div class="theme-card-preview">
+                <span class="theme-card-overlay ${statusOverlayClass}">${statusText}</span>
+                <div class="theme-card-icon">${theme.icon}</div>
+                <div class="theme-card-title">
+                    <div class="theme-card-name">${theme.name}</div>
+                    <div class="theme-card-subtitle">${isUnlocked ? 'Lista para usar' : 'Completa el desafío'}</div>
+                </div>
+            </div>
+            <div class="theme-card-body">
+                <div class="theme-card-description">${theme.description}</div>
+                
+                <div class="theme-progress-section">
+                    <div class="theme-progress-header">
+                        <span class="theme-progress-label">Progreso</span>
+                        <span class="theme-progress-percent" style="color: var(--theme-primary, #e6a817)">${progress.percentage}%</span>
+                    </div>
+                    <div class="progress-bar-aaa">
+                        <div class="progress-fill-aaa" style="width: ${progress.percentage}%"></div>
+                    </div>
+                    <div class="progress-count">
+                        <span>${progress.current} victorias</span>
+                        <span>${progress.required} necesarias</span>
+                    </div>
+                </div>
+                
+                <div class="theme-requirements">
+                    <div class="theme-requirements-title">📋 Cómo conseguirla</div>
+                    <div class="theme-requirement-item">
+                        <span class="theme-requirement-icon">🏆</span>
+                        <span>Ganar <strong>${theme.winsRequired}</strong> partidas${theme.winsRequired > 0 ? ' en total' : ''}</span>
+                    </div>
+                </div>
+                
+                <div class="theme-includes-section">
+                    <div class="theme-includes-title">✨ Incluye</div>
+                    <ul class="theme-includes-list">
+                        ${includesList}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function handleThemeCardClick(themeId) {
+    if (isUnlocked(themeId)) {
+        selectTheme(themeId);
+    } else {
+        const theme = THEMES_CONFIG[themeId];
+        showNotification(`🔒 ${theme.name} requiere ${theme.winsRequired} victorias`, 2000);
+    }
 }
 
 function renderSettingsThemes() {
@@ -255,3 +347,5 @@ window.restoreSfxVolume = restoreSfxVolume;
 window.renderAudioSettings = renderAudioSettings;
 window.THEMES_CONFIG = THEMES_CONFIG;
 window.themesState = themesState;
+window.createAAAThemeCard = createAAAThemeCard;
+window.handleThemeCardClick = handleThemeCardClick;
