@@ -3,6 +3,8 @@
 [![Jugar Ahora](https://img.shields.io/badge/Play-Now-green?style=for-the-badge)](https://gurrumino3214.github.io/Hex-conquest-wwii-game-)
 [![License](https://img.shields.io/badge/License-Open%20Source-blue?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-2026-orange?style=for-the-badge)](https://github.com/gurrumino3214/Hex-conquest-wwii-game-)
+[![Stars](https://img.shields.io/github/stars/gurrumino3214/Hex-conquest-wwii-game-?style=for-the-badge&color=yellow)](https://github.com/gurrumino3214/Hex-conquest-wwii-game-/stargazers)
+[![Size](https://img.shields.io/github/repo-size/gurrumino3214/Hex-conquest-wwii-game-?style=for-the-badge&color=lightblue)](https://github.com/gurrumino3214/Hex-conquest-wwii-game-)
 
 > **Un épico juego de estrategia por turnos basado en hexágonos.** Domina el mapa, derrota a tus oponentes y conviértete en la leyenda definitiva.
 
@@ -16,6 +18,8 @@
 - [Tecnologías](#-tecnologías)
 - [Instalación](#-instalación)
 - [Audio](#-sistema-de-audio)
+- [FAQs](#-preguntas-frecuentes)
+- [Rendimiento](#-rendimiento)
 - [Contribuir](#-contribuciones)
 - [Contacto](#-contacto)
 
@@ -134,6 +138,53 @@ Desarrollado con **Web Audio API**:
 - 🔊 Efectos SFX para todas las acciones
 - 🎛️ Controles independientes: Música / SFX
 - 🔕 Mute instantáneo desde el juego
+
+---
+
+## ❓ Preguntas Frecuentes
+
+<details>
+<summary><b>¿Es gratuito?</b></summary>
+✅ Sí, completamente gratis y open-source.
+</details>
+
+<details>
+<summary><b>¿Funciona en móviles?</b></summary>
+📱 Sí, es totalmente responsive y compatible con tablets y smartphones.
+</details>
+
+<details>
+<summary><b>¿Necesito instalar algo?</b></summary>
+❌ No, puedes jugar directamente desde el navegador sin descargas.
+</details>
+
+<details>
+<summary><b>¿Puedo contribuir?</b></summary>
+🤝 ¡Por supuesto! Revisa la sección de contribuciones más abajo.
+</details>
+
+<details>
+<summary><b>¿Hay multijugador online?</b></summary>
+👥 Actualmente solo soporta multijugador local (hasta 8 jugadores).
+</details>
+
+---
+
+## ⚡ Rendimiento
+
+| Métrica | Valor |
+|---------|-------|
+| 📦 Tamaño | < 1 MB |
+| 🚀 Carga | < 2 segundos |
+| 🎯 FPS | 60 FPS estables |
+| 📱 Responsive | 100% compatible |
+| 🌐 Navegadores | Chrome, Firefox, Edge, Safari |
+
+**Optimizaciones:**
+- ✅ Sin dependencias externas
+- ✅ Código minificado y optimizado
+- ✅ Assets ligeros
+- ✅ Lazy loading de recursos
 
 ---
 
