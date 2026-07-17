@@ -1,20 +1,20 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   BOTONES - TEMA ANIME (Estilo Japonés Vibrante)
-   Inspiración: colores vivos, degradados, brillo
+   BOTONES - TEMA ANIME (Estilo Oscuro Épico)
+   Inspiración: Berserk, Hunter x Hunter, Naruto, One Piece - Atmosfera oscura y seria
    ═══════════════════════════════════════════════════════════════════════════ */
 
 body.theme-anime {
-    --btn-bg-primary: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    --btn-bg-secondary: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-    --btn-bg-gold: linear-gradient(135deg, #ffeaa7 0%, #ffd700 100%);
-    --btn-text-primary: #ffffff;
-    --btn-text-secondary: #ff6b6b;
-    --btn-text-gold: #ff6b6b;
-    --btn-border-color: #ffb6c1;
+    --btn-bg-primary: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    --btn-bg-secondary: linear-gradient(135deg, #3d2317 0%, #2a1810 100%);
+    --btn-bg-gold: linear-gradient(135deg, #8b6914 0%, #5c4a0f 100%);
+    --btn-text-primary: #d4af37;
+    --btn-text-secondary: #c9a961;
+    --btn-text-gold: #f5d56c;
+    --btn-border-color: #4a3728;
     --btn-border-width: 2px;
-    --btn-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
-    --btn-shadow-hover: 0 6px 25px rgba(255, 107, 157, 0.5);
-    --btn-radius: 20px;
+    --btn-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --btn-shadow-hover: 0 6px 25px rgba(139, 105, 20, 0.4);
+    --btn-radius: 8px;
 }
 
 /* Botones principales (.modal-btn, .btn-primary) */
@@ -25,11 +25,13 @@ body.theme-anime .btn-primary {
     border-radius: var(--btn-radius);
     color: var(--btn-text-primary);
     box-shadow: var(--btn-shadow);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
+    font-family: 'Special Elite', cursive;
+    font-weight: 600;
     transition: all 0.3s ease-out;
     position: relative;
     overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 body.theme-anime .modal-btn::before,
@@ -40,16 +42,16 @@ body.theme-anime .btn-primary::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.3s ease;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transition: left 0.5s ease;
 }
 
 body.theme-anime .modal-btn:hover,
 body.theme-anime .btn-primary:hover {
-    background: linear-gradient(135deg, #ff8fb3 0%, #ffb6c1 100%);
-    border-color: #ffc0cb;
-    box-shadow: var(--btn-shadow-hover), 0 0 20px rgba(255, 107, 157, 0.4);
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #3d2317 0%, #2a1810 100%);
+    border-color: #8b6914;
+    box-shadow: var(--btn-shadow-hover), 0 0 15px rgba(139, 105, 20, 0.3);
+    transform: translateY(-2px);
 }
 
 body.theme-anime .modal-btn:hover::before,
@@ -60,36 +62,38 @@ body.theme-anime .btn-primary:hover::before {
 body.theme-anime .modal-btn:active,
 body.theme-anime .btn-primary:active {
     transform: translateY(0) scale(0.98);
-    box-shadow: 0 2px 8px rgba(255, 107, 157, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 body.theme-anime .modal-btn:disabled,
 body.theme-anime .btn-primary:disabled {
-    background: linear-gradient(135deg, #cccccc 0%, #aaaaaa 100%);
-    border-color: #dddddd;
-    color: #eeeeee;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-color: #3a3a3a;
+    color: #5a5a5a;
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 /* Botón secundario */
 body.theme-anime .btn-secondary {
     background: var(--btn-bg-secondary);
-    border: var(--btn-border-width) solid #ff6b9d;
+    border: var(--btn-border-width) solid #5c4a37;
     border-radius: var(--btn-radius);
     color: var(--btn-text-secondary);
     box-shadow: var(--btn-shadow);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 600;
+    font-family: 'Special Elite', cursive;
+    font-weight: 500;
     transition: all 0.3s ease-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 body.theme-anime .btn-secondary:hover {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    border-color: #ffb6c1;
-    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
-    transform: translateY(-3px);
-    color: #ffffff;
+    background: linear-gradient(135deg, #4a3728 0%, #3d2317 100%);
+    border-color: #8b6914;
+    box-shadow: 0 6px 20px rgba(139, 105, 20, 0.3);
+    transform: translateY(-2px);
+    color: #d4af37;
 }
 
 body.theme-anime .btn-secondary:active {
@@ -99,20 +103,22 @@ body.theme-anime .btn-secondary:active {
 /* Botón dorado */
 body.theme-anime .btn-gold {
     background: var(--btn-bg-gold);
-    border: 2px solid #ffeaa7;
+    border: 2px solid #8b6914;
     border-radius: var(--btn-radius);
     color: var(--btn-text-gold);
-    box-shadow: 0 4px 15px rgba(255, 234, 167, 0.5);
-    font-family: 'Nunito', sans-serif;
+    box-shadow: 0 4px 15px rgba(139, 105, 20, 0.4);
+    font-family: 'Special Elite', cursive;
     font-weight: 700;
     transition: all 0.3s ease-out;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
 
 body.theme-anime .btn-gold:hover {
-    background: linear-gradient(135deg, #fff0b3 0%, #ffe033 100%);
-    border-color: #fff5cc;
-    box-shadow: 0 6px 25px rgba(255, 234, 167, 0.7), 0 0 30px rgba(255, 215, 0, 0.3);
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #a0781a 0%, #6f5a14 100%);
+    border-color: #c9a961;
+    box-shadow: 0 6px 25px rgba(139, 105, 20, 0.5), 0 0 20px rgba(212, 175, 55, 0.3);
+    transform: translateY(-2px);
 }
 
 body.theme-anime .btn-gold:active {
@@ -121,20 +127,22 @@ body.theme-anime .btn-gold:active {
 
 /* Botones de dados y salida */
 body.theme-anime .dice-btn {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
-    border: 2px solid #ff8f8f;
+    background: linear-gradient(135deg, #8b1818 0%, #5c0f0f 100%);
+    border: 2px solid #a03030;
     border-radius: var(--btn-radius);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
-    color: #ffffff;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(139, 24, 24, 0.5);
+    color: #d4af37;
+    font-family: 'Special Elite', cursive;
+    font-weight: 600;
     transition: all 0.3s ease-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 body.theme-anime .dice-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #ff8f8f 0%, #ff6b6b 100%);
-    border-color: #ffb3b3;
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    background: linear-gradient(135deg, #a03030 0%, #8b1818 100%);
+    border-color: #c04040;
+    box-shadow: 0 6px 20px rgba(139, 24, 24, 0.6);
     transform: translateY(-2px);
 }
 
@@ -143,26 +151,28 @@ body.theme-anime .dice-btn:active:not(:disabled) {
 }
 
 body.theme-anime .dice-btn:disabled {
-    background: linear-gradient(135deg, #cccccc 0%, #aaaaaa 100%);
-    border-color: #dddddd;
-    color: #eeeeee;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border-color: #3a3a3a;
+    color: #5a5a5a;
     cursor: not-allowed;
 }
 
 body.theme-anime .exit-btn {
-    background: linear-gradient(135deg, #4ecdc4 0%, #44a3bb 100%);
-    border: 2px solid #7edddd;
+    background: linear-gradient(135deg, #3d3d3d 0%, #2a2a2a 100%);
+    border: 2px solid #5a5a5a;
     border-radius: var(--btn-radius);
-    box-shadow: 0 3px 12px rgba(78, 205, 196, 0.4);
-    color: #ffffff;
-    font-family: 'Nunito', sans-serif;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    color: #c9a961;
+    font-family: 'Special Elite', cursive;
     transition: all 0.3s ease-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 body.theme-anime .exit-btn:hover {
-    background: linear-gradient(135deg, #5ddcd4 0%, #4ecdc4 100%);
-    border-color: #a3ebeb;
-    box-shadow: 0 5px 18px rgba(78, 205, 196, 0.5);
+    background: linear-gradient(135deg, #4a4a4a 0%, #3d3d3d 100%);
+    border-color: #7a7a7a;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
     transform: translateY(-2px);
 }
 
@@ -172,44 +182,46 @@ body.theme-anime .exit-btn:active {
 
 /* Botones de menú (tabs) */
 body.theme-anime .menu-tab {
-    background: #fff5eb;
-    color: #ff8fb3;
+    background: #1a0f0a;
+    color: #8b6914;
     border: none;
-    border-right: 2px solid #ffeaa7;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 600;
+    border-right: 2px solid #3d2317;
+    font-family: 'Special Elite', cursive;
+    font-weight: 500;
     transition: all 0.3s ease-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 body.theme-anime .menu-tab:hover {
-    background: #fff9f5;
-    color: #ff6b9d;
+    background: #2a1810;
+    color: #c9a961;
 }
 
 body.theme-anime .menu-tab.active {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    color: #ffffff;
-    box-shadow: inset 0 -3px 0 #ff4785;
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    color: #d4af37;
+    box-shadow: inset 0 -3px 0 #8b6914;
 }
 
 /* Botones contador */
 body.theme-anime .counter-btn {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-    border: 2px solid #ff6b9d;
+    background: linear-gradient(135deg, #3d2317 0%, #2a1810 100%);
+    border: 2px solid #8b6914;
     border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
-    color: #ff6b6b;
-    font-family: 'Nunito', sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    color: #d4af37;
+    font-family: 'Special Elite', cursive;
     font-weight: 700;
     transition: all 0.3s ease-out;
 }
 
 body.theme-anime .counter-btn:hover {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    border-color: #ffb6c1;
-    box-shadow: 0 6px 18px rgba(255, 107, 157, 0.5);
+    background: linear-gradient(135deg, #4a3728 0%, #3d2317 100%);
+    border-color: #c9a961;
+    box-shadow: 0 6px 18px rgba(139, 105, 20, 0.4);
     transform: scale(1.1);
-    color: #ffffff;
+    color: #f5d56c;
 }
 
 body.theme-anime .counter-btn:active {
@@ -221,22 +233,24 @@ body.theme-anime .diff-btn,
 body.theme-anime .maptype-btn,
 body.theme-anime .size-btn,
 body.theme-anime .mode-option {
-    background: #fff5eb;
-    border: 2px solid #ff6b9d;
+    background: #1a0f0a;
+    border: 2px solid #4a3728;
     border-radius: var(--btn-radius);
-    color: #ff6b6b;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 600;
+    color: #c9a961;
+    font-family: 'Special Elite', cursive;
+    font-weight: 500;
     transition: all 0.3s ease-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 body.theme-anime .diff-btn:hover,
 body.theme-anime .maptype-btn:hover,
 body.theme-anime .size-btn:hover,
 body.theme-anime .mode-option:hover {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    border-color: #ffb6c1;
-    color: #ffffff;
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border-color: #8b6914;
+    color: #d4af37;
     transform: translateY(-1px);
 }
 
@@ -244,31 +258,31 @@ body.theme-anime .diff-btn.selected,
 body.theme-anime .maptype-btn.selected,
 body.theme-anime .size-btn.selected,
 body.theme-anime .mode-option.selected {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    border-color: #ffb6c1;
-    color: #ffffff;
-    box-shadow: 0 2px 12px rgba(255, 107, 157, 0.4);
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border-color: #8b6914;
+    color: #d4af37;
+    box-shadow: 0 2px 12px rgba(139, 105, 20, 0.3);
 }
 
 /* Tarjetas de país */
 body.theme-anime .country-card {
-    background: #fff9f5;
-    border: 2px solid #ff6b9d;
+    background: #1a0f0a;
+    border: 2px solid #4a3728;
     border-radius: var(--btn-radius);
-    color: #ff6b6b;
+    color: #c9a961;
     transition: all 0.3s ease-out;
 }
 
 body.theme-anime .country-card:hover {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-    border-color: #ff8fb3;
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border-color: #8b6914;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 4px 15px rgba(139, 105, 20, 0.3);
 }
 
 body.theme-anime .country-card.selected {
-    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fb3 100%);
-    border-color: #ffb6c1;
-    color: #ffffff;
-    box-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+    background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 100%);
+    border-color: #8b6914;
+    color: #d4af37;
+    box-shadow: 0 0 20px rgba(139, 105, 20, 0.4);
 }
