@@ -433,10 +433,47 @@ function showUnlockAllCelebration() {
     setTimeout(() => { if (modal.parentNode) modal.remove(); }, 5000);
 }
 
-function setMusicVolume(volume) { themesState.musicVolume = Math.max(0, Math.min(100, volume)); themesState.musicMuted = themesState.musicVolume === 0; saveThemesState(); if (typeof updateAudio === 'function') updateAudio(); }
-function setSfxVolume(volume) { themesState.sfxVolume = Math.max(0, Math.min(100, volume)); themesState.sfxMuted = themesState.sfxVolume === 0; saveThemesState(); }
-function toggleMusicMute() { themesState.musicMuted = !themesState.musicMuted; themesState.musicVolume = themesState.musicMuted ? 0 : 70; saveThemesState(); if (typeof updateAudio === 'function') updateAudio(); }
-function toggleSfxMute() { themesState.sfxMuted = !themesState.sfxMuted; themesState.sfxVolume = themesState.sfxMuted ? 0 : 80; saveThemesState(); }
+function setMusicVolume(volume) { 
+    themesState.musicVolume = Math.max(0, Math.min(100, parseInt(volume) || 0)); 
+    themesState.musicMuted = themesState.musicVolume === 0; 
+    saveThemesState(); 
+    // Actualizar AudioManager si existe
+    if (window.audioManager) {
+        window.audioManager.setMusicVolume(themesState.musicVolume / 100);
+    }
+    if (typeof updateAudio === 'function') updateAudio(); 
+}
+
+function setSfxVolume(volume) { 
+    themesState.sfxVolume = Math.max(0, Math.min(100, parseInt(volume) || 0)); 
+    themesState.sfxMuted = themesState.sfxVolume === 0; 
+    saveThemesState(); 
+    // Actualizar AudioManager si existe
+    if (window.audioManager) {
+        window.audioManager.setSfxVolume(themesState.sfxVolume / 100);
+    }
+}
+
+function toggleMusicMute() { 
+    themesState.musicMuted = !themesState.musicMuted; 
+    themesState.musicVolume = themesState.musicMuted ? 0 : (themesState.musicVolume || 70); 
+    saveThemesState(); 
+    // Actualizar AudioManager si existe
+    if (window.audioManager) {
+        window.audioManager.toggleMusicMute();
+    }
+    if (typeof updateAudio === 'function') updateAudio(); 
+}
+
+function toggleSfxMute() { 
+    themesState.sfxMuted = !themesState.sfxMuted; 
+    themesState.sfxVolume = themesState.sfxMuted ? 0 : (themesState.sfxVolume || 80); 
+    saveThemesState(); 
+    // Actualizar AudioManager si existe
+    if (window.audioManager) {
+        window.audioManager.toggleSfxMute();
+    }
+}
 function restoreMusicVolume() { themesState.musicVolume = 70; themesState.musicMuted = false; saveThemesState(); if (typeof updateAudio === 'function') updateAudio(); }
 function restoreSfxVolume() { themesState.sfxVolume = 80; themesState.sfxMuted = false; saveThemesState(); }
 
