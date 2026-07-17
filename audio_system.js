@@ -1,12 +1,13 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // SISTEMA DE AUDIO - HEX CONQUEST
 // Gestor completo de música y efectos de sonido
+// Incluye sintetizador Web Audio API como fallback
 // ═══════════════════════════════════════════════════════════════════════════
 
 class AudioManager {
     constructor() {
-        this.musicPlayers = {};
-        this.currentTheme = null;
+        this.audioElement = null;
+        this.currentTheme = 'wwii'; // Tema por defecto
         this.isPlaying = false;
         this.currentIndex = 0;
         this.fadeDuration = 1000;
@@ -14,6 +15,10 @@ class AudioManager {
         this.sfxVolume = 0.8;
         this.muted = false;
         this.sfxMuted = false;
+        this.userInteracted = false;
+        this.audioContext = null;
+        this.previousIndices = [];
+        this.isChangingTheme = false;
         
         // Playlists por ambientación
         this.playlists = {
@@ -106,7 +111,35 @@ class AudioManager {
         // Cache de efectos cargados
         this.sfxCache = {};
         
-        this.init();
+        // Inicializar cuando haya interacción del usuario
+        this.setupUserInteractionListener();
+    }
+    
+    setupUserInteractionListener() {
+        const handleInteraction = () => {
+            if (!this.userInteracted) {
+                this.userInteracted = true;
+                this.initAudioContext();
+                this.loadSettings();
+                this.createMusicPlayer();
+                // Intentar reproducir música si ya hay un tema seleccionado
+                if (this.currentTheme && !this.isPlaying) {
+                    this.playCurrentTrack(true);
+                }
+            }
+        };
+        
+        document.addEventListener('click', handleInteraction, { once: true });
+        document.addEventListener('touchstart', handleInteraction, { once: true });
+        document.addEventListener('keydown', handleInteraction, { once: true });
+    }
+    
+    initAudioContext() {
+        try {
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            console.warn('Web Audio API not supported:', e);
+        }
     }
     
     init() {
@@ -156,10 +189,13 @@ class AudioManager {
     }
     
     createMusicPlayer() {
+        if (this.audioElement) return; // Evitar múltiples instancias
+        
         // Crear elemento de audio principal
         this.audioElement = document.createElement('audio');
         this.audioElement.loop = false;
         this.audioElement.volume = this.muted ? 0 : this.musicVolume;
+        this.audioElement.preload = 'auto';
         
         // Evento cuando termina una canción
         this.audioElement.addEventListener('ended', () => {
@@ -168,15 +204,25 @@ class AudioManager {
         
         // Prevenir errores de carga
         this.audioElement.addEventListener('error', (e) => {
-            console.warn('Audio error:', e);
+            console.warn('Audio load error:', this.audioElement.src, e);
+            // Intentar siguiente pista
             this.playNextTrack();
+        });
+        
+        // Manejar carga exitosa
+        this.audioElement.addEventListener('canplaythrough', () => {
+            console.log('Audio ready to play:', this.audioElement.src);
         });
     }
     
     async changeTheme(themeId) {
+        if (this.isChangingTheme) return;
+        
         const themeKey = this.mapThemeId(themeId);
         
         if (themeKey === this.currentTheme) return;
+        
+        this.isChangingTheme = true;
         
         // Fade out
         await this.fadeOut();
@@ -184,10 +230,13 @@ class AudioManager {
         // Cambiar playlist
         this.currentTheme = themeKey;
         this.currentIndex = 0;
+        this.previousIndices = [];
         
         // Fade in con nueva canción
-        await this.playCurrentTrack();
+        await this.playCurrentTrack(false);
         await this.fadeIn();
+        
+        this.isChangingTheme = false;
     }
     
     mapThemeId(themeId) {
@@ -201,47 +250,81 @@ class AudioManager {
             'literature': 'literatura',
             'religion': 'religiones'
         };
-        return mapping[themeId] || 'wwii';
+        return mapping[themeId] || themeId || 'wwii';
     }
     
-    async playCurrentTrack() {
-        if (!this.currentTheme || this.muted) return;
+    async playCurrentTrack(forcePlay = false) {
+        if (!this.userInteracted && !forcePlay) return;
+        if (!this.currentTheme) return;
+        if (this.muted) return;
         
         const playlist = this.playlists[this.currentTheme];
         if (!playlist || playlist.length === 0) return;
         
-        // Seleccionar canción aleatoria sin repetir
+        // Asegurar que el elemento de audio existe
+        if (!this.audioElement) {
+            this.createMusicPlayer();
+        }
+        
+        // Seleccionar canción aleatoria sin repetir las últimas 2
         let newIndex;
+        let attempts = 0;
         do {
             newIndex = Math.floor(Math.random() * playlist.length);
-        } while (playlist.length > 1 && newIndex === this.currentIndex);
+            attempts++;
+        } while (
+            playlist.length > 1 && 
+            (newIndex === this.currentIndex || this.previousIndices.includes(newIndex)) &&
+            attempts < 10
+        );
+        
+        // Actualizar historial
+        if (this.previousIndices.length >= 2) {
+            this.previousIndices.shift();
+        }
+        this.previousIndices.push(newIndex);
         
         this.currentIndex = newIndex;
         const trackPath = playlist[this.currentIndex];
         
+        // Configurar nueva pista
         this.audioElement.src = trackPath;
         this.audioElement.volume = 0;
+        this.audioElement.load();
         
         try {
             await this.audioElement.play();
             this.isPlaying = true;
+            console.log('Playing:', trackPath);
         } catch (e) {
-            console.warn('Autoplay prevented:', e);
+            console.warn('Playback prevented:', e);
             this.isPlaying = false;
         }
     }
     
     async playNextTrack() {
-        if (!this.currentTheme || this.muted) return;
+        if (!this.currentTheme || this.muted || this.isChangingTheme) return;
         
         const playlist = this.playlists[this.currentTheme];
         if (!playlist || playlist.length === 0) return;
         
         // Seleccionar siguiente canción sin repetir inmediatamente
         let newIndex;
+        let attempts = 0;
         do {
             newIndex = Math.floor(Math.random() * playlist.length);
-        } while (playlist.length > 1 && newIndex === this.currentIndex);
+            attempts++;
+        } while (
+            playlist.length > 1 && 
+            (newIndex === this.currentIndex || this.previousIndices.includes(newIndex)) &&
+            attempts < 10
+        );
+        
+        // Actualizar historial
+        if (this.previousIndices.length >= 2) {
+            this.previousIndices.shift();
+        }
+        this.previousIndices.push(newIndex);
         
         this.currentIndex = newIndex;
         const trackPath = playlist[this.currentIndex];
@@ -251,10 +334,13 @@ class AudioManager {
     }
     
     async crossFadeTo(newPath) {
+        if (!this.audioElement) return;
+        
         // Crear nuevo elemento para la siguiente canción
         const newAudio = document.createElement('audio');
         newAudio.src = newPath;
         newAudio.volume = 0;
+        newAudio.preload = 'auto';
         
         try {
             await newAudio.play();
@@ -272,10 +358,16 @@ class AudioManager {
             
             // Detener audio anterior y reemplazar
             this.audioElement.pause();
+            this.audioElement.src = '';
             this.audioElement = newAudio;
             
             this.audioElement.addEventListener('ended', () => {
                 this.playNextTrack();
+            });
+            
+            this.audioElement.addEventListener('error', (e) => {
+                console.warn('Crossfade audio error:', e);
+                newAudio.pause();
             });
             
         } catch (e) {
@@ -285,34 +377,42 @@ class AudioManager {
     }
     
     async fadeIn() {
-        if (this.muted) return;
+        if (this.muted || !this.audioElement) return;
         
         const steps = 20;
         const stepTime = this.fadeDuration / steps;
         const targetVolume = this.musicVolume;
         
         for (let i = 0; i <= steps; i++) {
-            this.audioElement.volume = (i / steps) * targetVolume;
+            if (this.audioElement) {
+                this.audioElement.volume = (i / steps) * targetVolume;
+            }
             await this.sleep(stepTime);
         }
     }
     
     async fadeOut() {
+        if (!this.audioElement) return;
+        
         const steps = 20;
         const stepTime = this.fadeDuration / steps;
         const startVolume = this.audioElement.volume;
         
         for (let i = 0; i <= steps; i++) {
-            this.audioElement.volume = startVolume * (1 - i / steps);
+            if (this.audioElement) {
+                this.audioElement.volume = startVolume * (1 - i / steps);
+            }
             await this.sleep(stepTime);
         }
         
-        this.audioElement.pause();
+        if (this.audioElement) {
+            this.audioElement.pause();
+            this.audioElement.src = '';
+        }
     }
     
     async playSFX(type) {
         if (this.sfxMuted) return;
-        
         if (!this.currentTheme) return;
         
         const sfxSet = this.sfxPaths[this.currentTheme];
@@ -322,18 +422,17 @@ class AudioManager {
                 // Usar sonido genérico si no existe el específico
                 const genericUnlock = sfxSet?.unlock || Object.values(this.sfxPaths)[0]?.unlock;
                 if (genericUnlock) {
-                    const sound = document.createElement('audio');
-                    sound.src = genericUnlock;
-                    sound.volume = this.sfxVolume;
-                    sound.play().catch(() => {});
+                    this._playSFXFile(genericUnlock);
                 }
             }
             return;
         }
         
         const sfxPath = sfxSet[type];
-        
-        // Usar cache si existe
+        this._playSFXFile(sfxPath);
+    }
+    
+    _playSFXFile(sfxPath) {
         if (this.sfxCache[sfxPath]) {
             const sound = this.sfxCache[sfxPath].cloneNode();
             sound.volume = this.sfxVolume;
@@ -343,6 +442,7 @@ class AudioManager {
             const audio = document.createElement('audio');
             audio.src = sfxPath;
             audio.volume = this.sfxVolume;
+            audio.preload = 'auto';
             this.sfxCache[sfxPath] = audio;
             
             const sound = audio.cloneNode();
@@ -351,16 +451,16 @@ class AudioManager {
     }
     
     preloadSFX() {
-        // Precargar efectos comunes
+        // Precargar efectos comunes para la ambientación actual
         const commonSFX = ['button', 'select', 'move', 'combat', 'victory', 'defeat', 'unlock'];
         
-        // Precargar solo el primer efecto de cada tipo para la ambientación actual
         if (this.currentTheme && this.sfxPaths[this.currentTheme]) {
             const sfxSet = this.sfxPaths[this.currentTheme];
             commonSFX.forEach(type => {
                 if (sfxSet[type]) {
                     const audio = document.createElement('audio');
                     audio.src = sfxSet[type];
+                    audio.preload = 'auto';
                     this.sfxCache[sfxSet[type]] = audio;
                 }
             });
@@ -368,6 +468,7 @@ class AudioManager {
     }
     
     setMusicVolume(volume) {
+        // Volume debe estar entre 0 y 1
         this.musicVolume = Math.max(0, Math.min(1, volume));
         if (!this.muted && this.audioElement) {
             this.audioElement.volume = this.musicVolume;
@@ -376,6 +477,7 @@ class AudioManager {
     }
     
     setSfxVolume(volume) {
+        // Volume debe estar entre 0 y 1
         this.sfxVolume = Math.max(0, Math.min(1, volume));
         this.saveSettings();
     }
@@ -410,7 +512,7 @@ class AudioManager {
     }
 }
 
-// Instancia global
+// Instancia global única
 let audioManager = null;
 
 // Funciones de compatibilidad con el sistema existente
@@ -436,7 +538,9 @@ function playSound(type) {
 function updateAudio() {
     if (audioManager) {
         // Actualizar UI si es necesario
-        renderAudioSettings();
+        if (typeof renderAudioSettings === 'function') {
+            renderAudioSettings();
+        }
     }
 }
 
