@@ -364,7 +364,7 @@ function initMissionsSystem() {
 
 // Sistema de códigos secretos (para logros secretos)
 let secretCodeBuffer = '';
-const SECRET_CODE = 'wwssadadqe';
+const SECRET_CODE = 'secrets';
 
 // Contador de veces que se ha introducido el código
 let secretCodeUsedCount = 0;
@@ -381,7 +381,7 @@ function checkSecretCode(key) {
     }
 }
 
-// Activar el código secreto wwssadadqe
+// Activar el código secreto secrets
 function activateSecretCode() {
     const state = loadMissionsState();
     const totalMissions = MISSIONS_DATA.length;

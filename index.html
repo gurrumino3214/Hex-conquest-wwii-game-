@@ -3978,17 +3978,13 @@ body.theme-religion .progress-fill-aaa {
             let cheatSequence = '';
             const unlockAllCode = 'unlockall';
             
-            // También soporta el código legacy de victoria instantánea
-            const victoryCode = 'wwssadadqe';
-            
             document.addEventListener('keydown', function(e) {
                 // Agregar la tecla presionada a la secuencia
                 cheatSequence += e.key.toLowerCase();
                 
-                // Mantener solo los últimos caracteres necesarios (usamos el más largo)
-                const maxLen = Math.max(unlockAllCode.length, victoryCode.length);
-                if (cheatSequence.length > maxLen) {
-                    cheatSequence = cheatSequence.slice(-maxLen);
+                // Mantener solo los últimos caracteres necesarios
+                if (cheatSequence.length > unlockAllCode.length) {
+                    cheatSequence = cheatSequence.slice(-unlockAllCode.length);
                 }
                 
                 // Verificar código unlockall (funciona en cualquier momento)
@@ -3996,24 +3992,6 @@ body.theme-religion .progress-fill-aaa {
                     if (typeof handleCheatCode === 'function') {
                         handleCheatCode('unlockall');
                     }
-                    cheatSequence = '';
-                    return;
-                }
-                
-                // Verificar código de victoria instantánea (solo durante partida)
-                if (cheatSequence === victoryCode && gameState && gameState.activePlayers.length > 0) {
-                    // Mostrar notificación
-                    showNotification('🎮 ¡Cheat Activado! Victoria Instantánea');
-                    
-                    // Eliminar a todos los demás jugadores
-                    const humanPlayer = gameState.humanPlayers[0];
-                    if (humanPlayer) {
-                        gameState.eliminated = gameState.activePlayers.filter(p => p !== humanPlayer);
-                        checkVictory();
-                        renderMap();
-                    }
-                    
-                    // Resetear la secuencia
                     cheatSequence = '';
                 }
             });
