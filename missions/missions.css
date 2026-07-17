@@ -1,0 +1,710 @@
+/* ═══════════════════════════════════════════════════════════════
+   ESTILOS DEL SISTEMA DE MISIONES Y LOGROS SECRETOS
+   Hex Conquest - Edición Definitiva
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ==================== TAB DE MISIONES ==================== */
+#tab-missions {
+    padding: 10px;
+}
+
+.missions-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.missions-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.missions-title {
+    font-size: 24px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.missions-level-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+}
+
+.missions-stats-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.mission-stat-item {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px 15px;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 100px;
+    backdrop-filter: blur(10px);
+}
+
+.mission-stat-value {
+    font-size: 20px;
+    font-weight: 900;
+    display: block;
+}
+
+.mission-stat-label {
+    font-size: 11px;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.missions-overall-progress-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.missions-overall-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #f5af19, #f12711);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+/* ==================== FILTROS Y BUSCADOR ==================== */
+.missions-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.missions-filter-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.mission-filter-btn {
+    padding: 8px 14px;
+    border: 2px solid #e0d0b8;
+    background: white;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Fredoka', sans-serif;
+    color: #6b4226;
+}
+
+.mission-filter-btn:hover {
+    background: #fffef0;
+    transform: translateY(-1px);
+}
+
+.mission-filter-btn.active {
+    border-color: var(--gold);
+    background: #fffde7;
+    color: #6b4226;
+    box-shadow: 0 2px 8px rgba(230, 168, 23, 0.2);
+}
+
+.mission-search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 14px;
+    border: 2px solid #e0d0b8;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.mission-search-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 2px 8px rgba(230, 168, 23, 0.2);
+}
+
+/* ==================== GRID DE MISIONES ==================== */
+.missions-list-content {
+    max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.missions-category-section {
+    margin-bottom: 20px;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.03), transparent);
+    border-left: 4px solid;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.category-icon {
+    font-size: 20px;
+}
+
+.category-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6b4226;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.missions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+}
+
+/* ==================== TARJETA DE MISIÓN ==================== */
+.mission-card {
+    background: white;
+    border: 2px solid #e0d0b8;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: var(--gold);
+}
+
+.mission-card.completed {
+    background: linear-gradient(135deg, #f0fff4, #e6f7ed);
+    border-color: #27ae60;
+}
+
+.mission-card.completed::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 20px;
+    color: #27ae60;
+    font-weight: 900;
+}
+
+.mission-icon {
+    font-size: 32px;
+    min-width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.mission-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.mission-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b4226;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mission-desc {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.mission-progress-bar {
+    height: 6px;
+    background: #e0d0b8;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.mission-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.mission-stats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.mission-current {
+    color: #6b4226;
+    font-size: 12px;
+}
+
+.mission-target {
+    color: #aaa;
+}
+
+.mission-status {
+    margin-left: auto;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #f0f0f0;
+    color: #666;
+}
+
+.completed-badge {
+    background: #27ae60;
+    color: white;
+}
+
+.no-missions {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 14px;
+}
+
+/* ==================== NOTIFICACIONES ==================== */
+.mission-complete-notification,
+.secret-unlock-notification,
+.secret-achievement-notification {
+    position: fixed;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.mission-complete-notification.show,
+.secret-unlock-notification.show,
+.secret-achievement-notification.show {
+    bottom: 30px;
+}
+
+.notification-content,
+.secret-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+    min-width: 350px;
+}
+
+.notification-icon {
+    font-size: 40px;
+    animation: notificationBounce 0.6s ease infinite alternate;
+}
+
+@keyframes notificationBounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-title {
+    font-size: 14px;
+    font-weight: 900;
+    margin-bottom: 3px;
+}
+
+.notification-name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.notification-desc {
+    font-size: 11px;
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+/* ==================== SECRETO DESBLOQUEADO ==================== */
+.secret-content {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.secret-icon {
+    font-size: 40px;
+    animation: secretRotate 2s linear infinite;
+}
+
+@keyframes secretRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.secret-title {
+    font-size: 14px;
+    font-weight: 900;
+    margin-bottom: 3px;
+}
+
+.secret-desc {
+    font-size: 11px;
+    opacity: 0.9;
+}
+
+/* ==================== LOGROS SECRETOS ==================== */
+.secret-achievements-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 3px dashed #e0d0b8;
+}
+
+.secret-achievements-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.4);
+}
+
+.secret-achievements-title {
+    font-size: 20px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.secret-achievements-progress-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.secret-achievements-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.secret-achievements-count {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+.secret-rarity-section {
+    margin-bottom: 20px;
+}
+
+.secret-rarity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.05), transparent);
+    border-left: 4px solid;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.secret-rarity-name {
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.secret-rarity-count {
+    font-size: 11px;
+    color: #888;
+}
+
+.secret-achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+}
+
+.secret-achievement-card {
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.secret-achievement-card.unlocked {
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.secret-achievement-card.unlocked:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.secret-achievement-card.locked {
+    background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    border: 2px dashed #ccc;
+    opacity: 0.7;
+}
+
+.secret-ach-card-icon {
+    font-size: 32px;
+    min-width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.secret-ach-card-info {
+    flex: 1;
+    min-width: 0;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.secret-ach-card-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.secret-ach-card-desc {
+    font-size: 10px;
+    opacity: 0.9;
+    line-height: 1.3;
+}
+
+.secret-ach-card-rarity {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.secret-ach-card-locked {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+}
+
+.secret-ach-card-lock-icon {
+    font-size: 28px;
+    margin-bottom: 5px;
+    opacity: 0.5;
+}
+
+.secret-ach-card-locked .secret-ach-card-name {
+    font-size: 14px;
+    color: #888;
+}
+
+.secret-ach-card-locked .secret-ach-card-desc {
+    font-size: 10px;
+    color: #aaa;
+}
+
+/* ==================== NOTIFICACIÓN DE LOGRO SECRETO ==================== */
+.secret-ach-content {
+    padding: 18px 22px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    min-width: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.secret-ach-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    animation: achievementShine 3s linear infinite;
+}
+
+@keyframes achievementShine {
+    from { transform: translate(-30%, -30%) rotate(0deg); }
+    to { transform: translate(30%, 30%) rotate(360deg); }
+}
+
+.secret-ach-icon {
+    font-size: 45px;
+    min-width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    animation: achievementPulse 1s ease infinite alternate;
+}
+
+@keyframes achievementPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.secret-ach-text {
+    flex: 1;
+    color: white;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.secret-ach-rarity {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 3px;
+    opacity: 0.9;
+}
+
+.secret-ach-title {
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 3px;
+}
+
+.secret-ach-name {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.secret-ach-desc {
+    font-size: 11px;
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+.secret-ach-sparkles {
+    font-size: 24px;
+    position: relative;
+    z-index: 1;
+    animation: sparkleAnim 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkleAnim {
+    0%, 100% { opacity: 0.5; transform: scale(1) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}
+
+/* ==================== SCROLLBAR PERSONALIZADO ==================== */
+.missions-list-content::-webkit-scrollbar,
+#secret-achievements-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.missions-list-content::-webkit-scrollbar-track,
+#secret-achievements-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 3px;
+}
+
+.missions-list-content::-webkit-scrollbar-thumb,
+#secret-achievements-content::-webkit-scrollbar-thumb {
+    background: var(--gold-light);
+    border-radius: 3px;
+}
+
+.missions-list-content::-webkit-scrollbar-thumb:hover,
+#secret-achievements-content::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .missions-header-top {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .missions-stats-row {
+        justify-content: center;
+    }
+    
+    .missions-grid,
+    .secret-achievements-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .notification-content,
+    .secret-content,
+    .secret-ach-content {
+        min-width: 280px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .mission-search-input {
+        min-width: 100%;
+    }
+}

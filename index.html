@@ -4035,5 +4035,19 @@ body.theme-religion .progress-fill-aaa {
     <!-- Sistema de Ambientaciones -->
     <script src="audio_system.js"></script>
     <script src="themes_system.js"></script>
+    
+    <!-- Sistema de Misiones y Logros Secretos -->
+    <link rel="stylesheet" href="missions/missions.css">
+    <script src="missions/missions.js"></script>
+    <script src="missions/secret_achievements.js"></script>
+    <script src="missions/missions_ui.js"></script>
+    <script>
+        // Inicializar sistema de misiones cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof initFullMissionsSystem === 'function') {
+                setTimeout(initFullMissionsSystem, 500);
+            }
+        });
+    </script>
 </body>
 </html>

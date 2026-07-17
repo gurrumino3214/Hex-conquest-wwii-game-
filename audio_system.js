@@ -316,7 +316,20 @@ class AudioManager {
         if (!this.currentTheme) return;
         
         const sfxSet = this.sfxPaths[this.currentTheme];
-        if (!sfxSet || !sfxSet[type]) return;
+        if (!sfxSet || !sfxSet[type]) {
+            // Sonidos especiales del sistema de misiones
+            if (type === 'achievement' || type === 'secret_achievement' || type === 'secret_unlock') {
+                // Usar sonido genérico si no existe el específico
+                const genericUnlock = sfxSet?.unlock || Object.values(this.sfxPaths)[0]?.unlock;
+                if (genericUnlock) {
+                    const sound = document.createElement('audio');
+                    sound.src = genericUnlock;
+                    sound.volume = this.sfxVolume;
+                    sound.play().catch(() => {});
+                }
+            }
+            return;
+        }
         
         const sfxPath = sfxSet[type];
         
