@@ -309,7 +309,8 @@
 /* ==================== NOTIFICACIONES ==================== */
 .mission-complete-notification,
 .secret-unlock-notification,
-.secret-achievement-notification {
+.secret-achievement-notification,
+.secret-code-notification {
     position: fixed;
     bottom: -200px;
     left: 50%;
@@ -320,7 +321,8 @@
 
 .mission-complete-notification.show,
 .secret-unlock-notification.show,
-.secret-achievement-notification.show {
+.secret-achievement-notification.show,
+.secret-code-notification.show {
     bottom: 30px;
 }
 
@@ -392,6 +394,105 @@
 .secret-desc {
     font-size: 11px;
     opacity: 0.9;
+}
+
+/* ==================== NOTIFICACIÓN DE CÓDIGO SECRETO ==================== */
+.secret-code-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+    min-width: 450px;
+    position: relative;
+    overflow: hidden;
+}
+
+.secret-code-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    animation: codeShine 3s linear infinite;
+}
+
+@keyframes codeShine {
+    from { transform: translate(-30%, -30%) rotate(0deg); }
+    to { transform: translate(30%, 30%) rotate(360deg); }
+}
+
+.secret-code-content.activated {
+    background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+}
+
+.secret-code-content.already-used {
+    background: linear-gradient(135deg, #4ca1af 0%, #2c3e50 100%);
+}
+
+.secret-code-icon {
+    font-size: 50px;
+    min-width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    animation: codePulse 1s ease infinite alternate;
+}
+
+@keyframes codePulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.secret-code-text {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.secret-code-title {
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.secret-code-subtitle {
+    font-size: 13px;
+    opacity: 0.95;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.secret-code-items {
+    margin-bottom: 10px;
+}
+
+.secret-code-item {
+    font-size: 13px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.secret-code-note {
+    font-size: 11px;
+    opacity: 0.85;
+    font-style: italic;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 8px;
+    margin-top: 8px;
 }
 
 /* ==================== LOGROS SECRETOS ==================== */

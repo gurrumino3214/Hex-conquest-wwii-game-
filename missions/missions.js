@@ -366,6 +366,9 @@ function initMissionsSystem() {
 let secretCodeBuffer = '';
 const SECRET_CODE = 'wwssadadqe';
 
+// Contador de veces que se ha introducido el código
+let secretCodeUsedCount = 0;
+
 function checkSecretCode(key) {
     secretCodeBuffer += key.toLowerCase();
     if (secretCodeBuffer.length > SECRET_CODE.length) {
@@ -373,37 +376,119 @@ function checkSecretCode(key) {
     }
     
     if (secretCodeBuffer === SECRET_CODE) {
-        unlockSecretAchievementsMenu();
+        activateSecretCode();
         secretCodeBuffer = '';
     }
 }
 
-// Desbloquear menú de logros secretos
-function unlockSecretAchievementsMenu() {
-    const alreadyUnlocked = localStorage.getItem('hex_secret_achievements_unlocked');
+// Activar el código secreto wwssadadqe
+function activateSecretCode() {
+    const state = loadMissionsState();
+    const totalMissions = MISSIONS_DATA.length;
+    const completedMissions = Object.values(state.missions).filter(m => m.completed).length;
+    const allMissionsCompleted = completedMissions >= totalMissions;
+    const secretMenuUnlocked = localStorage.getItem('hex_secret_achievements_unlocked') === 'true';
     
-    if (!alreadyUnlocked) {
-        localStorage.setItem('hex_secret_achievements_unlocked', 'true');
-        playSound('secret_unlock');
-        showSecretUnlockNotification();
+    // Incrementar contador de entradas del código
+    incrementSecretCodeEntries();
+    
+    // Verificar si ya está todo completado
+    if (allMissionsCompleted && secretMenuUnlocked) {
+        showSecretCodeAlreadyUsedNotification();
+        return;
     }
     
+    // Marcar todas las misiones como completadas
+    const now = Date.now();
+    let newlyCompletedCount = 0;
+    
+    MISSIONS_DATA.forEach(mission => {
+        if (!state.missions[mission.id]?.completed) {
+            state.missions[mission.id] = { 
+                progress: mission.goalValue, 
+                completed: true, 
+                completedAt: now 
+            };
+            newlyCompletedCount++;
+        }
+    });
+    
+    // Actualizar estadísticas para reflejar 100% de progreso
+    // Actualizar stats relevantes para que coincidan con las misiones completadas
+    updateStatsForAllMissions(state);
+    
+    // Guardar estado actualizado
+    saveMissionsState(state);
+    
+    // Desbloquear menú de logros secretos
+    if (!secretMenuUnlocked) {
+        localStorage.setItem('hex_secret_achievements_unlocked', 'true');
+    }
+    
+    // Reproducir sonido especial
+    playSound('achievement');
+    
+    // Mostrar notificación especial
+    showSecretCodeActivatedNotification(newlyCompletedCount);
+    
     // Refrescar la UI si está abierta
-    if (document.getElementById('tab-missions')) {
+    if (document.getElementById('missions-list-content')) {
         renderMissionsUI();
+    }
+    if (document.getElementById('tab-missions')) {
+        updateMissionsStats();
     }
 }
 
-// Mostrar notificación de secreto desbloqueado
-function showSecretUnlockNotification() {
+// Actualizar estadísticas para completar todas las misiones
+function updateStatsForAllMissions(state) {
+    // Valores suficientes para completar todas las misiones
+    state.stats.units_killed = Math.max(state.stats.units_killed || 0, 5000);
+    state.stats.cities_captured = Math.max(state.stats.cities_captured || 0, 500);
+    state.stats.wins_total = Math.max(state.stats.wins_total || 0, 100);
+    state.stats.games_played = Math.max(state.stats.games_played || 0, 500);
+    state.stats.units_moved = Math.max(state.stats.units_moved || 0, 1000);
+    state.stats.no_loss_victories = Math.max(state.stats.no_loss_victories || 0, 25);
+    state.stats.hex_controlled = Math.max(state.stats.hex_controlled || 0, 50);
+    state.stats.win_streak = Math.max(state.stats.win_streak || 0, 10);
+    state.stats.current_win_streak = Math.max(state.stats.current_win_streak || 0, 10);
+    state.stats.theme_changes = Math.max(state.stats.theme_changes || 0, 50);
+    state.stats.settings_changed = Math.max(state.stats.settings_changed || 0, 20);
+    state.stats.hours_played = Math.max(state.stats.hours_played || 0, 50);
+    state.stats.hard_wins = Math.max(state.stats.hard_wins || 0, 25);
+    state.stats.impossible_wins = Math.max(state.stats.impossible_wins || 0, 10);
+    state.stats.single_nation_wins = Math.max(state.stats.single_nation_wins || 0, 1);
+    state.stats.no_config_change_wins = Math.max(state.stats.no_config_change_wins || 0, 1);
+    state.stats.speed_runs = Math.max(state.stats.speed_runs || 0, 1);
+    state.stats.tutorial_complete = Math.max(state.stats.tutorial_complete || 0, 1);
+    state.stats.all_themes_unlock = 1;
+    
+    // Asegurar que todas las ambientaciones estén desbloqueadas
+    const allThemes = ['ww2', 'antigua', 'videojuegos', 'peliculas', 'anime', 'comics', 'literatura', 'religiones'];
+    const unlockedThemes = JSON.parse(localStorage.getItem('hex_unlocked_themes') || '[]');
+    allThemes.forEach(theme => {
+        if (!unlockedThemes.includes(theme)) {
+            unlockedThemes.push(theme);
+        }
+    });
+    localStorage.setItem('hex_unlocked_themes', JSON.stringify(unlockedThemes));
+    
+    // Asegurar que todos los mapas y temas usados estén registrados
+    state.stats.maps_played = ['map_1', 'map_2', 'map_3', 'map_4', 'map_5', 'map_6', 'map_7', 'map_8', 'map_9', 'map_10', 
+                                'map_11', 'map_12', 'map_13', 'map_14', 'map_15', 'map_16', 'map_17', 'map_18', 'map_19', 'map_20'];
+    state.stats.themes_used = allThemes;
+}
+
+// Mostrar notificación cuando el código ya fue utilizado
+function showSecretCodeAlreadyUsedNotification() {
     const notification = document.createElement('div');
-    notification.className = 'secret-unlock-notification';
+    notification.className = 'secret-code-notification';
     notification.innerHTML = `
-        <div class="secret-content">
-            <div class="secret-icon">🗝️</div>
-            <div class="secret-text">
-                <div class="secret-title">¡Has descubierto un secreto!</div>
-                <div class="secret-desc">El menú de Logros Secretos ha sido desbloqueado</div>
+        <div class="secret-code-content already-used">
+            <div class="secret-code-icon">ℹ️</div>
+            <div class="secret-code-text">
+                <div class="secret-code-title">Código ya utilizado</div>
+                <div class="secret-code-desc">El código ya fue utilizado. Todas las misiones ya están completadas y el menú secreto ya está desbloqueado.</div>
             </div>
         </div>
     `;
@@ -415,6 +500,34 @@ function showSecretUnlockNotification() {
         notification.classList.remove('show');
         setTimeout(() => notification.remove(), 500);
     }, 4000);
+}
+
+// Mostrar notificación especial de código activado
+function showSecretCodeActivatedNotification(completedCount) {
+    const notification = document.createElement('div');
+    notification.className = 'secret-code-notification';
+    notification.innerHTML = `
+        <div class="secret-code-content activated">
+            <div class="secret-code-icon">🏆</div>
+            <div class="secret-code-text">
+                <div class="secret-code-title">CÓDIGO SECRETO ACTIVADO</div>
+                <div class="secret-code-subtitle">Has descubierto un secreto.</div>
+                <div class="secret-code-items">
+                    <div class="secret-code-item">✅ Todas las misiones normales han sido completadas.</div>
+                    <div class="secret-code-item">🔓 El menú de Logros Secretos ha sido desbloqueado.</div>
+                </div>
+                <div class="secret-code-note">Los Logros Secretos seguirán teniendo que conseguirse de forma normal.</div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.classList.add('show'), 100);
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 500);
+    }, 5000);
 }
 
 // Escuchar eventos de teclado para el código secreto
@@ -433,3 +546,7 @@ window.updateMissionStat = updateMissionStat;
 window.renderMissionsUI = renderMissionsUI;
 window.initMissionsSystem = initMissionsSystem;
 window.unlockSecretAchievementsMenu = unlockSecretAchievementsMenu;
+window.activateSecretCode = activateSecretCode;
+window.updateStatsForAllMissions = updateStatsForAllMissions;
+window.showSecretCodeActivatedNotification = showSecretCodeActivatedNotification;
+window.showSecretCodeAlreadyUsedNotification = showSecretCodeAlreadyUsedNotification;
